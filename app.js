@@ -6,13 +6,134 @@ const WORLDS=[
 {id:'starless-void',code:'CHANNEL 05 / DEEP SPACE',title:'STARLESS VOID',subtitle:'A transmission drifting beyond the last mapped constellation.',genre:'COSMIC AMBIENT',bpm:40,color:'#9f87ff',color2:'#48d7ff',track:'EVENT HORIZON',tracks:['EVENT HORIZON','PILOT MEMORY','ION VEIL','BEYOND THE LAST STAR'],osc:[36.7,55,92.5],layers:['ION CLOUD','DARK MATTER','PILOT MEMORY']}
 ];
 const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];
-const requestedWorld=new URLSearchParams(location.search).get('world');let current=Math.max(0,WORLDS.findIndex(w=>w.id===requestedWorld));if(!requestedWorld)current=Number(localStorage.srWorld||0);let playing=false,audioCtx,master,analyser,filters=[],sources=[],layerGains=[],noiseNodes=[],engineNodes=[],engineTimers=[],startedAt=0,timerEnd=0,timerHandle,deferredPrompt,lang='de',switching=false,transmissionTimer=null,trackIndex=0,shuffleMode=localStorage.srShuffle==='1',favorites=new Set(JSON.parse(localStorage.srFavorites||'[]'));
+const settings=Object.assign({intro:true,reduced:false,remember:true,shuffleStart:false,defaultTimer:0},JSON.parse(localStorage.srSettings||'{}'));const requestedWorld=new URLSearchParams(location.search).get('world');let current=Math.max(0,WORLDS.findIndex(w=>w.id===requestedWorld));if(!requestedWorld)current=settings.remember?Number(localStorage.srWorld||0):0;let playing=false,audioCtx,master,analyser,filters=[],sources=[],layerGains=[],noiseNodes=[],engineNodes=[],engineTimers=[],startedAt=0,timerEnd=0,timerHandle,deferredPrompt,lang='de',switching=false,transmissionTimer=null,trackIndex=0,shuffleMode=settings.shuffleStart||localStorage.srShuffle==='1',favorites=new Set(JSON.parse(localStorage.srFavorites||'[]'));
 const state={eq:JSON.parse(localStorage.srEq||'{"bass":0,"mid":0,"treble":0}'),layers:JSON.parse(localStorage.srLayers||'[0.45,0.28,0.22]'),volume:Number(localStorage.srVol||.72)};
-function renderWorlds(){ $('#worlds').innerHTML=WORLDS.map((w,i)=>`<button class="world-card ${i===current?'active':''} ${favorites.has(w.id)?'favorite':''}" data-i="${i}" style="--card:${w.color}"><small>${w.code.split('/')[0]}</small><b>${w.title}</b><span>${w.genre}</span></button>`).join('');$$('.world-card').forEach(b=>b.onclick=()=>selectWorld(+b.dataset.i));}
+function renderWorlds(){ $('#worlds').innerHTML=WORLDS.map((w,i)=>{
+  const active=i===current?'active':'';
+  const favorite=favorites.has(w.id)?'favorite':'';
+  if(w.id==='black-sun'){
+    return `<button class="world-card black-sun-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}">
+      <span class="world-number">01</span>
+      <div class="bs-card-art" aria-hidden="true">
+        <div class="bs-horizon"></div>
+        <div class="bs-sun-wrap">
+          <div class="bs-glow"></div>
+          <div class="bs-sun-core"></div>
+          <div class="bs-sun-ring"></div>
+        </div>
+        <div class="bs-ash ash-1"></div>
+        <div class="bs-ash ash-2"></div>
+        <div class="bs-ash ash-3"></div>
+      </div>
+      <div class="world-text">
+        <span class="world-kicker">CHANNEL 01</span>
+        <strong>Black Sun</strong>
+        <small>Low-frequency transmissions beneath a dead horizon</small>
+      </div>
+    </button>`;
+  }
+  if(w.id==='aquatoc'){
+    return `<button class="world-card aquatoc-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}">
+      <span class="world-number">02</span>
+      <div class="aq-card-art" aria-hidden="true">
+        <div class="aq-pressure"></div>
+        <div class="aq-sonar"><i></i><b></b><em></em></div>
+        <div class="aq-depth-line l1"></div>
+        <div class="aq-depth-line l2"></div>
+        <div class="aq-bubble b1"></div>
+        <div class="aq-bubble b2"></div>
+        <div class="aq-bubble b3"></div>
+      </div>
+      <div class="world-text">
+        <span class="world-kicker">CHANNEL 02</span>
+        <strong>Aquatoc</strong>
+        <small>Submerged machinery dreaming below an endless ocean</small>
+      </div>
+    </button>`;
+  }
+  if(w.id==='crimson-rain'){
+    return `<button class="world-card crimson-rain-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}">
+      <span class="world-number">03</span>
+      <div class="cr-card-art" aria-hidden="true">
+        <div class="cr-nightglass"></div>
+        <div class="cr-neon-gate"><i></i><b></b><em></em></div>
+        <div class="cr-rain r1"></div>
+        <div class="cr-rain r2"></div>
+        <div class="cr-rain r3"></div>
+        <div class="cr-reflection"></div>
+        <div class="cr-signal-dot d1"></div>
+        <div class="cr-signal-dot d2"></div>
+      </div>
+      <div class="world-text">
+        <span class="world-kicker">CHANNEL 03</span>
+        <strong>Crimson Rain</strong>
+        <small>Red light dissolving across wet streets after midnight</small>
+      </div>
+    </button>`;
+  }
+  if(w.id==='mountain-blood'){
+    return `<button class="world-card mountain-blood-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}">
+      <span class="world-number">04</span>
+      <div class="mb-card-art" aria-hidden="true">
+        <div class="mb-stone-ridge"><i></i><b></b><em></em></div>
+        <div class="mb-sigil"><i></i><b></b><em></em></div>
+        <div class="mb-wind w1"></div>
+        <div class="mb-wind w2"></div>
+        <div class="mb-ember e1"></div>
+        <div class="mb-ember e2"></div>
+        <div class="mb-ember e3"></div>
+      </div>
+      <div class="world-text">
+        <span class="world-kicker">CHANNEL 04</span>
+        <strong>Mountain Blood</strong>
+        <small>Ancient strings carried through stone, wind and memory</small>
+      </div>
+    </button>`;
+  }
+  if(w.id==='starless-void'){
+    return `<button class="world-card starless-void-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}">
+      <span class="world-number">05</span>
+      <div class="sv-card-art" aria-hidden="true">
+        <div class="sv-orbit o1"></div>
+        <div class="sv-orbit o2"></div>
+        <div class="sv-event-core"><i></i><b></b><em></em></div>
+        <div class="sv-star s1"></div>
+        <div class="sv-star s2"></div>
+        <div class="sv-star s3"></div>
+        <div class="sv-star s4"></div>
+        <div class="sv-signal"></div>
+      </div>
+      <div class="world-text">
+        <span class="world-kicker">CHANNEL 05</span>
+        <strong>Starless Void</strong>
+        <small>A transmission drifting beyond the last mapped constellation</small>
+      </div>
+    </button>`;
+  }
+  return `<button class="world-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}"><small>${w.code.split('/')[0]}</small><b>${w.title}</b><span>${w.genre}</span></button>`;
+}).join('');$$('.world-card').forEach(b=>b.onclick=()=>selectWorld(+b.dataset.i));}
 function renderControls(){const labels=[['bass','BASS'],['mid','MID'],['treble','TREBLE']];$('#eq').innerHTML=labels.map(([k,l])=>`<div class="control"><label>${l}</label><input data-eq="${k}" type="range" min="-12" max="12" step="1" value="${state.eq[k]}"><output>${state.eq[k]>0?'+':''}${state.eq[k]}</output></div>`).join('');$$('[data-eq]').forEach(el=>el.oninput=e=>{state.eq[e.target.dataset.eq]=+e.target.value;e.target.nextElementSibling.textContent=(+e.target.value>0?'+':'')+e.target.value;applyEq();save();});renderLayers();$('#timerButtons').innerHTML=[15,30,45,60,90,0].map(x=>`<button data-min="${x}">${x||'∞'}${x?' MIN':''}</button>`).join('');$$('[data-min]').forEach(b=>b.onclick=()=>setTimer(+b.dataset.min));}
 function renderLayers(){const w=WORLDS[current];$('#layers').innerHTML=w.layers.map((l,i)=>`<div class="control"><label>${l}</label><input data-layer="${i}" type="range" min="0" max="1" step=".01" value="${state.layers[i]??.3}"><output>${Math.round((state.layers[i]??.3)*100)}</output></div>`).join('');$$('[data-layer]').forEach(el=>el.oninput=e=>{state.layers[+e.target.dataset.layer]=+e.target.value;e.target.nextElementSibling.textContent=Math.round(e.target.value*100);if(layerGains[+e.target.dataset.layer]){const i=+e.target.dataset.layer;const scale=current===0?[.17,.2,.12][i]:current===1?[.15,.14,.11][i]:current===2?[.12,.16,.11][i]:current===3?[.14,.12,.13][i]:[.11,.055,.035][i];layerGains[i].gain.setTargetAtTime(+e.target.value*scale,audioCtx.currentTime,.12)}save();});}
-function setCurrentWorld(i){current=(i+WORLDS.length)%WORLDS.length;trackIndex=0;localStorage.srWorld=current;updateWorld();}
-function selectWorld(i){const next=(i+WORLDS.length)%WORLDS.length;if(next===current||switching)return;if(!playing){setCurrentWorld(next);return}switching=true;$('#deck')?.classList.add('switching');const now=audioCtx.currentTime;master.gain.cancelScheduledValues(now);master.gain.setValueAtTime(master.gain.value,now);master.gain.linearRampToValueAtTime(0.0001,now+.65);setTimeout(()=>{teardownAudio();setCurrentWorld(next);master.gain.setValueAtTime(.0001,audioCtx.currentTime);startAudio(true);master.gain.linearRampToValueAtTime(state.volume,audioCtx.currentTime+1.15);setTimeout(()=>{$('#deck')?.classList.remove('switching');switching=false},450)},690)}
+
+function showWorldGate(i){
+  const w=WORLDS[(i+WORLDS.length)%WORLDS.length],gate=$('#worldGate');
+  if(!gate)return;
+  gate.style.setProperty('--gate-color',w.color);
+  gate.style.setProperty('--gate-glow',hexAlpha(w.color,.34));
+  $('#gateTitle').textContent=w.title;
+  $('#gateGenre').textContent=w.genre;
+  gate.classList.remove('closing');
+  gate.classList.add('open');
+  gate.setAttribute('aria-hidden','false');
+}
+function hideWorldGate(){
+  const gate=$('#worldGate');if(!gate)return;
+  gate.classList.add('closing');
+  setTimeout(()=>{gate.classList.remove('open','closing');gate.setAttribute('aria-hidden','true')},480);
+}
+
+function setCurrentWorld(i){current=(i+WORLDS.length)%WORLDS.length;trackIndex=0;if(settings.remember)localStorage.srWorld=current;updateWorld();}
+function selectWorld(i){const next=(i+WORLDS.length)%WORLDS.length;if(next===current||switching)return;switching=true;showWorldGate(next);if(!playing){setTimeout(()=>{setCurrentWorld(next);hideWorldGate();switching=false},520);return}$('#deck')?.classList.add('switching');const now=audioCtx.currentTime;master.gain.cancelScheduledValues(now);master.gain.setValueAtTime(master.gain.value,now);master.gain.linearRampToValueAtTime(0.0001,now+.65);setTimeout(()=>{teardownAudio();setCurrentWorld(next);master.gain.setValueAtTime(.0001,audioCtx.currentTime);startAudio(true);master.gain.linearRampToValueAtTime(state.volume,audioCtx.currentTime+1.15);setTimeout(()=>{hideWorldGate();$('#deck')?.classList.remove('switching');switching=false},620)},690)}
 function updateWorld(){const w=WORLDS[current];document.body.dataset.world=w.id;document.documentElement.style.setProperty('--accent',w.color);document.documentElement.style.setProperty('--accent2',w.color2);document.documentElement.style.setProperty('--glow',hexAlpha(w.color,.26));$('#worldCode').textContent=w.code;$('#worldTitle').textContent=w.title;$('#worldSubtitle').textContent=w.subtitle;$('#genreTag').textContent=w.genre;$('#bpmTag').textContent=w.bpm+' BPM';$('#nowTitle').textContent=w.title+' — '+(w.tracks?.[trackIndex]||w.track);updateMasterControls();$('#sleepCode').textContent=w.code;$('#sleepTitle').textContent=w.title;renderWorlds();renderLayers();updateMedia();}
 function hexAlpha(hex,a){const h=hex.replace('#','');return `rgba(${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)},${a})`}
 function ensureAudio(){if(audioCtx)return;audioCtx=new (window.AudioContext||window.webkitAudioContext)();master=audioCtx.createGain();analyser=audioCtx.createAnalyser();analyser.fftSize=256;filters=[audioCtx.createBiquadFilter(),audioCtx.createBiquadFilter(),audioCtx.createBiquadFilter()];filters[0].type='lowshelf';filters[0].frequency.value=180;filters[1].type='peaking';filters[1].frequency.value=900;filters[1].Q.value=.8;filters[2].type='highshelf';filters[2].frequency.value=3500;filters[0].connect(filters[1]).connect(filters[2]).connect(analyser).connect(master).connect(audioCtx.destination);master.gain.value=state.volume;applyEq();drawVisualizer();}
@@ -138,22 +259,30 @@ function applyEq(){if(!filters.length)return;['bass','mid','treble'].forEach((k,
 function save(){localStorage.srEq=JSON.stringify(state.eq);localStorage.srLayers=JSON.stringify(state.layers);localStorage.srVol=state.volume}
 function setTimer(min){clearInterval(timerHandle);$$('[data-min]').forEach(b=>b.classList.toggle('active',+b.dataset.min===min));if(!min){timerEnd=0;$('#timerTitle').textContent='NO TIMER';$('#timerCountdown').textContent=$('#sleepTimerText').textContent='∞';return}timerEnd=Date.now()+min*60000;$('#timerTitle').textContent=min+' MINUTES';timerHandle=setInterval(updateTimer,1000);updateTimer();toast(`SLEEP TIMER ${min} MIN`)}
 function updateTimer(){const left=Math.max(0,timerEnd-Date.now()),m=Math.floor(left/60000),s=Math.floor(left%60000/1000),txt=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;$('#timerCountdown').textContent=$('#sleepTimerText').textContent=txt;if(left<=0){clearInterval(timerHandle);stopAudio();timerEnd=0;toast('SLEEP PROTOCOL COMPLETE')}}
-function updateMedia(){if(!('mediaSession'in navigator))return;const w=WORLDS[current];navigator.mediaSession.metadata=new MediaMetadata({title:(w.tracks?.[trackIndex]||w.track),artist:'Shinra Omega Radio',album:w.title,artwork:[{src:'icons/icon-512.png',sizes:'512x512',type:'image/png'}]});navigator.mediaSession.playbackState=playing?'playing':'paused'}
-function drawVisualizer(){const c=$('#visualizer'),ctx=c.getContext('2d'),data=new Uint8Array(analyser.frequencyBinCount);function frame(){const dpr=Math.min(devicePixelRatio,2),w=innerWidth,h=innerHeight;if(c.width!==w*dpr||c.height!==h*dpr){c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}ctx.clearRect(0,0,w,h);analyser.getByteFrequencyData(data);const color=WORLDS[current].color;ctx.strokeStyle=color;ctx.lineWidth=1;ctx.globalAlpha=.7;ctx.beginPath();for(let i=0;i<data.length;i++){const x=i/(data.length-1)*w,y=h*.78-(data[i]/255)*h*.24+(Math.sin(i*.5+performance.now()*.001)*4);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();const avg=data.reduce((a,b)=>a+b,0)/data.length;$('#signalMeter').style.width=(playing?Math.max(8,avg/255*100):4)+'%';$('#reactor').style.transform=`scale(${1+(avg/255)*.045})`;$('#progressBar').style.width=playing?((Date.now()-startedAt)/1000%120)/120*100+'%':'0%';$('#elapsed').textContent=fmt(playing?(Date.now()-startedAt)/1000:0);requestAnimationFrame(frame)}frame()}
+function updateMedia(){if(!('mediaSession'in navigator))return;const w=WORLDS[current];navigator.mediaSession.metadata=new MediaMetadata({title:(w.tracks?.[trackIndex]||w.track),artist:'Shinra Omega Radio',album:w.title,artwork:[{src:'icon-512.png',sizes:'512x512',type:'image/png'}]});navigator.mediaSession.playbackState=playing?'playing':'paused'}
+function drawVisualizer(){const c=$('#visualizer'),ctx=c.getContext('2d'),data=new Uint8Array(analyser.frequencyBinCount);function frame(){const dpr=Math.min(devicePixelRatio,2),w=innerWidth,h=innerHeight;if(c.width!==w*dpr||c.height!==h*dpr){c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}ctx.clearRect(0,0,w,h);analyser.getByteFrequencyData(data);const color=WORLDS[current].color;ctx.strokeStyle=color;ctx.lineWidth=1;ctx.globalAlpha=.7;ctx.beginPath();for(let i=0;i<data.length;i++){const x=i/(data.length-1)*w,y=h*.78-(data[i]/255)*h*.24+(Math.sin(i*.5+performance.now()*.001)*4);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();const avg=data.reduce((a,b)=>a+b,0)/data.length;document.body.style.setProperty('--signal',playing?Math.min(1,avg/190).toFixed(3):'0');$('#signalMeter').style.width=(playing?Math.max(8,avg/255*100):4)+'%';$('#reactor').style.transform=`scale(${1+(avg/255)*.045})`;$('#progressBar').style.width=playing?((Date.now()-startedAt)/1000%120)/120*100+'%':'0%';$('#elapsed').textContent=fmt(playing?(Date.now()-startedAt)/1000:0);requestAnimationFrame(frame)}frame()}
 function fmt(sec){return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(Math.floor(sec%60)).padStart(2,'0')}`}
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800)}
 function updateMasterControls(){const fav=$('#favoriteBtn'),shuffle=$('#shuffleBtn');if(fav){fav.classList.toggle('active',favorites.has(WORLDS[current].id));fav.textContent=favorites.has(WORLDS[current].id)?'♥':'♡'}if(shuffle)shuffle.classList.toggle('active',shuffleMode)}
 function toggleFavorite(){const id=WORLDS[current].id;if(favorites.has(id))favorites.delete(id);else favorites.add(id);localStorage.srFavorites=JSON.stringify([...favorites]);renderWorlds();updateMasterControls();toast(favorites.has(id)?'FAVORITE STORED':'FAVORITE REMOVED')}
 function nextWorld(direction=1){if(shuffleMode){let choices=WORLDS.map((_,i)=>i).filter(i=>i!==current);if(favorites.size){const favChoices=choices.filter(i=>favorites.has(WORLDS[i].id));if(favChoices.length)choices=favChoices}selectWorld(choices[Math.floor(Math.random()*choices.length)])}else selectWorld(current+direction)}
-$('#playBtn').onclick=$('#sleepPlayBtn').onclick=toggle;$('#prevBtn').onclick=()=>nextWorld(-1);$('#nextBtn').onclick=()=>nextWorld(1);$('#favoriteBtn').onclick=toggleFavorite;$('#shuffleBtn').onclick=()=>{shuffleMode=!shuffleMode;localStorage.srShuffle=shuffleMode?'1':'0';updateMasterControls();toast(shuffleMode?'SHUFFLE ACTIVE':'SHUFFLE OFF')};$('#volume').value=state.volume;$('#volumeOut').textContent=Math.round(state.volume*100);$('#volume').oninput=e=>{state.volume=+e.target.value;$('#volumeOut').textContent=Math.round(state.volume*100);if(master)master.gain.setTargetAtTime(state.volume,audioCtx.currentTime,.05);save()};$('#resetEq').onclick=()=>{state.eq={bass:0,mid:0,treble:0};renderControls();applyEq();save();toast('EQ RESET')};$('#fullscreenSleep').onclick=$('#sleepModeBtn').onclick=()=>{$('#sleepOverlay').classList.add('open');$('#sleepOverlay').setAttribute('aria-hidden','false')};$('#exitSleepBtn').onclick=()=>{$('#sleepOverlay').classList.remove('open');$('#sleepOverlay').setAttribute('aria-hidden','true')};
+
+function applySettings(){document.body.classList.toggle('motion-reduced',!!settings.reduced);$('#settingIntro').checked=!!settings.intro;$('#settingReduced').checked=!!settings.reduced;$('#settingRemember').checked=!!settings.remember;$('#settingShuffle').checked=!!settings.shuffleStart;$('#settingTimer').value=String(settings.defaultTimer||0)}
+function openSettings(){applySettings();$('#settingsOverlay').classList.add('open');$('#settingsOverlay').setAttribute('aria-hidden','false')}
+function closeSettings(){const el=$('#settingsOverlay');el.classList.remove('open');el.setAttribute('aria-hidden','true')}
+function storeSettings(){settings.intro=$('#settingIntro').checked;settings.reduced=$('#settingReduced').checked;settings.remember=$('#settingRemember').checked;settings.shuffleStart=$('#settingShuffle').checked;settings.defaultTimer=Number($('#settingTimer').value||0);localStorage.srSettings=JSON.stringify(settings);if(!settings.remember)localStorage.removeItem('srWorld');applySettings();closeSettings();toast('SETTINGS STORED')}
+function resetAppData(){if(!confirm('Alle gespeicherten Sender, Favoriten, Regler und Einstellungen zurücksetzen?'))return;['srEq','srLayers','srVol','srWorld','srFavorites','srShuffle','srSettings','srIntroSeen'].forEach(k=>localStorage.removeItem(k));location.reload()}
+$('#playBtn').onclick=$('#sleepPlayBtn').onclick=toggle;$('#prevBtn').onclick=()=>nextWorld(-1);$('#nextBtn').onclick=()=>nextWorld(1);$('#favoriteBtn').onclick=toggleFavorite;$('#shuffleBtn').onclick=()=>{shuffleMode=!shuffleMode;localStorage.srShuffle=shuffleMode?'1':'0';updateMasterControls();toast(shuffleMode?'SHUFFLE ACTIVE':'SHUFFLE OFF')};$('#volume').value=state.volume;$('#volumeOut').textContent=Math.round(state.volume*100);$('#volume').oninput=e=>{state.volume=+e.target.value;$('#volumeOut').textContent=Math.round(state.volume*100);if(master)master.gain.setTargetAtTime(state.volume,audioCtx.currentTime,.05);save()};$('#resetEq').onclick=()=>{state.eq={bass:0,mid:0,treble:0};renderControls();applyEq();save();toast('EQ RESET')};$('#fullscreenSleep').onclick=$('#sleepModeBtn').onclick=()=>{$('#sleepOverlay').classList.add('open');$('#sleepOverlay').setAttribute('aria-hidden','false')};$('#exitSleepBtn').onclick=()=>{$('#sleepOverlay').classList.remove('open');$('#sleepOverlay').setAttribute('aria-hidden','true')};$('#settingsBtn').onclick=openSettings;$('#closeSettings').onclick=closeSettings;$('#saveSettings').onclick=storeSettings;$('#resetAppData').onclick=resetAppData;$('#settingsOverlay').addEventListener('click',e=>{if(e.target.id==='settingsOverlay')closeSettings()});
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true}};
 window.addEventListener('online',()=>{$('#netLabel').textContent='ONLINE';$('#netDot').style.background='#6df49a'});window.addEventListener('offline',()=>{$('#netLabel').textContent='OFFLINE';$('#netDot').style.background='#ff765f'});
 if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>!playing&&startAudio());navigator.mediaSession.setActionHandler('pause',()=>playing&&stopAudio());navigator.mediaSession.setActionHandler('previoustrack',()=>selectWorld(current-1));navigator.mediaSession.setActionHandler('nexttrack',()=>selectWorld(current+1));}
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 window.addEventListener('keydown',e=>{if(e.code==='Space'&&e.target.tagName!=='INPUT'){e.preventDefault();toggle()}if(e.code==='ArrowRight')nextWorld(1);if(e.code==='ArrowLeft')nextWorld(-1);if(e.key.toLowerCase()==='f')toggleFavorite();if(e.key.toLowerCase()==='s'){shuffleMode=!shuffleMode;localStorage.srShuffle=shuffleMode?'1':'0';updateMasterControls()}});
-renderControls();updateWorld();updateMasterControls();
+applySettings();renderControls();updateWorld();updateMasterControls();if(settings.defaultTimer)setTimer(settings.defaultTimer);
 const boot=$('#boot');
-const closeBoot=()=>{if(!boot||boot.classList.contains('hide'))return;boot.classList.add('done');setTimeout(()=>boot.classList.add('hide'),760)};
-const bootTimer=setTimeout(closeBoot,4200);
-$('#skipBoot')?.addEventListener('click',()=>{clearTimeout(bootTimer);closeBoot()});
-boot?.addEventListener('click',e=>{if(e.target===boot){clearTimeout(bootTimer);closeBoot()}});
+const closeBoot=()=>{if(!boot||boot.classList.contains('hide'))return;boot.classList.add('done');localStorage.srIntroSeen='1';setTimeout(()=>boot.classList.add('hide'),760)};
+if(!settings.intro&&localStorage.srIntroSeen==='1'){boot?.classList.add('hide')}else{
+  const bootTimer=setTimeout(closeBoot,4200);
+  $('#skipBoot')?.addEventListener('click',()=>{clearTimeout(bootTimer);closeBoot()});
+  boot?.addEventListener('click',e=>{if(e.target===boot){clearTimeout(bootTimer);closeBoot()}});
+}

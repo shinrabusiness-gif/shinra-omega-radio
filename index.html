@@ -36,10 +36,72 @@
     <header class="topbar glass">
       <button class="brand" id="brandBtn" aria-label="Shinra Omega Radio Startseite"><img class="brand-logo" src="shinra-symbol.png" alt=""><span><small>SHINRA SIGNAL NETWORK</small><b>SHINRA OMEGA RADIO</b></span></button>
       <div class="status"><span id="netDot" class="dot"></span><span id="netLabel">ONLINE</span></div>
-      <div class="top-actions"><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
+      <div class="top-actions"><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="settingsBtn" class="icon-btn" aria-label="Einstellungen" title="Einstellungen">⚙</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
     </header>
 
     <section class="hero glass"><img class="hero-brand-watermark" src="shinra-symbol.png" alt="" aria-hidden="true">
+      <div class="bs-hero-scene" aria-hidden="true">
+        <div class="bs-hero-dust"></div>
+        <div class="bs-hero-horizon"></div>
+        <div class="bs-hero-sun"><i></i><b></b><em></em></div>
+        <div class="bs-hero-heat h1"></div>
+        <div class="bs-hero-heat h2"></div>
+      </div>
+      <div class="aq-hero-scene" aria-hidden="true">
+        <div class="aq-hero-pressure"></div>
+        <div class="aq-hero-vignette"></div>
+        <div class="aq-hero-sonar"><i></i><b></b><em></em><span></span></div>
+        <div class="aq-hero-depth d1"></div>
+        <div class="aq-hero-depth d2"></div>
+        <div class="aq-hero-current c1"></div>
+        <div class="aq-hero-current c2"></div>
+        <div class="aq-hero-bubble b1"></div>
+        <div class="aq-hero-bubble b2"></div>
+        <div class="aq-hero-bubble b3"></div>
+        <div class="aq-hero-bubble b4"></div>
+      </div>
+
+      <div class="cr-hero-scene" aria-hidden="true">
+        <div class="cr-hero-rain r1"></div>
+        <div class="cr-hero-rain r2"></div>
+        <div class="cr-hero-rain r3"></div>
+        <div class="cr-hero-reflection"></div>
+        <div class="cr-hero-gate"><i></i><b></b><em></em><span></span></div>
+        <div class="cr-hero-street-line l1"></div>
+        <div class="cr-hero-street-line l2"></div>
+        <div class="cr-hero-signal s1"></div>
+        <div class="cr-hero-signal s2"></div>
+        <div class="cr-hero-signal s3"></div>
+      </div>
+      <div class="mb-hero-scene" aria-hidden="true">
+        <div class="mb-hero-sky"></div>
+        <div class="mb-hero-ridge back"><i></i><b></b><em></em></div>
+        <div class="mb-hero-ridge front"><i></i><b></b><em></em></div>
+        <div class="mb-hero-sigil"><i></i><b></b><em></em><span></span></div>
+        <div class="mb-hero-wind w1"></div>
+        <div class="mb-hero-wind w2"></div>
+        <div class="mb-hero-wind w3"></div>
+        <div class="mb-hero-ember e1"></div>
+        <div class="mb-hero-ember e2"></div>
+        <div class="mb-hero-ember e3"></div>
+        <div class="mb-hero-ember e4"></div>
+        <div class="mb-hero-fireline"></div>
+      </div>
+      <div class="sv-hero-scene" aria-hidden="true">
+        <div class="sv-hero-nebula n1"></div>
+        <div class="sv-hero-nebula n2"></div>
+        <div class="sv-hero-orbit o1"></div>
+        <div class="sv-hero-orbit o2"></div>
+        <div class="sv-hero-orbit o3"></div>
+        <div class="sv-hero-horizon"><i></i><b></b><em></em></div>
+        <div class="sv-hero-star s1"></div>
+        <div class="sv-hero-star s2"></div>
+        <div class="sv-hero-star s3"></div>
+        <div class="sv-hero-star s4"></div>
+        <div class="sv-hero-star s5"></div>
+        <div class="sv-hero-pulse p1"></div>
+        <div class="sv-hero-pulse p2"></div>
+      </div>
       <div class="hero-copy"><p id="worldCode" class="eyebrow">CHANNEL 01 / ORIGIN</p><h1 id="worldTitle">BLACK SUN</h1><p id="worldSubtitle">Low-frequency transmissions beneath a dead horizon.</p><div class="tags"><span id="genreTag">DARK AMBIENT</span><span id="bpmTag">48 BPM</span><span id="modeTag">PROCEDURAL</span></div></div>
       <div class="reactor-wrap"><div id="reactor" class="reactor"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><div class="core"><span>SR</span></div></div></div>
       <div class="signal-box"><small>SIGNAL</small><strong id="signalValue">STANDBY</strong><div class="meter"><i id="signalMeter"></i></div></div>
@@ -53,7 +115,71 @@
         <button id="playBtn" class="round play" aria-label="Wiedergabe starten"><span id="playIcon">▶</span></button>
         <button id="nextBtn" class="round secondary" aria-label="Nächster Sender">›</button><button id="favoriteBtn" class="round secondary utility" aria-label="Sender favorisieren" title="Favorit">♡</button><button id="shuffleBtn" class="round secondary utility" aria-label="Zufallsmodus" title="Zufallsmodus">⌁</button>
       </div>
-      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong><div class="progress"><i id="progressBar"></i></div><div class="time"><span id="elapsed">00:00</span><span>∞</span></div></div>
+      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong>
+        <div class="bs-mini-signal" aria-hidden="true">
+          <span class="bs-mini-horizon"></span>
+          <span class="bs-mini-sun"><i></i><b></b><em></em></span>
+          <span class="bs-mini-wave w1"></span>
+          <span class="bs-mini-wave w2"></span>
+          <span class="bs-mini-wave w3"></span>
+          <span class="bs-mini-ash a1"></span>
+          <span class="bs-mini-ash a2"></span>
+          <span class="bs-mini-ash a3"></span>
+        </div>
+        <div class="aq-mini-signal" aria-hidden="true">
+          <span class="aq-mini-depth-line d1"></span>
+          <span class="aq-mini-depth-line d2"></span>
+          <span class="aq-mini-depth-line d3"></span>
+          <span class="aq-mini-sonar"><i></i><b></b><em></em></span>
+          <span class="aq-mini-ping p1"></span>
+          <span class="aq-mini-ping p2"></span>
+          <span class="aq-mini-ping p3"></span>
+          <span class="aq-mini-bubble b1"></span>
+          <span class="aq-mini-bubble b2"></span>
+          <span class="aq-mini-bubble b3"></span>
+          <span class="aq-mini-current c1"></span>
+          <span class="aq-mini-current c2"></span>
+        </div>
+        <div class="cr-mini-signal" aria-hidden="true">
+          <span class="cr-mini-rain r1"></span>
+          <span class="cr-mini-rain r2"></span>
+          <span class="cr-mini-rain r3"></span>
+          <span class="cr-mini-gate"><i></i><b></b><em></em></span>
+          <span class="cr-mini-reflection"></span>
+          <span class="cr-mini-wave w1"></span>
+          <span class="cr-mini-wave w2"></span>
+          <span class="cr-mini-wave w3"></span>
+          <span class="cr-mini-dot d1"></span>
+          <span class="cr-mini-dot d2"></span>
+          <span class="cr-mini-dot d3"></span>
+        </div>
+        <div class="mb-mini-signal" aria-hidden="true">
+          <span class="mb-mini-ridge"><i></i><b></b><em></em></span>
+          <span class="mb-mini-sigil"><i></i><b></b><em></em></span>
+          <span class="mb-mini-wind w1"></span>
+          <span class="mb-mini-wind w2"></span>
+          <span class="mb-mini-wind w3"></span>
+          <span class="mb-mini-ember e1"></span>
+          <span class="mb-mini-ember e2"></span>
+          <span class="mb-mini-ember e3"></span>
+          <span class="mb-mini-pulse p1"></span>
+          <span class="mb-mini-pulse p2"></span>
+        </div>
+        <div class="sv-mini-signal" aria-hidden="true">
+          <span class="sv-mini-horizon"><i></i><b></b><em></em></span>
+          <span class="sv-mini-orbit o1"></span>
+          <span class="sv-mini-orbit o2"></span>
+          <span class="sv-mini-orbit o3"></span>
+          <span class="sv-mini-pulse p1"></span>
+          <span class="sv-mini-pulse p2"></span>
+          <span class="sv-mini-pulse p3"></span>
+          <span class="sv-mini-star s1"></span>
+          <span class="sv-mini-star s2"></span>
+          <span class="sv-mini-star s3"></span>
+          <span class="sv-mini-drift d1"></span>
+          <span class="sv-mini-drift d2"></span>
+        </div>
+        <div class="progress"><i id="progressBar"></i></div><div class="time"><span id="elapsed">00:00</span><span>∞</span></div></div>
       <div class="volume"><span>VOL</span><input id="volume" type="range" min="0" max="1" value="0.72" step="0.01" aria-label="Lautstärke"><output id="volumeOut">72</output></div>
     </section>
 
@@ -63,11 +189,34 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button></article>
     </section>
 
-    <section class="system glass"><div><small>CORE VERSION</small><b>2.0 OMEGA MASTER</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div><small>CORE VERSION</small><b>3.7 WORLD GATES</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
+
+  <aside id="worldGate" class="world-gate" aria-hidden="true">
+    <div class="gate-field"></div>
+    <div class="gate-emblem" aria-hidden="true"><i></i><b></b><em></em></div>
+    <p class="eyebrow">ENTERING TRANSMISSION</p>
+    <h2 id="gateTitle">BLACK SUN</h2>
+    <small id="gateGenre">DARK AMBIENT</small>
+  </aside>
+
   <aside id="sleepOverlay" class="sleep-overlay" aria-hidden="true"><button id="exitSleepBtn" class="sleep-exit">EXIT</button><div class="sleep-content"><p id="sleepCode" class="eyebrow">CHANNEL 01</p><h2 id="sleepTitle">BLACK SUN</h2><div class="sleep-orb"><i></i></div><p id="sleepTimerText">NO TIMER</p><button id="sleepPlayBtn" class="round play">▶</button></div></aside>
+
+  <aside id="settingsOverlay" class="settings-overlay" aria-hidden="true">
+    <div class="settings-card glass" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="settings-head"><div><p class="eyebrow">OMEGA CONTROL</p><h2 id="settingsTitle">EINSTELLUNGEN</h2></div><button id="closeSettings" class="icon-btn" aria-label="Einstellungen schließen">×</button></div>
+      <div class="settings-list">
+        <label class="setting-row"><span><b>STARTANIMATION</b><small>Logo-Intro bei jedem neuen Besuch</small></span><input id="settingIntro" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>RUHIGE ANIMATIONEN</b><small>Weniger Bewegung und Effekte</small></span><input id="settingReduced" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>LETZTEN SENDER MERKEN</b><small>Beim nächsten Start wieder auswählen</small></span><input id="settingRemember" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>SHUFFLE BEIM START</b><small>Zufallsmodus automatisch aktivieren</small></span><input id="settingShuffle" type="checkbox" role="switch"></label>
+        <label class="setting-row setting-select"><span><b>STANDARD SLEEP-TIMER</b><small>Wird beim Start vorbereitet</small></span><select id="settingTimer"><option value="0">AUS</option><option value="15">15 MIN</option><option value="30">30 MIN</option><option value="45">45 MIN</option><option value="60">60 MIN</option><option value="90">90 MIN</option></select></label>
+      </div>
+      <div class="settings-actions"><button id="resetAppData" class="danger-btn">APP-DATEN ZURÜCKSETZEN</button><button id="saveSettings" class="wide-btn">SPEICHERN</button></div>
+    </div>
+  </aside>
   <div id="toast" class="toast" role="status"></div>
   <script src="app.js"></script>
 </body>

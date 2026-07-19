@@ -330,11 +330,77 @@ function createSunrootVale(){
   hp.type='highpass';hp.frequency.value=180;lp.type='lowpass';lp.frequency.value=2400;pan.pan.value=.12;lfo.frequency.value=.038;depth.gain.value=.55;lfo.connect(depth).connect(pan.pan);wind.connect(hp).connect(lp).connect(pan).connect(forestGain);wind.start();noiseNodes.push(wind);sources.push(lfo);lfo.start();trackNode(hp,lp,pan,depth);
   [98,146.83].forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),p=audioCtx.createStereoPanner(),l=audioCtx.createOscillator(),d=audioCtx.createGain();o.type=i? 'triangle':'sine';o.frequency.value=freq;o.detune.value=i?3:-5;g.gain.value=i?.08:.12;p.pan.value=i?.34:-.28;l.frequency.value=i?.05:.03;d.gain.value=i?3.5:4.2;l.connect(d).connect(o.detune);o.connect(g).connect(p).connect(forestGain);o.start();l.start();sources.push(o,l);trackNode(g,p,d)});
 
-  // Ancient Reed: breathy shakuhachi-like calls, sparse and ancient.
-  const reedGain=audioCtx.createGain();reedGain.gain.value=(state.layers[1]??.28)*.1;reedGain.connect(bus);layerGains[1]=reedGain;trackNode(reedGain);
-  const reedNotes=[293.66,329.63,392.00,440.00,523.25];
-  const playReed=()=>{if(!playing||current!==6)return;const t=audioCtx.currentTime,dur=2.4+Math.random()*1.7,base=reedNotes[Math.floor(Math.random()*reedNotes.length)];const osc=audioCtx.createOscillator(),g=audioCtx.createGain(),bp=audioCtx.createBiquadFilter(),hp2=audioCtx.createBiquadFilter(),p=audioCtx.createStereoPanner(),air=makeNoise('white',dur+0.5),ag=audioCtx.createGain(),am=audioCtx.createGain(),amLfo=audioCtx.createOscillator();osc.type='triangle';osc.frequency.setValueAtTime(base*.99,t);osc.frequency.linearRampToValueAtTime(base*1.01,t+dur*.28);osc.frequency.exponentialRampToValueAtTime(base*.92,t+dur);bp.type='bandpass';bp.frequency.value=base*3.5;bp.Q.value=1.2;hp2.type='highpass';hp2.frequency.value=340;p.pan.value=(Math.random()-.5)*.8;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.055*(state.layers[1]??.28),t+.22);g.gain.linearRampToValueAtTime(.03*(state.layers[1]??.28),t+dur*.55);g.gain.exponentialRampToValueAtTime(.0001,t+dur);ag.gain.setValueAtTime(.0001,t);ag.gain.linearRampToValueAtTime(.012*(state.layers[1]??.28),t+.12);ag.gain.exponentialRampToValueAtTime(.0001,t+dur);amLfo.frequency.value=.7;am.gain.value=.12;amLfo.connect(am).connect(g.gain);osc.connect(g).connect(p).connect(reedGain);air.connect(bp).connect(hp2).connect(ag).connect(p).connect(reedGain);osc.start(t);osc.stop(t+dur+.04);air.start(t);air.stop(t+dur+.06);amLfo.start(t);amLfo.stop(t+dur+.04);trackNode(osc,g,bp,hp2,p,air,ag,am,amLfo)};
-  playReed();engineTimers.push(setInterval(playReed,5200));
+  // Ancient Reed: rough bamboo breath, pitch falls and long silences.
+  const reedGain=audioCtx.createGain();reedGain.gain.value=(state.layers[1]??.28)*.105;reedGain.connect(bus);layerGains[1]=reedGain;trackNode(reedGain);
+  const reedNotes=[220,246.94,293.66,329.63,392];
+  const playReed=()=>{
+    if(!playing||current!==6)return;
+    const t=audioCtx.currentTime;
+    const dur=3.8+Math.random()*2.4;
+    const base=reedNotes[Math.floor(Math.random()*reedNotes.length)];
+    const osc1=audioCtx.createOscillator(),osc2=audioCtx.createOscillator();
+    const tone=audioCtx.createBiquadFilter(),formant=audioCtx.createBiquadFilter(),hp2=audioCtx.createBiquadFilter();
+    const g=audioCtx.createGain(),p=audioCtx.createStereoPanner();
+    const air=makeNoise('white',dur+1),air2=makeNoise('pink',dur+1),airBand=audioCtx.createBiquadFilter(),airGain=audioCtx.createGain();
+    const vib=audioCtx.createOscillator(),vibDepth=audioCtx.createGain(),wander=audioCtx.createOscillator(),wanderDepth=audioCtx.createGain();
+    const attackNoise=makeNoise('white',.55),attackBand=audioCtx.createBiquadFilter(),attackGain=audioCtx.createGain();
+
+    osc1.type='sawtooth';osc2.type='triangle';
+    osc1.frequency.setValueAtTime(base*1.012,t);
+    osc1.frequency.exponentialRampToValueAtTime(base*.965,t+dur*.9);
+    osc2.frequency.setValueAtTime(base*.498,t);
+    osc2.frequency.exponentialRampToValueAtTime(base*.47,t+dur*.9);
+    osc2.detune.value=-7;
+
+    tone.type='lowpass';tone.frequency.value=1150;tone.Q.value=.7;
+    formant.type='bandpass';formant.frequency.value=720+Math.random()*260;formant.Q.value=2.8;
+    hp2.type='highpass';hp2.frequency.value=160;
+    p.pan.value=(Math.random()-.5)*.7;
+
+    vib.frequency.value=4.1+Math.random()*1.7;
+    vibDepth.gain.setValueAtTime(0,t);
+    vibDepth.gain.linearRampToValueAtTime(8+Math.random()*7,t+dur*.45);
+    vibDepth.gain.linearRampToValueAtTime(3,t+dur);
+    vib.connect(vibDepth);vibDepth.connect(osc1.detune);vibDepth.connect(osc2.detune);
+
+    wander.frequency.value=.16+Math.random()*.12;
+    wanderDepth.gain.value=11+Math.random()*7;
+    wander.connect(wanderDepth);wanderDepth.connect(osc1.detune);
+
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.028*(state.layers[1]??.28),t+.18);
+    g.gain.linearRampToValueAtTime(.052*(state.layers[1]??.28),t+.65);
+    g.gain.setValueAtTime(.05*(state.layers[1]??.28),t+dur*.48);
+    g.gain.linearRampToValueAtTime(.026*(state.layers[1]??.28),t+dur*.78);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+
+    airBand.type='bandpass';airBand.frequency.value=1800+Math.random()*700;airBand.Q.value=.75;
+    airGain.gain.setValueAtTime(.0001,t);
+    airGain.gain.linearRampToValueAtTime(.024*(state.layers[1]??.28),t+.08);
+    airGain.gain.linearRampToValueAtTime(.011*(state.layers[1]??.28),t+.7);
+    airGain.gain.setValueAtTime(.008*(state.layers[1]??.28),t+dur*.7);
+    airGain.gain.exponentialRampToValueAtTime(.0001,t+dur);
+
+    attackBand.type='bandpass';attackBand.frequency.value=2700;attackBand.Q.value=.9;
+    attackGain.gain.setValueAtTime(.0001,t);
+    attackGain.gain.linearRampToValueAtTime(.035*(state.layers[1]??.28),t+.035);
+    attackGain.gain.exponentialRampToValueAtTime(.0001,t+.38);
+
+    osc1.connect(tone);osc2.connect(tone);tone.connect(formant).connect(hp2).connect(g).connect(p).connect(reedGain);
+    air.connect(airBand);air2.connect(airBand);airBand.connect(airGain).connect(p).connect(reedGain);
+    attackNoise.connect(attackBand).connect(attackGain).connect(p).connect(reedGain);
+
+    osc1.start(t);osc2.start(t);air.start(t);air2.start(t);attackNoise.start(t);vib.start(t);wander.start(t);
+    const stop=t+dur+.08;osc1.stop(stop);osc2.stop(stop);air.stop(stop);air2.stop(stop);attackNoise.stop(t+.42);vib.stop(stop);wander.stop(stop);
+    trackNode(osc1,osc2,tone,formant,hp2,g,p,air,air2,airBand,airGain,vib,vibDepth,wander,wanderDepth,attackNoise,attackBand,attackGain);
+  };
+  const scheduleReed=()=>{
+    if(!playing||current!==6)return;
+    playReed();
+    const delay=9000+Math.random()*8000;
+    const id=setTimeout(scheduleReed,delay);engineTimers.push(id);
+  };
+  scheduleReed();
 
   // Root Resonance: wood / stone ritual pulses, grounded and sparse.
   const rootGain=audioCtx.createGain();rootGain.gain.value=(state.layers[2]??.22)*.085;rootGain.connect(bus);layerGains[2]=rootGain;trackNode(rootGain);
@@ -369,7 +435,29 @@ $('#playBtn').onclick=$('#sleepPlayBtn').onclick=toggle;$('#prevBtn').onclick=()
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true}};
 window.addEventListener('online',()=>{$('#netLabel').textContent='ONLINE';$('#netDot').style.background='#6df49a'});window.addEventListener('offline',()=>{$('#netLabel').textContent='OFFLINE';$('#netDot').style.background='#ff765f'});
 if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>!playing&&startAudio());navigator.mediaSession.setActionHandler('pause',()=>playing&&stopAudio());navigator.mediaSession.setActionHandler('previoustrack',()=>selectWorld(current-1));navigator.mediaSession.setActionHandler('nexttrack',()=>selectWorld(current+1));}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+const APP_VERSION='4.6';
+let waitingWorker=null,updateReloading=false;
+function showUpdateSignal(worker){waitingWorker=worker;const panel=$('#updateSignal');if(!panel)return;panel.classList.add('show');panel.setAttribute('aria-hidden','false');$('#updateSignalTitle').textContent=`VERSION ${APP_VERSION} READY`;$('#updateSignalText').textContent='A fresh Omega transmission is ready to install.'}
+function hideUpdateSignal(){const panel=$('#updateSignal');if(!panel)return;panel.classList.remove('show');panel.setAttribute('aria-hidden','true')}
+function markUpdated(){sessionStorage.srUpdatedVersion=APP_VERSION}
+if('serviceWorker'in navigator){
+  window.addEventListener('load',async()=>{
+    try{
+      const reg=await navigator.serviceWorker.register('./sw.js');
+      if(reg.waiting&&navigator.serviceWorker.controller)showUpdateSignal(reg.waiting);
+      reg.addEventListener('updatefound',()=>{
+        const worker=reg.installing;if(!worker)return;
+        worker.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)showUpdateSignal(worker)});
+      });
+      setInterval(()=>reg.update().catch(()=>{}),15*60*1000);
+      document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')reg.update().catch(()=>{})});
+    }catch{}
+  });
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(updateReloading)return;updateReloading=true;markUpdated();location.reload()});
+}
+$('#installUpdateBtn')?.addEventListener('click',()=>{if(!waitingWorker)return;$('#installUpdateBtn').textContent='INSTALLING…';waitingWorker.postMessage({type:'SKIP_WAITING'})});
+$('#dismissUpdateBtn')?.addEventListener('click',hideUpdateSignal);
+window.addEventListener('DOMContentLoaded',()=>{if(sessionStorage.srUpdatedVersion===APP_VERSION){sessionStorage.removeItem('srUpdatedVersion');setTimeout(()=>toast(`OMEGA CORE UPDATED — VERSION ${APP_VERSION} ONLINE`),900)}});
 window.addEventListener('keydown',e=>{if(e.code==='Space'&&e.target.tagName!=='INPUT'){e.preventDefault();toggle()}if(e.code==='ArrowRight')nextWorld(1);if(e.code==='ArrowLeft')nextWorld(-1);if(e.key.toLowerCase()==='f')toggleFavorite();if(e.key.toLowerCase()==='s'){shuffleMode=!shuffleMode;localStorage.srShuffle=shuffleMode?'1':'0';updateMasterControls()}});
 applySettings();renderControls();updateWorld();updateMasterControls();if(settings.defaultTimer)setTimer(settings.defaultTimer);
 const boot=$('#boot');

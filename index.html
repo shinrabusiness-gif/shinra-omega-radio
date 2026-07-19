@@ -243,7 +243,7 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button></article>
     </section>
 
-    <section class="system glass"><div><small>CORE VERSION</small><b>4.4 SUNROOT VALE COMPLETE</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div><small>CORE VERSION</small><b>4.6 OMEGA UPDATE SIGNAL</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
@@ -294,6 +294,17 @@
       </div>
       <div class="settings-actions"><button id="resetAppData" class="danger-btn">APP-DATEN ZURÜCKSETZEN</button><button id="saveSettings" class="wide-btn">SPEICHERN</button></div>
     </div>
+  </aside>
+
+  <aside id="updateSignal" class="update-signal" aria-hidden="true" role="status">
+    <div class="update-signal-mark" aria-hidden="true"><i></i><b></b><em></em></div>
+    <div class="update-signal-copy">
+      <small>OMEGA UPDATE DETECTED</small>
+      <strong id="updateSignalTitle">NEW CORE VERSION AVAILABLE</strong>
+      <span id="updateSignalText">A fresh transmission is ready to install.</span>
+    </div>
+    <button id="installUpdateBtn" class="update-signal-btn">UPDATE INSTALLIEREN</button>
+    <button id="dismissUpdateBtn" class="update-signal-close" aria-label="Update-Meldung schließen">×</button>
   </aside>
   <div id="toast" class="toast" role="status"></div>
   <script src="app.js"></script>

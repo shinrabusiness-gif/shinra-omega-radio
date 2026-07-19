@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08090d">
+  <meta name="description" content="Shinra Radio – broadcasts from forgotten worlds">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Shinra Omega Radio</title>
+</head>
+<body data-world="black-sun">
+  <canvas id="visualizer" aria-hidden="true"></canvas>
+  <div class="world-fx" aria-hidden="true"><div class="stars"></div><div class="grid"></div><div class="grain"></div></div>
+  <div id="boot" class="boot" role="dialog" aria-label="Shinra Omega Radio startet" aria-modal="true">
+    <div class="boot-aura" aria-hidden="true"></div>
+    <div class="boot-stage">
+      <svg class="boot-symbol" viewBox="0 0 240 240" role="img" aria-label="Shinra Omega Radio Logo">
+        <circle class="boot-orbit" cx="120" cy="120" r="78"></circle>
+        <path class="boot-horizon" d="M42 127 C78 124 96 121 120 121 C149 121 170 126 198 127"></path>
+        <circle class="boot-core" cx="120" cy="92" r="8"></circle>
+      </svg>
+      <div class="boot-wordmark" aria-hidden="true">
+        <strong>SHINRA</strong>
+        <span>ΩMEGA RADIO</span>
+        <small>森羅</small>
+      </div>
+      <p class="boot-network">SHINRA SIGNAL NETWORK</p>
+    </div>
+    <button id="skipBoot" class="boot-skip" type="button">SKIP</button>
+  </div>
+
+  <main class="shell">
+    <header class="topbar glass">
+      <button class="brand" id="brandBtn" aria-label="Shinra Omega Radio Startseite"><img class="brand-logo" src="shinra-symbol.png" alt=""><span><small>SHINRA SIGNAL NETWORK</small><b>SHINRA OMEGA RADIO</b></span></button>
+      <div class="status"><span id="netDot" class="dot"></span><span id="netLabel">ONLINE</span></div>
+      <div class="top-actions"><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
+    </header>
+
+    <section class="hero glass"><img class="hero-brand-watermark" src="shinra-symbol.png" alt="" aria-hidden="true">
+      <div class="hero-copy"><p id="worldCode" class="eyebrow">CHANNEL 01 / ORIGIN</p><h1 id="worldTitle">BLACK SUN</h1><p id="worldSubtitle">Low-frequency transmissions beneath a dead horizon.</p><div class="tags"><span id="genreTag">DARK AMBIENT</span><span id="bpmTag">48 BPM</span><span id="modeTag">PROCEDURAL</span></div></div>
+      <div class="reactor-wrap"><div id="reactor" class="reactor"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><div class="core"><span>SR</span></div></div></div>
+      <div class="signal-box"><small>SIGNAL</small><strong id="signalValue">STANDBY</strong><div class="meter"><i id="signalMeter"></i></div></div>
+    </section>
+
+    <nav id="worlds" class="worlds" aria-label="Sender"></nav>
+
+    <section id="deck" class="deck glass">
+      <div class="transport">
+        <button id="prevBtn" class="round secondary" aria-label="Vorheriger Sender">‹</button>
+        <button id="playBtn" class="round play" aria-label="Wiedergabe starten"><span id="playIcon">▶</span></button>
+        <button id="nextBtn" class="round secondary" aria-label="Nächster Sender">›</button><button id="favoriteBtn" class="round secondary utility" aria-label="Sender favorisieren" title="Favorit">♡</button><button id="shuffleBtn" class="round secondary utility" aria-label="Zufallsmodus" title="Zufallsmodus">⌁</button>
+      </div>
+      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong><div class="progress"><i id="progressBar"></i></div><div class="time"><span id="elapsed">00:00</span><span>∞</span></div></div>
+      <div class="volume"><span>VOL</span><input id="volume" type="range" min="0" max="1" value="0.72" step="0.01" aria-label="Lautstärke"><output id="volumeOut">72</output></div>
+    </section>
+
+    <section class="panels">
+      <article class="panel glass"><div class="panel-head"><div><p class="eyebrow">SONIC CONTROL</p><h2>3-BAND EQUALIZER</h2></div><button id="resetEq" class="text-btn">RESET</button></div><div class="eq" id="eq"></div></article>
+      <article class="panel glass"><div class="panel-head"><div><p class="eyebrow">ATMOSPHERE</p><h2>SIGNAL LAYERS</h2></div><span id="layerState">ACTIVE</span></div><div class="layers" id="layers"></div></article>
+      <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button></article>
+    </section>
+
+    <section class="system glass"><div><small>CORE VERSION</small><b>2.0 OMEGA MASTER</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
+  </main>
+
+  <aside id="sleepOverlay" class="sleep-overlay" aria-hidden="true"><button id="exitSleepBtn" class="sleep-exit">EXIT</button><div class="sleep-content"><p id="sleepCode" class="eyebrow">CHANNEL 01</p><h2 id="sleepTitle">BLACK SUN</h2><div class="sleep-orb"><i></i></div><p id="sleepTimerText">NO TIMER</p><button id="sleepPlayBtn" class="round play">▶</button></div></aside>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

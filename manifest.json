@@ -1,7 +1,7 @@
 {
   "name": "Shinra Omega Radio — Master",
   "short_name": "Shinra Ω",
-  "description": "Five living transmissions from forgotten worlds.",
+  "description": "Six living transmissions from forgotten worlds.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -48,6 +48,11 @@
       "name": "Starless Void",
       "short_name": "Starless Void",
       "url": "./?world=starless-void"
+    },
+    {
+      "name": "Celestial Veil",
+      "short_name": "Celestial Veil",
+      "url": "./?world=celestial-veil"
     }
   ]
 }

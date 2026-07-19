@@ -4,6 +4,7 @@ const WORLDS=[
 {id:'crimson-rain',code:'CHANNEL 03 / RED DISTRICT',title:'CRIMSON RAIN',subtitle:'Red light dissolving across wet streets after midnight.',genre:'NOCTURNAL SYNTH',bpm:74,color:'#ff334f',color2:'#8b102d',track:'AFTERGLOW SIGNAL',tracks:['AFTERGLOW SIGNAL','RED DISTRICT 03:17','RAIN ON GLASS','LAST TRAIN MEMORY'],osc:[49,73.42,146.83],layers:['MIDNIGHT CURRENT','CRIMSON RAIN','DISTANT CITY']},
 {id:'mountain-blood',code:'CHANNEL 04 / DARDANIA',title:'MOUNTAIN BLOOD',subtitle:'Ancient strings carried through stone, wind and memory.',genre:'BALKAN RITUAL',bpm:72,color:'#ff5b45',color2:'#d7ad62',track:'STONE OATH',tracks:['STONE OATH','WIND OVER DARDANIA','EMBER CIRCLE','MOUNTAIN MEMORY'],osc:[73.4,110,146.8],layers:['MOUNTAIN WIND','STRING ECHO','FIRE CIRCLE']},
 {id:'starless-void',code:'CHANNEL 05 / DEEP SPACE',title:'STARLESS VOID',subtitle:'A transmission drifting beyond the last mapped constellation.',genre:'COSMIC AMBIENT',bpm:40,color:'#9f87ff',color2:'#48d7ff',track:'EVENT HORIZON',tracks:['EVENT HORIZON','PILOT MEMORY','ION VEIL','BEYOND THE LAST STAR'],osc:[36.7,55,92.5],layers:['ION CLOUD','DARK MATTER','PILOT MEMORY']}
+,{id:'celestial-veil',code:'CHANNEL 06 / EMPYREAN',title:'CELESTIAL VEIL',subtitle:'Sacred transmissions beyond the veil of light.',genre:'HEAVENLY AMBIENT',bpm:52,color:'#f5e4ad',color2:'#fff8ef',track:'VEIL OF MERCY',tracks:['VEIL OF MERCY','HALO PROCESSION','IVORY SKY','LUMEN CHOIR'],osc:[130.81,261.63,392],layers:['CHOIR VEIL','HALO BELLS','STAR SHIMMER']}
 ];
 const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];
 const settings=Object.assign({intro:true,reduced:false,remember:true,shuffleStart:false,defaultTimer:0},JSON.parse(localStorage.srSettings||'{}'));const requestedWorld=new URLSearchParams(location.search).get('world');let current=Math.max(0,WORLDS.findIndex(w=>w.id===requestedWorld));if(!requestedWorld)current=settings.remember?Number(localStorage.srWorld||0):0;let playing=false,audioCtx,master,analyser,filters=[],sources=[],layerGains=[],noiseNodes=[],engineNodes=[],engineTimers=[],startedAt=0,timerEnd=0,timerHandle,deferredPrompt,lang='de',switching=false,transmissionTimer=null,trackIndex=0,shuffleMode=settings.shuffleStart||localStorage.srShuffle==='1',favorites=new Set(JSON.parse(localStorage.srFavorites||'[]'));
@@ -110,10 +111,33 @@ function renderWorlds(){ $('#worlds').innerHTML=WORLDS.map((w,i)=>{
       </div>
     </button>`;
   }
+
+  if(w.id==='celestial-veil'){
+    return `<button class="world-card celestial-veil-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}">
+      <span class="world-number">06</span>
+      <div class="cv-card-art" aria-hidden="true">
+        <div class="cv-card-glow"></div>
+        <div class="cv-card-halo"><i></i><b></b><em></em></div>
+        <div class="cv-card-ray r1"></div>
+        <div class="cv-card-ray r2"></div>
+        <div class="cv-card-ray r3"></div>
+        <div class="cv-card-arch a1"></div>
+        <div class="cv-card-arch a2"></div>
+        <div class="cv-card-star s1"></div>
+        <div class="cv-card-star s2"></div>
+        <div class="cv-card-star s3"></div>
+      </div>
+      <div class="world-text">
+        <span class="world-kicker">CHANNEL 06</span>
+        <strong>Celestial Veil</strong>
+        <small>Sacred transmissions beyond the veil of light</small>
+      </div>
+    </button>`;
+  }
   return `<button class="world-card ${active} ${favorite}" data-i="${i}" style="--card:${w.color}"><small>${w.code.split('/')[0]}</small><b>${w.title}</b><span>${w.genre}</span></button>`;
 }).join('');$$('.world-card').forEach(b=>b.onclick=()=>selectWorld(+b.dataset.i));}
 function renderControls(){const labels=[['bass','BASS'],['mid','MID'],['treble','TREBLE']];$('#eq').innerHTML=labels.map(([k,l])=>`<div class="control"><label>${l}</label><input data-eq="${k}" type="range" min="-12" max="12" step="1" value="${state.eq[k]}"><output>${state.eq[k]>0?'+':''}${state.eq[k]}</output></div>`).join('');$$('[data-eq]').forEach(el=>el.oninput=e=>{state.eq[e.target.dataset.eq]=+e.target.value;e.target.nextElementSibling.textContent=(+e.target.value>0?'+':'')+e.target.value;applyEq();save();});renderLayers();$('#timerButtons').innerHTML=[15,30,45,60,90,0].map(x=>`<button data-min="${x}">${x||'∞'}${x?' MIN':''}</button>`).join('');$$('[data-min]').forEach(b=>b.onclick=()=>setTimer(+b.dataset.min));}
-function renderLayers(){const w=WORLDS[current];$('#layers').innerHTML=w.layers.map((l,i)=>`<div class="control"><label>${l}</label><input data-layer="${i}" type="range" min="0" max="1" step=".01" value="${state.layers[i]??.3}"><output>${Math.round((state.layers[i]??.3)*100)}</output></div>`).join('');$$('[data-layer]').forEach(el=>el.oninput=e=>{state.layers[+e.target.dataset.layer]=+e.target.value;e.target.nextElementSibling.textContent=Math.round(e.target.value*100);if(layerGains[+e.target.dataset.layer]){const i=+e.target.dataset.layer;const scale=current===0?[.17,.2,.12][i]:current===1?[.15,.14,.11][i]:current===2?[.12,.16,.11][i]:current===3?[.14,.12,.13][i]:[.11,.055,.035][i];layerGains[i].gain.setTargetAtTime(+e.target.value*scale,audioCtx.currentTime,.12)}save();});}
+function renderLayers(){const w=WORLDS[current];$('#layers').innerHTML=w.layers.map((l,i)=>`<div class="control"><label>${l}</label><input data-layer="${i}" type="range" min="0" max="1" step=".01" value="${state.layers[i]??.3}"><output>${Math.round((state.layers[i]??.3)*100)}</output></div>`).join('');$$('[data-layer]').forEach(el=>el.oninput=e=>{state.layers[+e.target.dataset.layer]=+e.target.value;e.target.nextElementSibling.textContent=Math.round(e.target.value*100);if(layerGains[+e.target.dataset.layer]){const i=+e.target.dataset.layer;const scale=current===0?[.17,.2,.12][i]:current===1?[.15,.14,.11][i]:current===2?[.12,.16,.11][i]:current===3?[.14,.12,.13][i]:current===4?[.11,.055,.035][i]:[.12,.09,.065][i];layerGains[i].gain.setTargetAtTime(+e.target.value*scale,audioCtx.currentTime,.12)}save();});}
 
 function showWorldGate(i){
   const w=WORLDS[(i+WORLDS.length)%WORLDS.length],gate=$('#worldGate');
@@ -249,9 +273,32 @@ function createStarlessVoid(){
   beacon();engineTimers.push(setInterval(beacon,13700));
 }
 
+
+function createCelestialVeil(){
+  const now=audioCtx.currentTime;
+  const bus=audioCtx.createGain(),compressor=audioCtx.createDynamicsCompressor(),reverb=audioCtx.createConvolver(),dry=audioCtx.createGain(),wet=audioCtx.createGain(),shimmer=audioCtx.createBiquadFilter();
+  bus.gain.setValueAtTime(0,now);bus.gain.linearRampToValueAtTime(1,now+4.2);reverb.buffer=makeImpulse(8.6,5.2);dry.gain.value=.68;wet.gain.value=.48;shimmer.type='highshelf';shimmer.frequency.value=2400;shimmer.gain.value=4.5;
+  bus.connect(dry).connect(compressor);bus.connect(reverb).connect(wet).connect(compressor);compressor.connect(shimmer).connect(filters[0]);trackNode(bus,compressor,reverb,dry,wet,shimmer);
+
+  // Layer 1 — choir veil: soft open intervals breathing like a distant choir.
+  const choirGain=audioCtx.createGain();choirGain.gain.value=(state.layers[0]??.45)*.12;choirGain.connect(bus);layerGains[0]=choirGain;trackNode(choirGain);
+  [130.81,196,261.63,392].forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),p=audioCtx.createStereoPanner(),lfo=audioCtx.createOscillator(),depth=audioCtx.createGain();o.type=i<2?'sine':'triangle';o.frequency.value=freq;o.detune.value=[-4,3,-6,5][i];g.gain.value=[.45,.3,.18,.1][i];p.pan.value=[-.46,.28,-.18,.5][i];lfo.frequency.value=[.08,.06,.04,.03][i];depth.gain.value=[2.5,3.1,2.3,1.9][i];lfo.connect(depth).connect(o.detune);o.connect(g).connect(p).connect(choirGain);o.start();lfo.start();sources.push(o,lfo);trackNode(g,p,depth)});
+
+  // Layer 2 — halo bells: very gentle bell tones with long radiant tails.
+  const bellGain=audioCtx.createGain();bellGain.gain.value=(state.layers[1]??.28)*.09;bellGain.connect(bus);layerGains[1]=bellGain;trackNode(bellGain);
+  const ringBell=()=>{if(!playing||current!==5)return;const t=audioCtx.currentTime,root=[523.25,587.33,659.25,783.99][Math.floor(Math.random()*4)];[1,2.01,3.76].forEach((ratio,j)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),p=audioCtx.createStereoPanner();o.type='sine';o.frequency.setValueAtTime(root*ratio,t);o.frequency.exponentialRampToValueAtTime((root*ratio)*.995,t+3.8+j*.25);p.pan.value=(Math.random()-.5)*1.3;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime((.03/(j+1))*(state.layers[1]??.28),t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+4.5+j*.35);o.connect(g).connect(p).connect(reverb);o.start(t);o.stop(t+4.9+j*.4);trackNode(o,g,p)});};
+  ringBell();engineTimers.push(setInterval(ringBell,6400));
+
+  // Layer 3 — star shimmer: bright air, glass-light and drifting sparkle.
+  const starGain=audioCtx.createGain(),air=makeNoise('white',7),hp=audioCtx.createBiquadFilter(),lp=audioCtx.createBiquadFilter(),pan=audioCtx.createStereoPanner(),lfo=audioCtx.createOscillator(),depth=audioCtx.createGain();
+  starGain.gain.value=(state.layers[2]??.22)*.065;hp.type='highpass';hp.frequency.value=2800;lp.type='lowpass';lp.frequency.value=9200;pan.pan.value=.1;lfo.frequency.value=.045;depth.gain.value=.6;lfo.connect(depth).connect(pan.pan);air.connect(hp).connect(lp).connect(pan).connect(starGain).connect(bus);air.start();noiseNodes.push(air);sources.push(lfo);lfo.start();layerGains[2]=starGain;trackNode(starGain,hp,lp,pan,depth);
+  const glint=()=>{if(!playing||current!==5)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain(),p=audioCtx.createStereoPanner(),t=audioCtx.currentTime,d=.9+Math.random()*1.4;o.type='triangle';o.frequency.setValueAtTime(1320+Math.random()*900,t);o.frequency.exponentialRampToValueAtTime(760+Math.random()*260,t+d);p.pan.value=(Math.random()-.5)*1.6;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.015*(state.layers[2]??.22),t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(p).connect(reverb);o.start(t);o.stop(t+d+.06);trackNode(o,g,p)};
+  engineTimers.push(setInterval(glint,1700));
+}
+
 function createStandardWorld(){const w=WORLDS[current];w.osc.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),lfo=audioCtx.createOscillator(),lg=audioCtx.createGain();o.type=i===0?'sine':i===1?'triangle':'sine';o.frequency.value=freq;lfo.frequency.value=.04+i*.025;lg.gain.value=freq*.012;lfo.connect(lg).connect(o.frequency);g.gain.value=(state.layers[i]??.3)*[.11,.055,.035][i];o.connect(g).connect(filters[0]);o.start();lfo.start();sources.push(o,lfo);layerGains.push(g);trackNode(g,lg)});const n=makeNoise(current===2?'white':'brown'),ng=audioCtx.createGain(),nf=audioCtx.createBiquadFilter();nf.type='lowpass';nf.frequency.value=current===1?900:current===2?3500:650;ng.gain.value=(state.layers[2]??.2)*.06;n.connect(nf).connect(ng).connect(filters[0]);n.start();noiseNodes.push(n);trackNode(ng,nf)}
 function beginTransmissionCycle(){clearInterval(transmissionTimer);transmissionTimer=setInterval(()=>{if(!playing)return;const w=WORLDS[current],list=w.tracks||[w.track];trackIndex=(trackIndex+1)%list.length;const title=$('#nowTitle');title.classList.add('changing');setTimeout(()=>{title.textContent=w.title+' — '+list[trackIndex];title.classList.remove('changing');updateMedia()},320)},45000)}
-function startAudio(fromSwitch=false){ensureAudio();audioCtx.resume();sources=[];layerGains=[];noiseNodes=[];engineNodes=[];engineTimers=[];if(!fromSwitch)master.gain.setTargetAtTime(state.volume,audioCtx.currentTime,.08);if(current===0)createBlackSun();else if(current===1)createAquatoc();else if(current===2)createCrimsonRain();else if(current===3)createMountainBlood();else if(current===4)createStarlessVoid();else createStandardWorld();playing=true;startedAt=Date.now();document.body.classList.add('playing');$('#playIcon').textContent=$('#sleepPlayBtn').textContent='Ⅱ';$('#signalValue').textContent='TRANSMITTING';$('#systemStatus').textContent=WORLDS[current].title+' LIVE';beginTransmissionCycle();updateMedia();toast(WORLDS[current].title+' ONLINE');}
+function startAudio(fromSwitch=false){ensureAudio();audioCtx.resume();sources=[];layerGains=[];noiseNodes=[];engineNodes=[];engineTimers=[];if(!fromSwitch)master.gain.setTargetAtTime(state.volume,audioCtx.currentTime,.08);if(current===0)createBlackSun();else if(current===1)createAquatoc();else if(current===2)createCrimsonRain();else if(current===3)createMountainBlood();else if(current===4)createStarlessVoid();else if(current===5)createCelestialVeil();else createStandardWorld();playing=true;startedAt=Date.now();document.body.classList.add('playing');$('#playIcon').textContent=$('#sleepPlayBtn').textContent='Ⅱ';$('#signalValue').textContent='TRANSMITTING';$('#systemStatus').textContent=WORLDS[current].title+' LIVE';beginTransmissionCycle();updateMedia();toast(WORLDS[current].title+' ONLINE');}
 function teardownAudio(){clearInterval(transmissionTimer);engineTimers.forEach(clearInterval);engineTimers=[];[...sources,...noiseNodes].forEach(x=>{try{x.stop()}catch{}});[...engineNodes].forEach(x=>{try{x.disconnect()}catch{}});sources=[];noiseNodes=[];engineNodes=[];layerGains=[];}
 function stopAudio(){if(!playing)return;playing=false;clearInterval(transmissionTimer);const finish=()=>{teardownAudio();document.body.classList.remove('playing');$('#playIcon').textContent=$('#sleepPlayBtn').textContent='▶';$('#signalValue').textContent='STANDBY';$('#systemStatus').textContent='READY';updateMedia()};if(audioCtx&&master){const now=audioCtx.currentTime;master.gain.cancelScheduledValues(now);master.gain.setValueAtTime(master.gain.value,now);master.gain.linearRampToValueAtTime(.0001,now+.45);setTimeout(()=>{finish();master.gain.value=state.volume},470)}else finish()}
 function toggle(){playing?stopAudio():startAudio()}

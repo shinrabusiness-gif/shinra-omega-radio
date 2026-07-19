@@ -1,2 +1,0 @@
-# shinra-omega-radio
-./.

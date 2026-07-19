@@ -218,7 +218,7 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button></article>
     </section>
 
-    <section class="system glass"><div><small>CORE VERSION</small><b>3.9 OMEGA AWAKENING</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div><small>CORE VERSION</small><b>4.2 APP ICON UPDATE</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
@@ -231,7 +231,27 @@
     <small id="gateGenre">DARK AMBIENT</small>
   </aside>
 
-  <aside id="sleepOverlay" class="sleep-overlay" aria-hidden="true"><button id="exitSleepBtn" class="sleep-exit">EXIT</button><div class="sleep-content"><p id="sleepCode" class="eyebrow">CHANNEL 01</p><h2 id="sleepTitle">BLACK SUN</h2><div class="sleep-orb"><i></i></div><p id="sleepTimerText">NO TIMER</p><button id="sleepPlayBtn" class="round play">▶</button></div></aside>
+  <aside id="sleepOverlay" class="sleep-overlay" aria-hidden="true">
+    <div class="sleep-scene bs-sleep-scene" aria-hidden="true">
+      <div class="bs-sleep-horizon"></div><div class="bs-sleep-sun"><i></i><b></b><em></em></div><span class="bs-sleep-ash a1"></span><span class="bs-sleep-ash a2"></span><span class="bs-sleep-ash a3"></span>
+    </div>
+    <div class="sleep-scene aq-sleep-scene" aria-hidden="true">
+      <div class="aq-sleep-sonar"><i></i><b></b><em></em></div><div class="aq-sleep-current c1"></div><div class="aq-sleep-current c2"></div><span class="aq-sleep-bubble b1"></span><span class="aq-sleep-bubble b2"></span><span class="aq-sleep-bubble b3"></span>
+    </div>
+    <div class="sleep-scene cr-sleep-scene" aria-hidden="true">
+      <div class="cr-sleep-gate"><i></i><b></b><em></em></div><div class="cr-sleep-reflection"></div><div class="cr-sleep-rain r1"></div><div class="cr-sleep-rain r2"></div><div class="cr-sleep-rain r3"></div>
+    </div>
+    <div class="sleep-scene mb-sleep-scene" aria-hidden="true">
+      <div class="mb-sleep-ridge back"></div><div class="mb-sleep-ridge front"></div><div class="mb-sleep-sigil"><i></i><b></b><em></em></div><div class="mb-sleep-wind w1"></div><div class="mb-sleep-wind w2"></div><span class="mb-sleep-ember e1"></span><span class="mb-sleep-ember e2"></span><span class="mb-sleep-ember e3"></span>
+    </div>
+    <div class="sleep-scene sv-sleep-scene" aria-hidden="true">
+      <div class="sv-sleep-horizon"><i></i><b></b><em></em></div><div class="sv-sleep-orbit o1"></div><div class="sv-sleep-orbit o2"></div><div class="sv-sleep-orbit o3"></div><span class="sv-sleep-star s1"></span><span class="sv-sleep-star s2"></span><span class="sv-sleep-star s3"></span>
+    </div>
+    <div class="sleep-scene cv-sleep-scene" aria-hidden="true">
+      <div class="cv-sleep-halo"><i></i><b></b><em></em></div><div class="cv-sleep-ray r1"></div><div class="cv-sleep-ray r2"></div><div class="cv-sleep-ray r3"></div><div class="cv-sleep-arch a1"></div><div class="cv-sleep-arch a2"></div><span class="cv-sleep-star s1"></span><span class="cv-sleep-star s2"></span><span class="cv-sleep-star s3"></span>
+    </div>
+    <button id="exitSleepBtn" class="sleep-exit">EXIT</button>
+    <div class="sleep-content"><p id="sleepCode" class="eyebrow">CHANNEL 01</p><h2 id="sleepTitle">BLACK SUN</h2><div class="sleep-orb"><i></i></div><p id="sleepTimerText">NO TIMER</p><button id="sleepPlayBtn" class="round play">▶</button></div></aside>
 
   <aside id="settingsOverlay" class="settings-overlay" aria-hidden="true">
     <div class="settings-card glass" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">

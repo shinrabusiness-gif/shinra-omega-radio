@@ -1034,3 +1034,138 @@ body[data-world="celestial-veil"] .round.play{background:linear-gradient(180deg,
 @keyframes awakeningRing{0%,100%{transform:scale(.98);opacity:.32}50%{transform:scale(1.055);opacity:.8}}
 @media(max-width:520px){.boot-awaken{bottom:max(25px,env(safe-area-inset-bottom));min-width:190px}}
 @media(prefers-reduced-motion:reduce){.boot-awaken:before{animation:none!important}}
+
+
+/* ===== WORLD SLEEP CHAMBERS 4.0 ===== */
+.sleep-overlay{background:radial-gradient(circle at 50% 12%,rgba(255,255,255,.03),transparent 32%),#030406;overflow:hidden}
+.sleep-overlay:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 28%,rgba(0,0,0,.18));pointer-events:none}
+.sleep-scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.sleep-overlay.open .sleep-content{position:relative;z-index:2}
+.sleep-overlay.open .sleep-scene{opacity:0}
+body[data-world="black-sun"] .sleep-overlay.open .bs-sleep-scene,
+body[data-world="aquatoc"] .sleep-overlay.open .aq-sleep-scene,
+body[data-world="crimson-rain"] .sleep-overlay.open .cr-sleep-scene,
+body[data-world="mountain-blood"] .sleep-overlay.open .mb-sleep-scene,
+body[data-world="starless-void"] .sleep-overlay.open .sv-sleep-scene,
+body[data-world="celestial-veil"] .sleep-overlay.open .cv-sleep-scene{opacity:1}
+.sleep-content{max-width:92vw;padding:24px 14px}
+.sleep-content .eyebrow{position:relative;z-index:2}
+.sleep-content h2{position:relative;z-index:2;letter-spacing:.03em}
+.sleep-content #sleepTimerText{position:relative;z-index:2;color:#c7ccd5;letter-spacing:.18em;font-size:12px}
+.sleep-exit{z-index:3;background:rgba(255,255,255,.04)}
+.sleep-orb{position:relative;z-index:2;overflow:visible}
+.sleep-orb:before,.sleep-orb:after{content:"";position:absolute;inset:-14%;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
+.sleep-orb:after{inset:-30%;opacity:.5}
+/* Black Sun */
+body[data-world="black-sun"] .sleep-overlay{background:radial-gradient(circle at 50% 18%,rgba(255,58,28,.06),transparent 24%),linear-gradient(180deg,#050507,#090606 54%,#020203)}
+.bs-sleep-horizon{position:absolute;left:0;right:0;top:57%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,84,54,.76),transparent);box-shadow:0 0 26px rgba(255,44,28,.4)}
+.bs-sleep-sun{position:absolute;left:50%;top:42%;width:min(42vw,290px);aspect-ratio:1;transform:translate(-50%,-50%)}
+.bs-sleep-sun i,.bs-sleep-sun b,.bs-sleep-sun em{position:absolute;inset:0;border-radius:50%}
+.bs-sleep-sun i{inset:18%;background:#020203;box-shadow:inset 0 0 35px rgba(255,73,47,.12)}
+.bs-sleep-sun b{border:1px solid rgba(255,77,54,.9);box-shadow:0 0 28px rgba(255,44,28,.5),inset 0 0 20px rgba(255,44,28,.18)}
+.bs-sleep-sun em{inset:-15%;background:radial-gradient(circle,rgba(255,44,28,.14),transparent 62%);filter:blur(18px);animation:slowpulse 7s ease-in-out infinite}
+.bs-sleep-ash{position:absolute;width:4px;height:4px;border-radius:50%;background:#ff5d44;box-shadow:0 0 12px rgba(255,63,40,.8);opacity:.48;animation:bsMiniAsh 8s ease-in-out infinite}.bs-sleep-ash.a1{left:23%;top:32%}.bs-sleep-ash.a2{left:68%;top:48%;animation-delay:1.4s}.bs-sleep-ash.a3{left:57%;top:24%;animation-delay:2.7s}
+body[data-world="black-sun"] .sleep-content h2{color:#fff0ec;text-shadow:0 0 24px rgba(255,66,44,.18)}
+body[data-world="black-sun"] .sleep-orb{background:radial-gradient(circle,#2e0202 0 22%,rgba(255,69,40,.9) 26%,rgba(255,69,40,.18) 48%,transparent 69%)}
+body[data-world="black-sun"] .sleep-orb i{background:#120202;box-shadow:0 0 80px rgba(255,44,28,.6)}
+/* Aquatoc */
+body[data-world="aquatoc"] .sleep-overlay{background:radial-gradient(circle at 50% 16%,rgba(93,230,255,.06),transparent 24%),linear-gradient(180deg,#030b12,#041421 54%,#02060b)}
+.aq-sleep-sonar{position:absolute;left:50%;top:43%;width:min(42vw,290px);aspect-ratio:1;transform:translate(-50%,-50%)}
+.aq-sleep-sonar i,.aq-sleep-sonar b,.aq-sleep-sonar em{position:absolute;inset:0;border-radius:50%}
+.aq-sleep-sonar i{inset:34%;background:#86f4ff;box-shadow:0 0 28px rgba(93,230,255,.9)}
+.aq-sleep-sonar b{border:1px solid rgba(93,230,255,.86);box-shadow:0 0 26px rgba(93,230,255,.35);animation:aqMiniPulse 5.8s ease-out infinite}
+.aq-sleep-sonar em{inset:-18%;border:1px solid rgba(23,120,255,.28);box-shadow:0 0 20px rgba(23,120,255,.15);animation:aqMiniPulse 7.2s ease-out infinite .9s}
+.aq-sleep-current{position:absolute;left:-8%;width:116%;height:36px;border-top:1px solid rgba(93,230,255,.12);border-radius:50%;opacity:.4;animation:aqMiniDrift 11s ease-in-out infinite}.aq-sleep-current.c1{top:34%}.aq-sleep-current.c2{top:62%;animation-delay:2.4s;opacity:.25}
+.aq-sleep-bubble{position:absolute;width:7px;height:7px;border-radius:50%;border:1px solid rgba(174,247,255,.78);box-shadow:0 0 12px rgba(93,230,255,.35);opacity:.56;animation:aqMiniBubble 8.5s ease-in-out infinite}.aq-sleep-bubble.b1{left:26%;bottom:15%}.aq-sleep-bubble.b2{left:51%;bottom:22%;animation-delay:2s}.aq-sleep-bubble.b3{left:68%;bottom:13%;animation-delay:3.6s}
+body[data-world="aquatoc"] .sleep-content h2{color:#e8fdff;text-shadow:0 0 24px rgba(93,230,255,.18)}
+body[data-world="aquatoc"] .sleep-orb{background:radial-gradient(circle,#0a2234 0 22%,rgba(93,230,255,.92) 28%,rgba(93,230,255,.18) 48%,transparent 69%)}
+body[data-world="aquatoc"] .sleep-orb i{background:#e8fdff;box-shadow:0 0 80px rgba(93,230,255,.52)}
+/* Crimson Rain */
+body[data-world="crimson-rain"] .sleep-overlay{background:radial-gradient(circle at 50% 16%,rgba(255,51,79,.06),transparent 24%),linear-gradient(180deg,#0b0408,#13060d 54%,#040204)}
+.cr-sleep-gate{position:absolute;left:50%;top:41%;width:min(38vw,240px);height:min(44vw,280px);transform:translate(-50%,-50%)}
+.cr-sleep-gate i,.cr-sleep-gate b,.cr-sleep-gate em{position:absolute;display:block;inset:0;border:1px solid rgba(255,51,79,.8);box-shadow:0 0 24px rgba(255,51,79,.32),inset 0 0 18px rgba(255,51,79,.1)}
+.cr-sleep-gate b{inset:14px;opacity:.78}.cr-sleep-gate em{inset:28px;opacity:.45}
+.cr-sleep-reflection{position:absolute;left:12%;right:12%;bottom:18%;height:26%;background:linear-gradient(180deg,rgba(255,51,79,.18),transparent);filter:blur(18px);opacity:.45}
+.cr-sleep-rain{position:absolute;top:-8%;width:1px;height:70%;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,94,118,.86),rgba(255,255,255,0));opacity:.36;animation:crRain 3.4s linear infinite}.cr-sleep-rain.r1{left:28%}.cr-sleep-rain.r2{left:51%;animation-duration:4.1s}.cr-sleep-rain.r3{left:72%;animation-duration:3.7s}
+@keyframes crRain{from{transform:translateY(-20%)}to{transform:translateY(55%)}}
+body[data-world="crimson-rain"] .sleep-content h2{color:#ffe8ed;text-shadow:0 0 24px rgba(255,51,79,.18)}
+body[data-world="crimson-rain"] .sleep-orb{background:radial-gradient(circle,#2d020b 0 22%,rgba(255,51,79,.94) 28%,rgba(255,51,79,.18) 48%,transparent 69%)}
+body[data-world="crimson-rain"] .sleep-orb i{background:#fff2f5;box-shadow:0 0 80px rgba(255,51,79,.54)}
+/* Mountain Blood */
+body[data-world="mountain-blood"] .sleep-overlay{background:radial-gradient(circle at 50% 16%,rgba(255,91,69,.06),transparent 24%),linear-gradient(180deg,#120805,#160b07 54%,#030202)}
+.mb-sleep-ridge{position:absolute;left:0;right:0;bottom:0;clip-path:polygon(0 100%,18% 66%,32% 79%,49% 48%,66% 72%,79% 54%,100% 100%)}
+.mb-sleep-ridge.back{height:36%;background:linear-gradient(180deg,rgba(89,56,44,.36),rgba(10,6,5,.95))}
+.mb-sleep-ridge.front{height:28%;background:linear-gradient(180deg,rgba(112,68,49,.4),rgba(8,5,5,.98));clip-path:polygon(0 100%,10% 74%,28% 86%,40% 64%,59% 88%,73% 62%,100% 100%)}
+.mb-sleep-sigil{position:absolute;left:50%;top:40%;width:min(28vw,170px);height:min(28vw,170px);transform:translate(-50%,-50%)}
+.mb-sleep-sigil i,.mb-sleep-sigil b,.mb-sleep-sigil em{position:absolute;display:block}.mb-sleep-sigil i{inset:10px;border:1px solid rgba(215,173,98,.78);transform:rotate(45deg);box-shadow:0 0 18px rgba(215,173,98,.2),inset 0 0 10px rgba(255,91,69,.08)}.mb-sleep-sigil b{left:50%;top:10px;bottom:10px;width:1px;background:linear-gradient(to bottom,transparent,#d7ad62,#ff5b45,transparent);box-shadow:0 0 9px rgba(255,91,69,.72)}.mb-sleep-sigil em{top:50%;left:10px;right:10px;height:1px;background:linear-gradient(90deg,transparent,#d7ad62,transparent);box-shadow:0 0 9px rgba(215,173,98,.62)}
+.mb-sleep-wind{position:absolute;left:-8%;width:116%;height:26px;border-top:1px solid rgba(215,173,98,.14);border-radius:50%;opacity:.3;animation:mbMiniWind 10s ease-in-out infinite}.mb-sleep-wind.w1{top:29%}.mb-sleep-wind.w2{top:56%;animation-direction:reverse;animation-duration:14s}
+.mb-sleep-ember{position:absolute;width:5px;height:5px;border-radius:50%;background:#ff7a5e;box-shadow:0 0 13px rgba(255,91,69,.88);opacity:.58;animation:mbMiniEmber 5.8s ease-in-out infinite}.mb-sleep-ember.e1{left:24%;bottom:18%}.mb-sleep-ember.e2{left:46%;bottom:14%;animation-delay:1.3s}.mb-sleep-ember.e3{left:63%;bottom:20%;animation-delay:2.6s}
+body[data-world="mountain-blood"] .sleep-content h2{color:#fff0dc;text-shadow:0 0 24px rgba(255,91,69,.18)}
+body[data-world="mountain-blood"] .sleep-orb{background:radial-gradient(circle,#250d07 0 22%,rgba(255,91,69,.92) 28%,rgba(215,173,98,.18) 48%,transparent 69%)}
+body[data-world="mountain-blood"] .sleep-orb i{background:#fff6df;box-shadow:0 0 80px rgba(255,91,69,.52)}
+/* Starless Void */
+body[data-world="starless-void"] .sleep-overlay{background:radial-gradient(circle at 50% 16%,rgba(143,116,255,.06),transparent 24%),linear-gradient(180deg,#06050d,#090711 54%,#010103)}
+.sv-sleep-horizon{position:absolute;left:50%;top:42%;width:min(42vw,280px);aspect-ratio:1;transform:translate(-50%,-50%)}
+.sv-sleep-horizon i,.sv-sleep-horizon b,.sv-sleep-horizon em{position:absolute;inset:0;border-radius:50%;display:block}.sv-sleep-horizon i{inset:22%;background:radial-gradient(circle,#0a0812 0 34%,#000 60%,transparent 61%)}.sv-sleep-horizon b{border:1px solid rgba(159,132,255,.65);box-shadow:0 0 18px rgba(143,116,255,.25)}.sv-sleep-horizon em{inset:-12%;background:radial-gradient(circle,rgba(137,105,255,.14),transparent 64%);filter:blur(14px)}
+.sv-sleep-orbit{position:absolute;left:50%;top:42%;width:min(50vw,360px);height:min(18vw,112px);border:1px solid rgba(159,132,255,.24);border-radius:50%;transform:translate(-50%,-50%) rotate(18deg)}.sv-sleep-orbit.o2{width:min(46vw,320px);transform:translate(-50%,-50%) rotate(-14deg)}.sv-sleep-orbit.o3{width:min(40vw,280px);transform:translate(-50%,-50%) rotate(74deg);opacity:.55}
+.sv-sleep-star{position:absolute;width:4px;height:4px;border-radius:50%;background:#efeaff;box-shadow:0 0 10px rgba(232,228,255,.9);opacity:.8;animation:cvStar 6.4s ease-in-out infinite}.sv-sleep-star.s1{left:27%;top:30%}.sv-sleep-star.s2{left:67%;top:24%;animation-delay:1.8s}.sv-sleep-star.s3{left:59%;top:60%;animation-delay:3s}
+body[data-world="starless-void"] .sleep-content h2{color:#f0edff;text-shadow:0 0 24px rgba(143,116,255,.18)}
+body[data-world="starless-void"] .sleep-orb{background:radial-gradient(circle,#070611 0 20%,rgba(101,86,170,.82) 24%,rgba(137,105,255,.18) 42%,transparent 68%)}
+body[data-world="starless-void"] .sleep-orb i{background:#eeeaff;box-shadow:0 0 80px rgba(137,105,255,.42)}
+/* Celestial Veil */
+body[data-world="celestial-veil"] .sleep-overlay{background:radial-gradient(circle at 50% 14%,rgba(255,255,255,.28),transparent 24%),linear-gradient(180deg,#f9f4e5,#efe2bc 54%,#d2bc84)}
+.cv-sleep-halo{position:absolute;left:50%;top:39%;width:min(42vw,290px);aspect-ratio:1;transform:translate(-50%,-50%)}
+.cv-sleep-halo i,.cv-sleep-halo b,.cv-sleep-halo em{position:absolute;inset:0;border-radius:50%;display:block}.cv-sleep-halo i{inset:31%;background:radial-gradient(circle,#fff,#f7ebc3 60%,transparent);box-shadow:0 0 28px rgba(255,241,196,.88)}.cv-sleep-halo b{border:1px solid rgba(244,223,160,.95);box-shadow:0 0 24px rgba(244,223,160,.46),inset 0 0 14px rgba(255,255,255,.35)}.cv-sleep-halo em{inset:-16%;border:1px solid rgba(255,250,238,.82);opacity:.78}
+.cv-sleep-ray{position:absolute;left:50%;top:39%;width:2px;height:230px;transform-origin:center 130px;background:linear-gradient(to top,transparent,rgba(255,237,177,.1),rgba(255,249,232,.95),transparent);opacity:.8}.cv-sleep-ray.r1{transform:translate(-50%,-50%) rotate(0deg)}.cv-sleep-ray.r2{transform:translate(-50%,-50%) rotate(60deg)}.cv-sleep-ray.r3{transform:translate(-50%,-50%) rotate(-60deg)}
+.cv-sleep-arch{position:absolute;left:50%;bottom:0;transform:translateX(-50%);border:1px solid rgba(255,246,216,.52);border-bottom:none;border-radius:50% 50% 0 0/100% 100% 0 0;opacity:.45}.cv-sleep-arch.a1{width:min(52vw,380px);height:min(16vw,110px)}.cv-sleep-arch.a2{width:min(72vw,540px);height:min(24vw,170px);opacity:.24}
+.cv-sleep-star{position:absolute;width:4px;height:4px;border-radius:50%;background:#fffef9;box-shadow:0 0 10px rgba(255,251,224,.95);opacity:.82;animation:cvStar 5.5s ease-in-out infinite}.cv-sleep-star.s1{left:24%;top:24%}.cv-sleep-star.s2{left:67%;top:20%;animation-delay:1.5s}.cv-sleep-star.s3{left:59%;top:57%;animation-delay:3s}
+body[data-world="celestial-veil"] .sleep-exit{border-color:rgba(181,149,84,.34);color:#5b4620;background:rgba(255,255,255,.26)}
+body[data-world="celestial-veil"] .sleep-content .eyebrow,body[data-world="celestial-veil"] .sleep-content #sleepTimerText{color:#624f29}
+body[data-world="celestial-veil"] .sleep-content h2{color:#2b2014;text-shadow:0 0 24px rgba(255,255,255,.44)}
+body[data-world="celestial-veil"] .sleep-orb{background:radial-gradient(circle,#fff7de 0 18%,rgba(245,228,173,.92) 24%,rgba(245,228,173,.25) 42%,transparent 68%)}
+body[data-world="celestial-veil"] .sleep-orb i{background:#fffef7;box-shadow:0 0 80px rgba(242,221,177,.62)}
+@media(max-width:520px){.sleep-content h2{font-size:52px}.sleep-orb{width:180px}.sleep-exit{right:12px;top:12px}}
+
+/* ===== CLEAN INTERACTION FOCUS 4.1 ===== */
+button,
+[role="button"],
+.world-card,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+[role="button"]:focus,
+.world-card:focus {
+  outline: none;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible,
+.world-card:focus-visible {
+  outline: 1px solid rgba(255,255,255,.24);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.035);
+}
+
+button:active,
+[role="button"]:active,
+.world-card:active {
+  transform: scale(.985);
+  filter: brightness(1.06);
+}
+
+@media (hover:hover) {
+  button:hover,
+  [role="button"]:hover {
+    filter: brightness(1.035);
+  }
+}
+
+body[data-world="celestial-veil"] button:focus-visible,
+body[data-world="celestial-veil"] [role="button"]:focus-visible,
+body[data-world="celestial-veil"] .world-card:focus-visible {
+  outline-color: rgba(86,66,31,.26);
+  box-shadow: 0 0 0 1px rgba(86,66,31,.035);
+}

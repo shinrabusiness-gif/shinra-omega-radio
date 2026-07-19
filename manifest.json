@@ -1,0 +1,53 @@
+{
+  "name": "Shinra Omega Radio — Master",
+  "short_name": "Shinra Ω",
+  "description": "Five living transmissions from forgotten worlds.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07080b",
+  "theme_color": "#07080b",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Black Sun",
+      "short_name": "Black Sun",
+      "url": "./?world=black-sun"
+    },
+    {
+      "name": "Aquatoc",
+      "short_name": "Aquatoc",
+      "url": "./?world=aquatoc"
+    },
+    {
+      "name": "Crimson Rain",
+      "short_name": "Crimson Rain",
+      "url": "./?world=crimson-rain"
+    },
+    {
+      "name": "Mountain Blood",
+      "short_name": "Mountain Blood",
+      "url": "./?world=mountain-blood"
+    },
+    {
+      "name": "Starless Void",
+      "short_name": "Starless Void",
+      "url": "./?world=starless-void"
+    }
+  ]
+}

@@ -327,9 +327,27 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 window.addEventListener('keydown',e=>{if(e.code==='Space'&&e.target.tagName!=='INPUT'){e.preventDefault();toggle()}if(e.code==='ArrowRight')nextWorld(1);if(e.code==='ArrowLeft')nextWorld(-1);if(e.key.toLowerCase()==='f')toggleFavorite();if(e.key.toLowerCase()==='s'){shuffleMode=!shuffleMode;localStorage.srShuffle=shuffleMode?'1':'0';updateMasterControls()}});
 applySettings();renderControls();updateWorld();updateMasterControls();if(settings.defaultTimer)setTimer(settings.defaultTimer);
 const boot=$('#boot');
+let bootSoundCtx=null,bootStarted=false;
+function playOmegaAwakening(){
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  bootSoundCtx=new AC();const ctx=bootSoundCtx,t=ctx.currentTime;
+  const out=ctx.createGain(),comp=ctx.createDynamicsCompressor(),verb=ctx.createConvolver(),dry=ctx.createGain(),wet=ctx.createGain();
+  out.gain.setValueAtTime(.0001,t);out.gain.exponentialRampToValueAtTime(.62,t+.22);out.gain.exponentialRampToValueAtTime(.0001,t+4.15);
+  const len=Math.floor(ctx.sampleRate*4.6),imp=ctx.createBuffer(2,len,ctx.sampleRate);for(let c=0;c<2;c++){const d=imp.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,4.2)}verb.buffer=imp;dry.gain.value=.68;wet.gain.value=.5;
+  out.connect(dry).connect(comp);out.connect(verb).connect(wet).connect(comp);comp.connect(ctx.destination);
+  // Deep awakening tone.
+  [55,82.41].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=i?'triangle':'sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.012,t+3.5);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(i?.075:.13,t+.55);g.gain.exponentialRampToValueAtTime(.0001,t+3.8);o.connect(g).connect(out);o.start(t);o.stop(t+4)});
+  // Soft choir triad enters as the mark forms.
+  [130.81,196,261.63,392].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),p=ctx.createStereoPanner();o.type=i<2?'sine':'triangle';o.frequency.value=f;o.detune.value=[-5,3,-3,5][i];p.pan.value=[-.5,.28,-.2,.52][i];g.gain.setValueAtTime(.0001,t+.55);g.gain.exponentialRampToValueAtTime([.055,.043,.028,.016][i],t+1.45);g.gain.exponentialRampToValueAtTime(.0001,t+4.05);o.connect(g).connect(p).connect(out);o.start(t+.48);o.stop(t+4.2)});
+  // Halo chime aligned with the red core / wordmark reveal.
+  [523.25,1046.5,1567.98].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),p=ctx.createStereoPanner();o.type='sine';o.frequency.setValueAtTime(f,t+1.78);o.frequency.exponentialRampToValueAtTime(f*.994,t+3.85);p.pan.value=[-.16,.2,.45][i];g.gain.setValueAtTime(.0001,t+1.76);g.gain.exponentialRampToValueAtTime([.08,.035,.016][i],t+1.82);g.gain.exponentialRampToValueAtTime(.0001,t+4.05);o.connect(g).connect(p).connect(verb);o.start(t+1.76);o.stop(t+4.15)});
+  // A tiny light shimmer at the final reveal.
+  const shimmer=ctx.createOscillator(),sg=ctx.createGain();shimmer.type='triangle';shimmer.frequency.setValueAtTime(1760,t+2.55);shimmer.frequency.exponentialRampToValueAtTime(920,t+3.3);sg.gain.setValueAtTime(.0001,t+2.54);sg.gain.exponentialRampToValueAtTime(.025,t+2.6);sg.gain.exponentialRampToValueAtTime(.0001,t+3.45);shimmer.connect(sg).connect(verb);shimmer.start(t+2.54);shimmer.stop(t+3.5);
+  setTimeout(()=>{try{ctx.close()}catch{}},4700);
+}
 const closeBoot=()=>{if(!boot||boot.classList.contains('hide'))return;boot.classList.add('done');localStorage.srIntroSeen='1';setTimeout(()=>boot.classList.add('hide'),760)};
+function awakenBoot(){if(bootStarted||!boot)return;bootStarted=true;boot.classList.remove('awaiting');boot.classList.add('awakened');playOmegaAwakening();$('#skipBoot')?.setAttribute('disabled','');setTimeout(closeBoot,4300)}
 if(!settings.intro&&localStorage.srIntroSeen==='1'){boot?.classList.add('hide')}else{
-  const bootTimer=setTimeout(closeBoot,4200);
-  $('#skipBoot')?.addEventListener('click',()=>{clearTimeout(bootTimer);closeBoot()});
-  boot?.addEventListener('click',e=>{if(e.target===boot){clearTimeout(bootTimer);closeBoot()}});
+  $('#skipBoot')?.addEventListener('click',awakenBoot);
+  boot?.addEventListener('click',e=>{if(e.target===boot||e.target.closest?.('.boot-stage'))awakenBoot()});
 }

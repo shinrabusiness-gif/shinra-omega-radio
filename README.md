@@ -1,3 +1,1 @@
-# Shinra Omega Radio 3.7 — World Gates
-
-Cinematic world transitions for all five transmissions. Upload every file directly to the GitHub repository root.
+Shinra Omega Radio 3.9 — Omega Awakening. Handy-Upload-Version: alle Dateien direkt in den GitHub-Hauptordner hochladen und vorhandene Dateien ersetzen.

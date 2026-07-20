@@ -1,7 +1,7 @@
 {
   "name": "Shinra Omega Radio — Master",
   "short_name": "Shinra Ω",
-  "description": "Seven living transmissions with a complete 21-pair World Fusion matrix.",
+  "description": "Seven living transmissions with a 21-texture offline sample bank and Sunlit Koto.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -5,7 +5,7 @@ const WORLDS=[
 {id:'mountain-blood',code:'CHANNEL 04 / DARDANIA',title:'MOUNTAIN BLOOD',subtitle:'Ancient strings carried through stone, wind and memory.',genre:'BALKAN RITUAL',bpm:72,color:'#ff5b45',color2:'#d7ad62',track:'STONE OATH',tracks:['STONE OATH','WIND OVER DARDANIA','EMBER CIRCLE','MOUNTAIN MEMORY'],osc:[73.4,110,146.8],layers:['MOUNTAIN WIND','STRING ECHO','FIRE CIRCLE']},
 {id:'starless-void',code:'CHANNEL 05 / DEEP SPACE',title:'STARLESS VOID',subtitle:'A transmission drifting beyond the last mapped constellation.',genre:'COSMIC AMBIENT',bpm:40,color:'#9f87ff',color2:'#48d7ff',track:'EVENT HORIZON',tracks:['EVENT HORIZON','PILOT MEMORY','ION VEIL','BEYOND THE LAST STAR'],osc:[36.7,55,92.5],layers:['ION CLOUD','DARK MATTER','PILOT MEMORY']}
 ,{id:'celestial-veil',code:'CHANNEL 06 / EMPYREAN',title:'CELESTIAL VEIL',subtitle:'Sacred transmissions beyond the veil of light.',genre:'HEAVENLY AMBIENT',bpm:52,color:'#f5e4ad',color2:'#fff8ef',track:'VEIL OF MERCY',tracks:['VEIL OF MERCY','HALO PROCESSION','IVORY SKY','LUMEN CHOIR'],osc:[130.81,261.63,392],layers:['CHOIR VEIL','HALO BELLS','STAR SHIMMER']},
-{id:'sunroot-vale',code:'CHANNEL 07 / SUNROOT',title:'SUNROOT VALE',subtitle:"Ancient reeds and rooted sunlight along the warrior's path.",genre:'ANCIENT FOREST',bpm:58,color:'#a9d36a',color2:'#f1d87a',track:'PATH OF CEDAR',tracks:['PATH OF CEDAR','SUN THROUGH LEAVES','ANCIENT REED','ROOT OF RESOLVE','UNBROKEN CANOPY'],osc:[98,146.83,220],layers:['FOREST BREATH','ANCIENT REED','ROOT RESONANCE']}
+{id:'sunroot-vale',code:'CHANNEL 07 / SUNROOT',title:'SUNROOT VALE',subtitle:"Ancient reeds and rooted sunlight along the warrior's path.",genre:'ANCIENT FOREST',bpm:58,color:'#a9d36a',color2:'#f1d87a',track:'PATH OF CEDAR',tracks:['PATH OF CEDAR','SUN THROUGH LEAVES','ANCIENT REED','ROOT OF RESOLVE','UNBROKEN CANOPY'],osc:[98,146.83,220],layers:['FOREST BREATH','ANCIENT REED','ROOT RESONANCE','SUNLIT KOTO']}
 ];
 const LORE={
   'black-sun':{gate:'The horizon keeps what the fire forgot.',fragments:[
@@ -92,7 +92,7 @@ function startScanner(){if(scannerActive)return;scannerWorldIndex=current;if(!pl
 const OPERATOR_MEMORY_DEFAULT={callsign:'SHINRA',totalMs:0,longestMs:0,lastSessionMs:0,sessions:0,worldMs:{},visits:{},firstContact:{},lastContact:0};
 function loadOperatorMemory(){try{const saved=JSON.parse(localStorage.srOperatorMemory||'{}');return {...OPERATOR_MEMORY_DEFAULT,...saved,worldMs:{...saved.worldMs},visits:{...saved.visits},firstContact:{...saved.firstContact}}}catch{return {...OPERATOR_MEMORY_DEFAULT,worldMs:{},visits:{},firstContact:{}}}}
 let operatorMemory=loadOperatorMemory(),operatorSessionStart=0,operatorLastTick=0,operatorMemoryTimer=null,operatorSaveCounter=0;
-const state={eq:JSON.parse(localStorage.srEq||'{"bass":0,"mid":0,"treble":0}'),layers:JSON.parse(localStorage.srLayers||'[0.45,0.28,0.22]'),volume:Number(localStorage.srVol||.72)};
+const state={eq:JSON.parse(localStorage.srEq||'{"bass":0,"mid":0,"treble":0}'),layers:JSON.parse(localStorage.srLayers||'[0.45,0.28,0.22,0.30]'),volume:Number(localStorage.srVol||.72)};
 const APP_CACHE='shinra-omega-share-signal-5.8';
 let performanceProfile='balanced',performanceReason='Initial device scan',performanceAutoStep=0,batteryInfo=null,currentFps=60,visualizerRunning=false,visualizerFrame=0,fpsFrames=0,fpsWindowStart=performance.now(),diagnosticsTimer=null,lastDiagnosticsReport='';
 const TIME_PHASES={dawn:{label:'DAWN',audio:[.2,.08,-.12]},day:{label:'DAYLIGHT',audio:[0,0,.16]},dusk:{label:'DUSK',audio:[.34,.04,-.34]},night:{label:'NIGHT',audio:[.48,-.1,-.58]},neutral:{label:'MANUAL',audio:[0,0,0]}};const timeOverride=new URLSearchParams(location.search).get('time');let currentTimePhase='neutral',timeCycleTimer=null,lastTimePhase='';
@@ -164,8 +164,8 @@ function updateDiagnosticsLive(){
   if($('#diagNodes'))$('#diagNodes').textContent=String(activeAudioNodeCount());
   if($('#diagAudio'))$('#diagAudio').textContent=audioCtx?audioCtx.state.toUpperCase():'NOT STARTED';
   if($('#diagAudioDetail'))$('#diagAudioDetail').textContent=audioCtx?`${audioCtx.sampleRate} Hz${audioCtx.baseLatency?` · ${Math.round(audioCtx.baseLatency*1000)} ms base latency`:''}`:'Web Audio available · starts after user gesture';
-  if($('#diagSamples'))$('#diagSamples').textContent=`${Object.keys(sampleBuffers).length} / 7`;
-  if($('#diagSampleDetail'))$('#diagSampleDetail').textContent=settings.hybrid===false?'Hybrid layer disabled':Object.keys(sampleBuffers).length===7?'All textures decoded':'Textures load when audio begins';
+  if($('#diagSamples'))$('#diagSamples').textContent=`${Object.keys(sampleBuffers).length} / ${HYBRID_SAMPLE_TOTAL}`;
+  if($('#diagSampleDetail'))$('#diagSampleDetail').textContent=settings.hybrid===false?'Hybrid layer disabled':Object.keys(sampleBuffers).length===HYBRID_SAMPLE_TOTAL?'All textures decoded':'Textures load when audio begins';
   if($('#diagMotion'))$('#diagMotion').textContent=settings.reduced?'QUIET':'FULL';
   if($('#diagMotionDetail'))$('#diagMotionDetail').textContent=settings.reduced?'Reduced motion set inside app':'World animation system active';applyDynamicTime(false);
   if($('#diagBattery')&&batteryInfo){$('#diagBattery').textContent=`${Math.round(batteryInfo.level*100)}%`;$('#diagBatteryDetail').textContent=batteryInfo.charging?'Charging':'On battery power'}
@@ -184,7 +184,7 @@ async function collectDiagnostics(){
   $('#diagWorker').textContent=worker;$('#diagWorkerDetail').textContent=workerDetail;
   $('#diagUpdate').textContent=waitingWorker?'READY':'CURRENT';$('#diagUpdateDetail').textContent=waitingWorker?'New core waiting for installation':'Omega Core 5.8 active';applyDynamicTime(false);
   lastDiagnosticsReport=[
-    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 5.9',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/7`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`GENERATED: ${new Date().toISOString()}`
+    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.5',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`GENERATED: ${new Date().toISOString()}`
   ].join('\n');
 }
 function openDiagnostics(){document.body.classList.add('diagnostics-open');$('#diagnosticsOverlay').classList.add('open');$('#diagnosticsOverlay').setAttribute('aria-hidden','false');collectDiagnostics();clearInterval(diagnosticsTimer);diagnosticsTimer=setInterval(updateDiagnosticsLive,1000)}
@@ -426,7 +426,7 @@ function closeListeningMode(){const el=$('#listeningModeOverlay');el.classList.r
 function updateWorld(){const w=WORLDS[current];document.body.dataset.world=w.id;document.documentElement.style.setProperty('--accent',w.color);document.documentElement.style.setProperty('--accent2',w.color2);document.documentElement.style.setProperty('--glow',hexAlpha(w.color,.26));$('#worldCode').textContent=w.code;$('#worldTitle').textContent=w.title;$('#worldSubtitle').textContent=w.subtitle;$('#genreTag').textContent=w.genre;$('#bpmTag').textContent=w.bpm+' BPM';$('#nowTitle').textContent=w.title+' — '+(w.tracks?.[trackIndex]||w.track);updateMasterControls();$('#sleepCode').textContent=w.code;$('#sleepTitle').textContent=w.title;renderWorlds();renderLayers();updateMedia();syncAmbientHud();applyDynamicTime(false);updateWeatherUI(true);if(!playing){evolutionPhase=0;document.body.dataset.evolution='0';updateEvolutionReadout(0)}if(document.body.classList.contains('scanner-open')&&!scannerActive)updateScannerWorld(current);if(document.body.classList.contains('share-open'))renderShareSignal();updateFusionUI()}
 function hexAlpha(hex,a){const h=hex.replace('#','');return `rgba(${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)},${a})`}
 
-function getLayerScale(worldIndex,i){const scales=[[.17,.2,.12],[.15,.14,.11],[.12,.16,.11],[.14,.12,.13],[.11,.055,.035],[.12,.09,.065],[.12,.1,.08]];return (scales[worldIndex]||[.11,.055,.035])[i]||.05}
+function getLayerScale(worldIndex,i){const scales=[[.17,.2,.12],[.15,.14,.11],[.12,.16,.11],[.14,.12,.13],[.11,.055,.035],[.12,.09,.065],[.12,.1,.08,.075]];return (scales[worldIndex]||[.11,.055,.035])[i]||.05}
 function evolutionMultiplier(i){if(settings.evolution===false)return 1;const matrix=[[1,1,1],[1.05,1.04,1.08],[1.1,1.12,1.16],[1.16,1.18,1.25]];return (matrix[evolutionPhase]||matrix[0])[i]||1}
 function targetLayerGain(i){return (state.layers[i]??.3)*getLayerScale(current,i)*evolutionMultiplier(i)*(listeningModeConfig().layers[i]??1)}
 function evolutionDefinition(){return EVOLUTION[WORLDS[current].id]||{states:['DORMANT','AWAKENING','ASCENDANT','MYTHIC'],messages:['The signal changes.','The world deepens.','The final state is open.']}}
@@ -442,55 +442,40 @@ function updateEvolution(){if(!playing||settings.evolution===false){updateEvolut
 function startEvolutionCycle(){clearInterval(evolutionTimer);evolutionStartedAt=Date.now();evolutionVoiceGains=[];evolutionPhase=-1;setEvolutionPhase(0,false);updateEvolution();evolutionTimer=setInterval(updateEvolution,1000)}
 function stopEvolutionCycle(){clearInterval(evolutionTimer);evolutionTimer=null;evolutionStartedAt=0;evolutionVoiceGains.forEach(g=>{try{g.gain.setTargetAtTime(.0001,audioCtx.currentTime,.25)}catch{}});evolutionVoiceGains=[];evolutionPhase=0;document.body.dataset.evolution='0';updateEvolutionReadout(0)}
 
-const HYBRID_SAMPLE_FILES={forest:'sample-forest.wav',rain:'sample-rain.wav',ocean:'sample-ocean.wav',radio:'sample-radio.wav',wood:'sample-wood.wav',bell:'sample-bell.wav',bamboo:'sample-bamboo.wav'};
+const HYBRID_SAMPLE_FILES={
+  forest:'sample-forest.wav',rain:'sample-rain.wav',ocean:'sample-ocean.wav',radio:'sample-radio.wav',wood:'sample-wood.wav',bell:'sample-bell.wav',bamboo:'sample-bamboo.wav',
+  ashWind:'sample-ash-wind.wav',metalResonance:'sample-metal-resonance.wav',bubbleField:'sample-bubble-field.wav',pressureCrack:'sample-pressure-crack.wav',
+  neonHum:'sample-neon-hum.wav',cityDistant:'sample-city-distant.wav',mountainString:'sample-mountain-string.wav',emberFire:'sample-ember-fire.wav',
+  cosmicStatic:'sample-cosmic-static.wav',ionPulse:'sample-ion-pulse.wav',choirAir:'sample-choir-air.wav',glassChime:'sample-glass-chime.wav',
+  cedarLeaves:'sample-cedar-leaves.wav',koto:'sample-koto.wav'
+};
+const HYBRID_SAMPLE_TOTAL=Object.keys(HYBRID_SAMPLE_FILES).length;
 function updateHybridStatus(text){const el=$('#audioEngineLabel');if(el)el.textContent=text}
 async function loadSampleBank(){
   if(sampleLoadPromise)return sampleLoadPromise;
   updateHybridStatus('LOADING SAMPLE BANK');
   sampleLoadPromise=Promise.all(Object.entries(HYBRID_SAMPLE_FILES).map(async([key,url])=>{
     try{const response=await fetch(url);if(!response.ok)throw new Error(`${response.status}`);const data=await response.arrayBuffer();sampleBuffers[key]=await audioCtx.decodeAudioData(data)}catch(error){console.warn('Hybrid sample unavailable',key,error)}
-  })).then(()=>{const count=Object.keys(sampleBuffers).length;updateHybridStatus(count?`HYBRID AUDIO · ${count}/7`:'WEB AUDIO FALLBACK');return sampleBuffers});
+  })).then(()=>{const count=Object.keys(sampleBuffers).length;updateHybridStatus(count?`HYBRID AUDIO · ${count}/${HYBRID_SAMPLE_TOTAL}`:'WEB AUDIO FALLBACK');return sampleBuffers});
   return sampleLoadPromise;
 }
-function stopHybridLayer(){
-  hybridGeneration++;
-  hybridTimers.forEach(clearTimeout);hybridTimers=[];
-  hybridSources.forEach(source=>{try{source.stop()}catch{}try{source.disconnect()}catch{}});hybridSources=[];
-  hybridNodes.forEach(node=>{try{node.disconnect()}catch{}});hybridNodes=[];
-}
-function sampleDestination(options={}){
-  const gain=audioCtx.createGain(),pan=audioCtx.createStereoPanner(),filter=audioCtx.createBiquadFilter();
-  gain.gain.value=options.gain??.02;pan.pan.value=options.pan??0;filter.type=options.filterType||'lowpass';filter.frequency.value=options.frequency||12000;filter.Q.value=options.q||.2;
-  filter.connect(gain).connect(pan).connect(filters[0]);hybridNodes.push(filter,gain,pan);return {filter,gain,pan};
-}
-function playHybridSample(name,options={}){
-  const buffer=sampleBuffers[name];if(!buffer||!audioCtx||!playing)return null;
-  const source=audioCtx.createBufferSource(),route=sampleDestination(options);source.buffer=buffer;source.loop=!!options.loop;source.playbackRate.value=options.rate||1;source.detune.value=options.detune||0;source.connect(route.filter);
-  const offset=source.loop?Math.random()*Math.max(.01,buffer.duration-.05):0;source.start(audioCtx.currentTime+(options.delay||0),offset);hybridSources.push(source);
-  if(!source.loop)source.onended=()=>{hybridSources=hybridSources.filter(s=>s!==source);try{source.disconnect()}catch{}try{route.filter.disconnect();route.gain.disconnect();route.pan.disconnect()}catch{}};
-  return source;
-}
-function scheduleHybridOneShot(name,minSeconds,maxSeconds,options={}){
-  const generation=hybridGeneration;
-  const fire=()=>{
-    if(generation!==hybridGeneration||!playing||settings.hybrid===false)return;
-    playHybridSample(name,{...options,pan:(options.randomPan?((Math.random()-.5)*(options.randomPan*2)):(options.pan||0)),rate:(options.rate||1)*(options.rateVariation?1+(Math.random()-.5)*options.rateVariation:1)});
-    const delay=(minSeconds+Math.random()*(maxSeconds-minSeconds))*1000;hybridTimers.push(setTimeout(fire,delay));
-  };
-  hybridTimers.push(setTimeout(fire,(options.firstDelay??minSeconds*.5)*1000));
-}
+function stopHybridLayer(){hybridGeneration++;hybridTimers.forEach(clearTimeout);hybridTimers=[];hybridSources.forEach(source=>{try{source.stop()}catch{}try{source.disconnect()}catch{}});hybridSources=[];hybridNodes.forEach(node=>{try{node.disconnect()}catch{}});hybridNodes=[]}
+function sampleDestination(options={}){const gain=audioCtx.createGain(),pan=audioCtx.createStereoPanner(),filter=audioCtx.createBiquadFilter();gain.gain.value=options.gain??.02;pan.pan.value=options.pan??0;filter.type=options.filterType||'lowpass';filter.frequency.value=options.frequency||12000;filter.Q.value=options.q||.2;const destination=Number.isInteger(options.layerIndex)&&layerGains[options.layerIndex]?layerGains[options.layerIndex]:filters[0];filter.connect(gain).connect(pan).connect(destination);hybridNodes.push(filter,gain,pan);return{filter,gain,pan}}
+function playHybridSample(name,options={}){const buffer=sampleBuffers[name];if(!buffer||!audioCtx||!playing)return null;const source=audioCtx.createBufferSource(),route=sampleDestination(options);source.buffer=buffer;source.loop=!!options.loop;source.playbackRate.value=options.rate||1;source.detune.value=options.detune||0;source.connect(route.filter);const offset=source.loop?Math.random()*Math.max(.01,buffer.duration-.05):0;source.start(audioCtx.currentTime+(options.delay||0),offset);hybridSources.push(source);if(!source.loop)source.onended=()=>{hybridSources=hybridSources.filter(s=>s!==source);try{source.disconnect()}catch{}try{route.filter.disconnect();route.gain.disconnect();route.pan.disconnect()}catch{}};return source}
+function scheduleHybridOneShot(name,minSeconds,maxSeconds,options={}){const generation=hybridGeneration;const fire=()=>{if(generation!==hybridGeneration||!playing||settings.hybrid===false)return;playHybridSample(name,{...options,pan:(options.randomPan?((Math.random()-.5)*(options.randomPan*2)):(options.pan||0)),rate:(options.rate||1)*(options.rateVariation?1+(Math.random()-.5)*options.rateVariation:1)});hybridTimers.push(setTimeout(fire,(minSeconds+Math.random()*(maxSeconds-minSeconds))*1000))};hybridTimers.push(setTimeout(fire,(options.firstDelay??minSeconds*.5)*1000))}
+function scheduleSunlitKoto(evolutionBoost=1){const generation=hybridGeneration,scale=[.75,.842,.946,1,1.125,1.263,1.5];const playPhrase=()=>{if(generation!==hybridGeneration||!playing||settings.hybrid===false||current!==6)return;const level=Math.max(.05,state.layers[3]??.3),first=scale[Math.floor(Math.random()*scale.length)];playHybridSample('koto',{gain:.52*evolutionBoost,filterType:'lowpass',frequency:4200,rate:first,pan:(Math.random()-.5)*.5,layerIndex:3});if(Math.random()<.52){const second=scale[Math.floor(Math.random()*scale.length)];playHybridSample('koto',{gain:.34*evolutionBoost,filterType:'lowpass',frequency:3900,rate:second,pan:(Math.random()-.5)*.55,delay:.42+Math.random()*.38,layerIndex:3})}hybridTimers.push(setTimeout(playPhrase,(6.5+Math.random()*8.5)*(1.15-.25*level)*1000))};hybridTimers.push(setTimeout(playPhrase,2200))}
 async function startHybridLayer(worldIndex=current){
   stopHybridLayer();if(settings.hybrid===false){updateHybridStatus('WEB AUDIO');return}
-  const generation=hybridGeneration;await loadSampleBank();if(generation!==hybridGeneration||!playing||worldIndex!==current)return;
-  const evolutionBoost=1+Math.max(0,evolutionPhase)*.08;
-  if(worldIndex===0){playHybridSample('radio',{loop:true,gain:.009*evolutionBoost,filterType:'bandpass',frequency:1050,q:.7,rate:.72,pan:.16});playHybridSample('forest',{loop:true,gain:.0045,filterType:'lowpass',frequency:430,rate:.58,pan:-.22})}
-  else if(worldIndex===1){playHybridSample('ocean',{loop:true,gain:.026*evolutionBoost,filterType:'lowpass',frequency:1750,rate:.92});playHybridSample('radio',{loop:true,gain:.0065,filterType:'bandpass',frequency:580,q:1.1,rate:.54,pan:.28})}
-  else if(worldIndex===2){playHybridSample('rain',{loop:true,gain:.025*evolutionBoost,filterType:'highpass',frequency:520,rate:1.02});playHybridSample('radio',{loop:true,gain:.004,filterType:'bandpass',frequency:1680,q:.55,rate:.84,pan:-.24})}
-  else if(worldIndex===3){playHybridSample('forest',{loop:true,gain:.011,filterType:'lowpass',frequency:1350,rate:.72,pan:-.12});scheduleHybridOneShot('wood',6.5,11.5,{gain:.036*evolutionBoost,filterType:'lowpass',frequency:1850,randomPan:.55,rateVariation:.16,firstDelay:2.4})}
-  else if(worldIndex===4){playHybridSample('radio',{loop:true,gain:.0065*evolutionBoost,filterType:'highpass',frequency:1650,rate:.48,pan:.18});playHybridSample('ocean',{loop:true,gain:.0065,filterType:'lowpass',frequency:105,rate:.42,pan:-.25})}
-  else if(worldIndex===5){playHybridSample('forest',{loop:true,gain:.004,filterType:'highpass',frequency:2500,rate:.82,pan:-.2});scheduleHybridOneShot('bell',7.5,13.5,{gain:.024*evolutionBoost,filterType:'highpass',frequency:440,randomPan:.65,rateVariation:.12,firstDelay:2.8})}
-  else if(worldIndex===6){playHybridSample('forest',{loop:true,gain:.021*evolutionBoost,filterType:'lowpass',frequency:2400,rate:.96,pan:.08});scheduleHybridOneShot('bamboo',10.5,17.5,{gain:.034*evolutionBoost,filterType:'bandpass',frequency:1280,q:.55,randomPan:.46,rateVariation:.18,firstDelay:3.2});scheduleHybridOneShot('wood',7,12.5,{gain:.026,filterType:'lowpass',frequency:1700,randomPan:.55,rateVariation:.14,firstDelay:5.4})}
+  const generation=hybridGeneration;await loadSampleBank();if(generation!==hybridGeneration||!playing||worldIndex!==current)return;const evolutionBoost=1+Math.max(0,evolutionPhase)*.08;
+  if(worldIndex===0){playHybridSample('ashWind',{loop:true,gain:.018*evolutionBoost,filterType:'lowpass',frequency:880,rate:.86,pan:-.12});playHybridSample('radio',{loop:true,gain:.0065,filterType:'bandpass',frequency:1100,q:.8,rate:.68,pan:.22});scheduleHybridOneShot('metalResonance',8,15,{gain:.027*evolutionBoost,filterType:'lowpass',frequency:2200,randomPan:.52,rateVariation:.12,firstDelay:3.2})}
+  else if(worldIndex===1){playHybridSample('ocean',{loop:true,gain:.024*evolutionBoost,filterType:'lowpass',frequency:1650,rate:.9});scheduleHybridOneShot('bubbleField',6,11,{gain:.022,filterType:'bandpass',frequency:1600,q:.45,randomPan:.7,rateVariation:.18,firstDelay:2.2});scheduleHybridOneShot('pressureCrack',11,19,{gain:.019*evolutionBoost,filterType:'lowpass',frequency:980,randomPan:.42,rateVariation:.1,firstDelay:5.4})}
+  else if(worldIndex===2){playHybridSample('rain',{loop:true,gain:.022*evolutionBoost,filterType:'highpass',frequency:520,rate:1.02});playHybridSample('neonHum',{loop:true,gain:.009,filterType:'bandpass',frequency:760,q:.9,rate:.94,pan:.18});scheduleHybridOneShot('cityDistant',10,18,{gain:.015,filterType:'lowpass',frequency:2600,randomPan:.55,rateVariation:.1,firstDelay:4})}
+  else if(worldIndex===3){playHybridSample('emberFire',{loop:true,gain:.013,filterType:'lowpass',frequency:1600,rate:.92,pan:.16});playHybridSample('forest',{loop:true,gain:.0075,filterType:'lowpass',frequency:1250,rate:.7,pan:-.18});scheduleHybridOneShot('mountainString',6.5,12,{gain:.026*evolutionBoost,filterType:'lowpass',frequency:3100,randomPan:.52,rateVariation:.16,firstDelay:2.6});scheduleHybridOneShot('wood',9,16,{gain:.022,filterType:'lowpass',frequency:1700,randomPan:.5,rateVariation:.14,firstDelay:5.5})}
+  else if(worldIndex===4){playHybridSample('cosmicStatic',{loop:true,gain:.012*evolutionBoost,filterType:'bandpass',frequency:1900,q:.38,rate:.72,pan:.1});playHybridSample('radio',{loop:true,gain:.0048,filterType:'highpass',frequency:1750,rate:.46,pan:-.24});scheduleHybridOneShot('ionPulse',8.5,15.5,{gain:.022*evolutionBoost,filterType:'lowpass',frequency:1100,randomPan:.6,rateVariation:.16,firstDelay:3.5})}
+  else if(worldIndex===5){playHybridSample('choirAir',{loop:true,gain:.014*evolutionBoost,filterType:'highpass',frequency:420,rate:.9,pan:-.1});scheduleHybridOneShot('glassChime',7,13,{gain:.019*evolutionBoost,filterType:'highpass',frequency:520,randomPan:.68,rateVariation:.16,firstDelay:2.5});scheduleHybridOneShot('bell',11,18,{gain:.017,filterType:'highpass',frequency:440,randomPan:.6,rateVariation:.1,firstDelay:5.2})}
+  else if(worldIndex===6){playHybridSample('forest',{loop:true,gain:.013*evolutionBoost,filterType:'lowpass',frequency:2300,rate:.94,pan:.08});playHybridSample('cedarLeaves',{loop:true,gain:.011,filterType:'bandpass',frequency:2400,q:.3,rate:.96,pan:-.12});scheduleHybridOneShot('bamboo',10,17,{gain:.028*evolutionBoost,filterType:'bandpass',frequency:1280,q:.55,randomPan:.46,rateVariation:.16,firstDelay:3.1});scheduleHybridOneShot('wood',9,15,{gain:.019,filterType:'lowpass',frequency:1650,randomPan:.52,rateVariation:.12,firstDelay:5.4});scheduleSunlitKoto(evolutionBoost)}
 }
+
 
 function ensureAudio(){if(audioCtx)return;audioCtx=new (window.AudioContext||window.webkitAudioContext)();master=audioCtx.createGain();analyser=audioCtx.createAnalyser();analyser.fftSize=256;filters=[audioCtx.createBiquadFilter(),audioCtx.createBiquadFilter(),audioCtx.createBiquadFilter()];filters[0].type='lowshelf';filters[0].frequency.value=180;filters[1].type='peaking';filters[1].frequency.value=900;filters[1].Q.value=.8;filters[2].type='highshelf';filters[2].frequency.value=3500;filters[0].connect(filters[1]).connect(filters[2]).connect(analyser).connect(master).connect(audioCtx.destination);master.gain.value=effectiveVolume();applyEq();applyPerformanceProfile('audio context');drawVisualizer();}
 function makeNoise(color='brown',seconds=3){const len=audioCtx.sampleRate*seconds,b=audioCtx.createBuffer(1,len,audioCtx.sampleRate),d=b.getChannelData(0);let last=0;for(let i=0;i<len;i++){const white=Math.random()*2-1;if(color==='brown'){last=(last+.02*white)/1.02;d[i]=last*3.5}else if(color==='pink'){last=.98*last+.02*white;d[i]=last*.8}else d[i]=white*.25}const s=audioCtx.createBufferSource();s.buffer=b;s.loop=true;return s}
@@ -717,6 +702,9 @@ function createSunrootVale(){
   const rootGain=audioCtx.createGain();rootGain.gain.value=(state.layers[2]??.22)*.085;rootGain.connect(bus);layerGains[2]=rootGain;trackNode(rootGain);
   const rootHit=()=>{if(!playing||current!==6)return;const t=audioCtx.currentTime,base=[82.41,98,110][Math.floor(Math.random()*3)],o=audioCtx.createOscillator(),g=audioCtx.createGain(),p=audioCtx.createStereoPanner(),n=makeNoise('white',1.1),ng=audioCtx.createGain(),bp=audioCtx.createBiquadFilter();o.type='sine';o.frequency.setValueAtTime(base,t);o.frequency.exponentialRampToValueAtTime(base*.58,t+.9);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.05*(state.layers[2]??.22),t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+1.2);p.pan.value=(Math.random()-.5)*.5;bp.type='bandpass';bp.frequency.value=760;bp.Q.value=.8;ng.gain.setValueAtTime(.0001,t);ng.gain.linearRampToValueAtTime(.009*(state.layers[2]??.22),t+.01);ng.gain.exponentialRampToValueAtTime(.0001,t+.42);o.connect(g).connect(p).connect(rootGain);n.connect(bp).connect(ng).connect(p).connect(rootGain);o.start(t);o.stop(t+1.25);n.start(t);n.stop(t+.45);trackNode(o,g,p,n,ng,bp)};
   rootHit();engineTimers.push(setInterval(rootHit,4300));
+
+  // Sunlit Koto: a dedicated fourth layer fed by the expanded sample bank.
+  const kotoGain=audioCtx.createGain();kotoGain.gain.value=targetLayerGain(3);kotoGain.connect(bus);layerGains[3]=kotoGain;trackNode(kotoGain);
 }
 
 function createStandardWorld(){const w=WORLDS[current];w.osc.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),lfo=audioCtx.createOscillator(),lg=audioCtx.createGain();o.type=i===0?'sine':i===1?'triangle':'sine';o.frequency.value=freq;lfo.frequency.value=.04+i*.025;lg.gain.value=freq*.012;lfo.connect(lg).connect(o.frequency);g.gain.value=(state.layers[i]??.3)*[.11,.055,.035][i];o.connect(g).connect(filters[0]);o.start();lfo.start();sources.push(o,lfo);layerGains.push(g);trackNode(g,lg)});const n=makeNoise(current===2?'white':'brown'),ng=audioCtx.createGain(),nf=audioCtx.createBiquadFilter();nf.type='lowpass';nf.frequency.value=current===1?900:current===2?3500:650;ng.gain.value=(state.layers[2]??.2)*.06;n.connect(nf).connect(ng).connect(filters[0]);n.start();noiseNodes.push(n);trackNode(ng,nf)}
@@ -1110,7 +1098,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true}};
 window.addEventListener('online',()=>{$('#netLabel').textContent='ONLINE';$('#netDot').style.background='#6df49a'});window.addEventListener('offline',()=>{$('#netLabel').textContent='OFFLINE';$('#netDot').style.background='#ff765f'});
 if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>!playing&&startAudio());navigator.mediaSession.setActionHandler('pause',()=>playing&&stopAudio());navigator.mediaSession.setActionHandler('previoustrack',()=>selectWorld(current-1));navigator.mediaSession.setActionHandler('nexttrack',()=>selectWorld(current+1));}
-const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.4';
+const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.5';
 let waitingWorker=null,updateReloading=false;
 function showUpdateSignal(worker){waitingWorker=worker;const panel=$('#updateSignal');if(!panel)return;panel.classList.add('show');panel.setAttribute('aria-hidden','false');$('#updateSignalTitle').textContent='NEW CORE VERSION READY';$('#updateSignalText').textContent='A fresh Omega transmission is ready to install.';try{worker.postMessage({type:'GET_VERSION'})}catch{}}
 function hideUpdateSignal(){const panel=$('#updateSignal');if(!panel)return;panel.classList.remove('show');panel.setAttribute('aria-hidden','true')}
@@ -1118,7 +1106,7 @@ function markUpdated(){sessionStorage.srUpdatedVersion=APP_VERSION}
 if('serviceWorker'in navigator){
   window.addEventListener('load',async()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});$('#coreVersionLabel')&&($('#coreVersionLabel').textContent=`${APP_VERSION} FUSION MATRIX + VERSION SYNC`);reg.update().catch(()=>{});
+      const reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});$('#coreVersionLabel')&&($('#coreVersionLabel').textContent=`${APP_VERSION} WORLD SAMPLE EXPANSION`);reg.update().catch(()=>{});
       if(reg.waiting&&navigator.serviceWorker.controller)showUpdateSignal(reg.waiting);
       reg.addEventListener('updatefound',()=>{
         const worker=reg.installing;if(!worker)return;

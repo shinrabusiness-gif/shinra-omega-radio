@@ -1,1 +1,1 @@
-Shinra Omega Radio 
+Shinra Omega Radio 6.6 — Sunroot Harmony Rework. Sunroot Vale now features more frequent, smoother pentatonic shakuhachi-inspired phrases, a quieter forest bed, more regular bamboo breath, and harmonized Sunlit Koto motifs. Upload every file to the GitHub repository root and replace existing files.

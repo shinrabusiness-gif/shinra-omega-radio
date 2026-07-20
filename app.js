@@ -184,7 +184,7 @@ async function collectDiagnostics(){
   $('#diagWorker').textContent=worker;$('#diagWorkerDetail').textContent=workerDetail;
   $('#diagUpdate').textContent=waitingWorker?'READY':'CURRENT';$('#diagUpdateDetail').textContent=waitingWorker?'New core waiting for installation':'Omega Core 5.8 active';applyDynamicTime(false);
   lastDiagnosticsReport=[
-    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.5',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`GENERATED: ${new Date().toISOString()}`
+    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.6',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`GENERATED: ${new Date().toISOString()}`
   ].join('\n');
 }
 function openDiagnostics(){document.body.classList.add('diagnostics-open');$('#diagnosticsOverlay').classList.add('open');$('#diagnosticsOverlay').setAttribute('aria-hidden','false');collectDiagnostics();clearInterval(diagnosticsTimer);diagnosticsTimer=setInterval(updateDiagnosticsLive,1000)}
@@ -426,7 +426,7 @@ function closeListeningMode(){const el=$('#listeningModeOverlay');el.classList.r
 function updateWorld(){const w=WORLDS[current];document.body.dataset.world=w.id;document.documentElement.style.setProperty('--accent',w.color);document.documentElement.style.setProperty('--accent2',w.color2);document.documentElement.style.setProperty('--glow',hexAlpha(w.color,.26));$('#worldCode').textContent=w.code;$('#worldTitle').textContent=w.title;$('#worldSubtitle').textContent=w.subtitle;$('#genreTag').textContent=w.genre;$('#bpmTag').textContent=w.bpm+' BPM';$('#nowTitle').textContent=w.title+' — '+(w.tracks?.[trackIndex]||w.track);updateMasterControls();$('#sleepCode').textContent=w.code;$('#sleepTitle').textContent=w.title;renderWorlds();renderLayers();updateMedia();syncAmbientHud();applyDynamicTime(false);updateWeatherUI(true);if(!playing){evolutionPhase=0;document.body.dataset.evolution='0';updateEvolutionReadout(0)}if(document.body.classList.contains('scanner-open')&&!scannerActive)updateScannerWorld(current);if(document.body.classList.contains('share-open'))renderShareSignal();updateFusionUI()}
 function hexAlpha(hex,a){const h=hex.replace('#','');return `rgba(${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)},${a})`}
 
-function getLayerScale(worldIndex,i){const scales=[[.17,.2,.12],[.15,.14,.11],[.12,.16,.11],[.14,.12,.13],[.11,.055,.035],[.12,.09,.065],[.12,.1,.08,.075]];return (scales[worldIndex]||[.11,.055,.035])[i]||.05}
+function getLayerScale(worldIndex,i){const scales=[[.17,.2,.12],[.15,.14,.11],[.12,.16,.11],[.14,.12,.13],[.11,.055,.035],[.12,.09,.065],[.095,.145,.075,.082]];return (scales[worldIndex]||[.11,.055,.035])[i]||.05}
 function evolutionMultiplier(i){if(settings.evolution===false)return 1;const matrix=[[1,1,1],[1.05,1.04,1.08],[1.1,1.12,1.16],[1.16,1.18,1.25]];return (matrix[evolutionPhase]||matrix[0])[i]||1}
 function targetLayerGain(i){return (state.layers[i]??.3)*getLayerScale(current,i)*evolutionMultiplier(i)*(listeningModeConfig().layers[i]??1)}
 function evolutionDefinition(){return EVOLUTION[WORLDS[current].id]||{states:['DORMANT','AWAKENING','ASCENDANT','MYTHIC'],messages:['The signal changes.','The world deepens.','The final state is open.']}}
@@ -463,7 +463,17 @@ function stopHybridLayer(){hybridGeneration++;hybridTimers.forEach(clearTimeout)
 function sampleDestination(options={}){const gain=audioCtx.createGain(),pan=audioCtx.createStereoPanner(),filter=audioCtx.createBiquadFilter();gain.gain.value=options.gain??.02;pan.pan.value=options.pan??0;filter.type=options.filterType||'lowpass';filter.frequency.value=options.frequency||12000;filter.Q.value=options.q||.2;const destination=Number.isInteger(options.layerIndex)&&layerGains[options.layerIndex]?layerGains[options.layerIndex]:filters[0];filter.connect(gain).connect(pan).connect(destination);hybridNodes.push(filter,gain,pan);return{filter,gain,pan}}
 function playHybridSample(name,options={}){const buffer=sampleBuffers[name];if(!buffer||!audioCtx||!playing)return null;const source=audioCtx.createBufferSource(),route=sampleDestination(options);source.buffer=buffer;source.loop=!!options.loop;source.playbackRate.value=options.rate||1;source.detune.value=options.detune||0;source.connect(route.filter);const offset=source.loop?Math.random()*Math.max(.01,buffer.duration-.05):0;source.start(audioCtx.currentTime+(options.delay||0),offset);hybridSources.push(source);if(!source.loop)source.onended=()=>{hybridSources=hybridSources.filter(s=>s!==source);try{source.disconnect()}catch{}try{route.filter.disconnect();route.gain.disconnect();route.pan.disconnect()}catch{}};return source}
 function scheduleHybridOneShot(name,minSeconds,maxSeconds,options={}){const generation=hybridGeneration;const fire=()=>{if(generation!==hybridGeneration||!playing||settings.hybrid===false)return;playHybridSample(name,{...options,pan:(options.randomPan?((Math.random()-.5)*(options.randomPan*2)):(options.pan||0)),rate:(options.rate||1)*(options.rateVariation?1+(Math.random()-.5)*options.rateVariation:1)});hybridTimers.push(setTimeout(fire,(minSeconds+Math.random()*(maxSeconds-minSeconds))*1000))};hybridTimers.push(setTimeout(fire,(options.firstDelay??minSeconds*.5)*1000))}
-function scheduleSunlitKoto(evolutionBoost=1){const generation=hybridGeneration,scale=[.75,.842,.946,1,1.125,1.263,1.5];const playPhrase=()=>{if(generation!==hybridGeneration||!playing||settings.hybrid===false||current!==6)return;const level=Math.max(.05,state.layers[3]??.3),first=scale[Math.floor(Math.random()*scale.length)];playHybridSample('koto',{gain:.52*evolutionBoost,filterType:'lowpass',frequency:4200,rate:first,pan:(Math.random()-.5)*.5,layerIndex:3});if(Math.random()<.52){const second=scale[Math.floor(Math.random()*scale.length)];playHybridSample('koto',{gain:.34*evolutionBoost,filterType:'lowpass',frequency:3900,rate:second,pan:(Math.random()-.5)*.55,delay:.42+Math.random()*.38,layerIndex:3})}hybridTimers.push(setTimeout(playPhrase,(6.5+Math.random()*8.5)*(1.15-.25*level)*1000))};hybridTimers.push(setTimeout(playPhrase,2200))}
+function scheduleSunlitKoto(evolutionBoost=1){
+  const generation=hybridGeneration,scale=[.75,.842,.946,1,1.125,1.263,1.5];
+  const motifs=[[3,4,2],[0,2,3],[4,3,1],[2,5,4,3],[0,3,2],[5,4,2]];let motifIndex=Math.floor(Math.random()*motifs.length);
+  const playPhrase=()=>{
+    if(generation!==hybridGeneration||!playing||settings.hybrid===false||current!==6)return;
+    const level=Math.max(.05,state.layers[3]??.3),motif=motifs[motifIndex++%motifs.length];
+    motif.forEach((noteIndex,i)=>playHybridSample('koto',{gain:(i===0?.46:.29)*evolutionBoost,filterType:'lowpass',frequency:3900,rate:scale[noteIndex],pan:(i%2?1:-1)*(.08+Math.random()*.14),delay:i*(.46+Math.random()*.12),layerIndex:3}));
+    hybridTimers.push(setTimeout(playPhrase,(8+Math.random()*5.5)*(1.12-.18*level)*1000));
+  };
+  hybridTimers.push(setTimeout(playPhrase,3400));
+}
 async function startHybridLayer(worldIndex=current){
   stopHybridLayer();if(settings.hybrid===false){updateHybridStatus('WEB AUDIO');return}
   const generation=hybridGeneration;await loadSampleBank();if(generation!==hybridGeneration||!playing||worldIndex!==current)return;const evolutionBoost=1+Math.max(0,evolutionPhase)*.08;
@@ -473,7 +483,7 @@ async function startHybridLayer(worldIndex=current){
   else if(worldIndex===3){playHybridSample('emberFire',{loop:true,gain:.013,filterType:'lowpass',frequency:1600,rate:.92,pan:.16});playHybridSample('forest',{loop:true,gain:.0075,filterType:'lowpass',frequency:1250,rate:.7,pan:-.18});scheduleHybridOneShot('mountainString',6.5,12,{gain:.026*evolutionBoost,filterType:'lowpass',frequency:3100,randomPan:.52,rateVariation:.16,firstDelay:2.6});scheduleHybridOneShot('wood',9,16,{gain:.022,filterType:'lowpass',frequency:1700,randomPan:.5,rateVariation:.14,firstDelay:5.5})}
   else if(worldIndex===4){playHybridSample('cosmicStatic',{loop:true,gain:.012*evolutionBoost,filterType:'bandpass',frequency:1900,q:.38,rate:.72,pan:.1});playHybridSample('radio',{loop:true,gain:.0048,filterType:'highpass',frequency:1750,rate:.46,pan:-.24});scheduleHybridOneShot('ionPulse',8.5,15.5,{gain:.022*evolutionBoost,filterType:'lowpass',frequency:1100,randomPan:.6,rateVariation:.16,firstDelay:3.5})}
   else if(worldIndex===5){playHybridSample('choirAir',{loop:true,gain:.014*evolutionBoost,filterType:'highpass',frequency:420,rate:.9,pan:-.1});scheduleHybridOneShot('glassChime',7,13,{gain:.019*evolutionBoost,filterType:'highpass',frequency:520,randomPan:.68,rateVariation:.16,firstDelay:2.5});scheduleHybridOneShot('bell',11,18,{gain:.017,filterType:'highpass',frequency:440,randomPan:.6,rateVariation:.1,firstDelay:5.2})}
-  else if(worldIndex===6){playHybridSample('forest',{loop:true,gain:.013*evolutionBoost,filterType:'lowpass',frequency:2300,rate:.94,pan:.08});playHybridSample('cedarLeaves',{loop:true,gain:.011,filterType:'bandpass',frequency:2400,q:.3,rate:.96,pan:-.12});scheduleHybridOneShot('bamboo',10,17,{gain:.028*evolutionBoost,filterType:'bandpass',frequency:1280,q:.55,randomPan:.46,rateVariation:.16,firstDelay:3.1});scheduleHybridOneShot('wood',9,15,{gain:.019,filterType:'lowpass',frequency:1650,randomPan:.52,rateVariation:.12,firstDelay:5.4});scheduleSunlitKoto(evolutionBoost)}
+  else if(worldIndex===6){playHybridSample('forest',{loop:true,gain:.0095*evolutionBoost,filterType:'lowpass',frequency:2300,rate:.94,pan:.08});playHybridSample('cedarLeaves',{loop:true,gain:.0085,filterType:'bandpass',frequency:2400,q:.3,rate:.96,pan:-.12});scheduleHybridOneShot('bamboo',6.5,10.5,{gain:.032*evolutionBoost,filterType:'bandpass',frequency:1280,q:.55,randomPan:.46,rateVariation:.16,firstDelay:1.8});scheduleHybridOneShot('wood',9,15,{gain:.019,filterType:'lowpass',frequency:1650,randomPan:.52,rateVariation:.12,firstDelay:5.4});scheduleSunlitKoto(evolutionBoost)}
 }
 
 
@@ -626,77 +636,73 @@ function createSunrootVale(){
   hp.type='highpass';hp.frequency.value=180;lp.type='lowpass';lp.frequency.value=2400;pan.pan.value=.12;lfo.frequency.value=.038;depth.gain.value=.55;lfo.connect(depth).connect(pan.pan);wind.connect(hp).connect(lp).connect(pan).connect(forestGain);wind.start();noiseNodes.push(wind);sources.push(lfo);lfo.start();trackNode(hp,lp,pan,depth);
   [98,146.83].forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),p=audioCtx.createStereoPanner(),l=audioCtx.createOscillator(),d=audioCtx.createGain();o.type=i? 'triangle':'sine';o.frequency.value=freq;o.detune.value=i?3:-5;g.gain.value=i?.08:.12;p.pan.value=i?.34:-.28;l.frequency.value=i?.05:.03;d.gain.value=i?3.5:4.2;l.connect(d).connect(o.detune);o.connect(g).connect(p).connect(forestGain);o.start();l.start();sources.push(o,l);trackNode(g,p,d)});
 
-  // Ancient Reed: rough bamboo breath, pitch falls and long silences.
-  const reedGain=audioCtx.createGain();reedGain.gain.value=(state.layers[1]??.28)*.105;reedGain.connect(bus);layerGains[1]=reedGain;trackNode(reedGain);
-  const reedNotes=[220,246.94,293.66,329.63,392];
-  const playReed=()=>{
-    if(!playing||current!==6)return;
-    const t=audioCtx.currentTime;
-    const dur=3.8+Math.random()*2.4;
-    const base=reedNotes[Math.floor(Math.random()*reedNotes.length)];
+  // Ancient Reed: melodic shakuhachi-inspired phrases in a stable Japanese pentatonic mode.
+  // The phrase engine is intentionally more frequent, but leaves breathing space between motifs.
+  const reedGain=audioCtx.createGain();reedGain.gain.value=targetLayerGain(1);reedGain.connect(bus);layerGains[1]=reedGain;trackNode(reedGain);
+  const reedScale=[220,246.94,293.66,329.63,392,440]; // A–B–D–E–G–A, a calm yo-style pentatonic colour.
+  const reedMotifs=[
+    [0,2,3],[3,2,0],[1,2,4],[4,3,2],[0,1,2,3],[3,4,5,4,2],[2,3,1],[4,2,1,0]
+  ];
+  let reedMotifIndex=Math.floor(Math.random()*reedMotifs.length);
+  const playReedNote=(base,offset=0,dur=2.5,velocity=1,panValue=0)=>{
+    const t=audioCtx.currentTime+offset;
     const osc1=audioCtx.createOscillator(),osc2=audioCtx.createOscillator();
-    const tone=audioCtx.createBiquadFilter(),formant=audioCtx.createBiquadFilter(),hp2=audioCtx.createBiquadFilter();
+    const harmonicGain=audioCtx.createGain(),toneFilter=audioCtx.createBiquadFilter(),formant=audioCtx.createBiquadFilter(),hp2=audioCtx.createBiquadFilter();
     const g=audioCtx.createGain(),p=audioCtx.createStereoPanner();
-    const air=makeNoise('white',dur+1),air2=makeNoise('pink',dur+1),airBand=audioCtx.createBiquadFilter(),airGain=audioCtx.createGain();
-    const vib=audioCtx.createOscillator(),vibDepth=audioCtx.createGain(),wander=audioCtx.createOscillator(),wanderDepth=audioCtx.createGain();
-    const attackNoise=makeNoise('white',.55),attackBand=audioCtx.createBiquadFilter(),attackGain=audioCtx.createGain();
+    const air=makeNoise('pink',dur+.7),airBand=audioCtx.createBiquadFilter(),airGain=audioCtx.createGain();
+    const vib=audioCtx.createOscillator(),vibDepth=audioCtx.createGain();
+    const attackNoise=makeNoise('white',.38),attackBand=audioCtx.createBiquadFilter(),attackGain=audioCtx.createGain();
 
-    osc1.type='sawtooth';osc2.type='triangle';
-    osc1.frequency.setValueAtTime(base*1.012,t);
-    osc1.frequency.exponentialRampToValueAtTime(base*.965,t+dur*.9);
-    osc2.frequency.setValueAtTime(base*.498,t);
-    osc2.frequency.exponentialRampToValueAtTime(base*.47,t+dur*.9);
-    osc2.detune.value=-7;
+    // Soft bamboo body instead of a sharp synthesizer timbre.
+    osc1.type='triangle';osc2.type='sine';
+    osc1.frequency.value=base;osc2.frequency.value=base*2;
+    harmonicGain.gain.value=.16;
+    osc1.detune.setValueAtTime(16,t);osc1.detune.linearRampToValueAtTime(0,t+.32);
+    osc1.detune.setValueAtTime(0,t+dur*.72);osc1.detune.linearRampToValueAtTime(-14-Math.random()*8,t+dur);
+    osc2.detune.setValueAtTime(10,t);osc2.detune.linearRampToValueAtTime(-5,t+dur);
 
-    tone.type='lowpass';tone.frequency.value=1150;tone.Q.value=.7;
-    formant.type='bandpass';formant.frequency.value=720+Math.random()*260;formant.Q.value=2.8;
-    hp2.type='highpass';hp2.frequency.value=160;
-    p.pan.value=(Math.random()-.5)*.7;
+    toneFilter.type='lowpass';toneFilter.frequency.value=1500+base*.85;toneFilter.Q.value=.45;
+    formant.type='bandpass';formant.frequency.value=880+base*.9;formant.Q.value=1.35;
+    hp2.type='highpass';hp2.frequency.value=145;
+    p.pan.value=panValue;
 
-    vib.frequency.value=4.1+Math.random()*1.7;
-    vibDepth.gain.setValueAtTime(0,t);
-    vibDepth.gain.linearRampToValueAtTime(8+Math.random()*7,t+dur*.45);
-    vibDepth.gain.linearRampToValueAtTime(3,t+dur);
+    vib.frequency.value=4.2+Math.random()*.7;
+    vibDepth.gain.setValueAtTime(0,t);vibDepth.gain.linearRampToValueAtTime(5+Math.random()*4,t+dur*.42);vibDepth.gain.linearRampToValueAtTime(2,t+dur);
     vib.connect(vibDepth);vibDepth.connect(osc1.detune);vibDepth.connect(osc2.detune);
 
-    wander.frequency.value=.16+Math.random()*.12;
-    wanderDepth.gain.value=11+Math.random()*7;
-    wander.connect(wanderDepth);wanderDepth.connect(osc1.detune);
+    g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.42*velocity,t+.16);g.gain.linearRampToValueAtTime(.7*velocity,t+.48);
+    g.gain.setValueAtTime(.62*velocity,t+dur*.55);g.gain.linearRampToValueAtTime(.36*velocity,t+dur*.82);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
 
-    g.gain.setValueAtTime(.0001,t);
-    g.gain.linearRampToValueAtTime(.028*(state.layers[1]??.28),t+.18);
-    g.gain.linearRampToValueAtTime(.052*(state.layers[1]??.28),t+.65);
-    g.gain.setValueAtTime(.05*(state.layers[1]??.28),t+dur*.48);
-    g.gain.linearRampToValueAtTime(.026*(state.layers[1]??.28),t+dur*.78);
-    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    airBand.type='bandpass';airBand.frequency.value=1850+Math.random()*550;airBand.Q.value=.6;
+    airGain.gain.setValueAtTime(.0001,t);airGain.gain.linearRampToValueAtTime(.18*velocity,t+.06);airGain.gain.linearRampToValueAtTime(.075*velocity,t+.5);airGain.gain.setValueAtTime(.055*velocity,t+dur*.72);airGain.gain.exponentialRampToValueAtTime(.0001,t+dur);
 
-    airBand.type='bandpass';airBand.frequency.value=1800+Math.random()*700;airBand.Q.value=.75;
-    airGain.gain.setValueAtTime(.0001,t);
-    airGain.gain.linearRampToValueAtTime(.024*(state.layers[1]??.28),t+.08);
-    airGain.gain.linearRampToValueAtTime(.011*(state.layers[1]??.28),t+.7);
-    airGain.gain.setValueAtTime(.008*(state.layers[1]??.28),t+dur*.7);
-    airGain.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    attackBand.type='bandpass';attackBand.frequency.value=2450;attackBand.Q.value=.72;
+    attackGain.gain.setValueAtTime(.0001,t);attackGain.gain.linearRampToValueAtTime(.22*velocity,t+.025);attackGain.gain.exponentialRampToValueAtTime(.0001,t+.25);
 
-    attackBand.type='bandpass';attackBand.frequency.value=2700;attackBand.Q.value=.9;
-    attackGain.gain.setValueAtTime(.0001,t);
-    attackGain.gain.linearRampToValueAtTime(.035*(state.layers[1]??.28),t+.035);
-    attackGain.gain.exponentialRampToValueAtTime(.0001,t+.38);
-
-    osc1.connect(tone);osc2.connect(tone);tone.connect(formant).connect(hp2).connect(g).connect(p).connect(reedGain);
-    air.connect(airBand);air2.connect(airBand);airBand.connect(airGain).connect(p).connect(reedGain);
-    attackNoise.connect(attackBand).connect(attackGain).connect(p).connect(reedGain);
-
-    osc1.start(t);osc2.start(t);air.start(t);air2.start(t);attackNoise.start(t);vib.start(t);wander.start(t);
-    const stop=t+dur+.08;osc1.stop(stop);osc2.stop(stop);air.stop(stop);air2.stop(stop);attackNoise.stop(t+.42);vib.stop(stop);wander.stop(stop);
-    trackNode(osc1,osc2,tone,formant,hp2,g,p,air,air2,airBand,airGain,vib,vibDepth,wander,wanderDepth,attackNoise,attackBand,attackGain);
+    osc1.connect(toneFilter);osc2.connect(harmonicGain).connect(toneFilter);toneFilter.connect(formant).connect(hp2).connect(g).connect(p).connect(reedGain);
+    air.connect(airBand).connect(airGain).connect(p).connect(reedGain);attackNoise.connect(attackBand).connect(attackGain).connect(p).connect(reedGain);
+    osc1.start(t);osc2.start(t);air.start(t);attackNoise.start(t);vib.start(t);
+    const stop=t+dur+.06;osc1.stop(stop);osc2.stop(stop);air.stop(stop);attackNoise.stop(t+.3);vib.stop(stop);
+    trackNode(osc1,osc2,harmonicGain,toneFilter,formant,hp2,g,p,air,airBand,airGain,vib,vibDepth,attackNoise,attackBand,attackGain);
+  };
+  const playReedPhrase=()=>{
+    if(!playing||current!==6)return 0;
+    const motif=reedMotifs[reedMotifIndex%reedMotifs.length];reedMotifIndex++;
+    let cursor=0;
+    motif.forEach((noteIndex,i)=>{
+      const dur=1.85+Math.random()*.85+(i===motif.length-1?.45:0);
+      const velocity=(i===0?1:.82+Math.random()*.13);
+      playReedNote(reedScale[noteIndex],cursor,dur,velocity,(i%2?1:-1)*(.08+Math.random()*.12));
+      cursor+=1.05+Math.random()*.42;
+    });
+    return cursor+1.6+Math.random()*1.7;
   };
   const scheduleReed=()=>{
     if(!playing||current!==6)return;
-    playReed();
-    const delay=9000+Math.random()*8000;
-    const id=setTimeout(scheduleReed,delay);engineTimers.push(id);
+    const phraseLength=playReedPhrase();
+    const id=setTimeout(scheduleReed,Math.max(4300,phraseLength*1000));engineTimers.push(id);
   };
-  scheduleReed();
+  const firstReed=setTimeout(scheduleReed,900);engineTimers.push(firstReed);
 
   // Root Resonance: wood / stone ritual pulses, grounded and sparse.
   const rootGain=audioCtx.createGain();rootGain.gain.value=(state.layers[2]??.22)*.085;rootGain.connect(bus);layerGains[2]=rootGain;trackNode(rootGain);
@@ -1098,7 +1104,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true}};
 window.addEventListener('online',()=>{$('#netLabel').textContent='ONLINE';$('#netDot').style.background='#6df49a'});window.addEventListener('offline',()=>{$('#netLabel').textContent='OFFLINE';$('#netDot').style.background='#ff765f'});
 if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>!playing&&startAudio());navigator.mediaSession.setActionHandler('pause',()=>playing&&stopAudio());navigator.mediaSession.setActionHandler('previoustrack',()=>selectWorld(current-1));navigator.mediaSession.setActionHandler('nexttrack',()=>selectWorld(current+1));}
-const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.5';
+const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.6';
 let waitingWorker=null,updateReloading=false;
 function showUpdateSignal(worker){waitingWorker=worker;const panel=$('#updateSignal');if(!panel)return;panel.classList.add('show');panel.setAttribute('aria-hidden','false');$('#updateSignalTitle').textContent='NEW CORE VERSION READY';$('#updateSignalText').textContent='A fresh Omega transmission is ready to install.';try{worker.postMessage({type:'GET_VERSION'})}catch{}}
 function hideUpdateSignal(){const panel=$('#updateSignal');if(!panel)return;panel.classList.remove('show');panel.setAttribute('aria-hidden','true')}
@@ -1106,7 +1112,7 @@ function markUpdated(){sessionStorage.srUpdatedVersion=APP_VERSION}
 if('serviceWorker'in navigator){
   window.addEventListener('load',async()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});$('#coreVersionLabel')&&($('#coreVersionLabel').textContent=`${APP_VERSION} WORLD SAMPLE EXPANSION`);reg.update().catch(()=>{});
+      const reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});$('#coreVersionLabel')&&($('#coreVersionLabel').textContent=`${APP_VERSION} SUNROOT HARMONY REWORK`);reg.update().catch(()=>{});
       if(reg.waiting&&navigator.serviceWorker.controller)showUpdateSignal(reg.waiting);
       reg.addEventListener('updatefound',()=>{
         const worker=reg.installing;if(!worker)return;

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#08090d">
-  <meta name="app-version" content="6.6">
+  <meta name="app-version" content="6.7">
   <meta name="description" content="Shinra Radio – broadcasts from seven forgotten worlds">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png">
@@ -161,7 +161,7 @@
           <div class="ambient-actions"><span id="ambientStatus">STANDBY</span><button id="exitAmbientBtn" class="ambient-exit" aria-label="Ambient-Modus verlassen">EXIT</button></div>
         </div>
         <div class="ambient-bottomline">
-          <div class="ambient-copy"><small id="ambientCode">CHANNEL 01 / ORIGIN</small><h2 id="ambientTitle">BLACK SUN</h2><p id="ambientTrack">CORE DRIFT</p><span id="ambientEvolution" class="ambient-evolution">STATE · DORMANT</span><span id="ambientTime" class="ambient-time">LOCAL CYCLE · SCANNING</span><span id="ambientWeather" class="ambient-weather">WORLD WEATHER · CALIBRATING</span></div>
+          <div class="ambient-copy"><small id="ambientCode">CHANNEL 01 / ORIGIN</small><h2 id="ambientTitle">BLACK SUN</h2><p id="ambientTrack">CORE DRIFT</p><span id="ambientEvolution" class="ambient-evolution">STATE · DORMANT</span><span id="ambientTime" class="ambient-time">LOCAL CYCLE · SCANNING</span><span id="ambientWeather" class="ambient-weather">WORLD WEATHER · CALIBRATING</span><span id="ambientDirector" class="ambient-director">DIRECTOR · STANDBY</span></div>
           <div class="ambient-transport" aria-label="Ambient-Steuerung">
             <button id="ambientPrevBtn" aria-label="Vorherige Welt">‹</button>
             <button id="ambientPlayBtn" class="ambient-play" aria-label="Wiedergabe starten">▶</button>
@@ -180,7 +180,7 @@
         <button id="playBtn" class="round play" aria-label="Wiedergabe starten"><span id="playIcon">▶</span></button>
         <button id="nextBtn" class="round secondary" aria-label="Nächster Sender">›</button><button id="favoriteBtn" class="round secondary utility" aria-label="Sender favorisieren" title="Favorit">♡</button><button id="shuffleBtn" class="round secondary utility" aria-label="Zufallsmodus" title="Zufallsmodus">⌁</button>
       </div>
-      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong><span id="listeningModeBadge" class="listening-mode-badge">BALANCED</span>
+      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong><span id="listeningModeBadge" class="listening-mode-badge">BALANCED</span><span id="musicDirectorBadge" class="music-director-badge">DIRECTOR · STANDBY</span>
         <div class="bs-mini-signal" aria-hidden="true">
           <span class="bs-mini-horizon"></span>
           <span class="bs-mini-sun"><i></i><b></b><em></em></span>
@@ -279,7 +279,7 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><div class="mode-buttons"><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button><button id="ambientPanelBtn" class="wide-btn ambient-entry">ENTER AMBIENT MODE</button></div></article>
     </section>
 
-    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b id="coreVersionLabel">6.6 SUNROOT HARMONY REWORK</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WEB AUDIO + SAMPLES</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b id="coreVersionLabel">6.7 WORLD MUSIC DIRECTOR</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WORLD MUSIC DIRECTOR</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
@@ -462,6 +462,7 @@
         <label class="setting-row"><span><b>RARE WORLD EVENTS</b><small>Seltene visuelle und klangliche Anomalien pro Welt</small></span><input id="settingRareEvents" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>WORLD EVOLUTION</b><small>Welten entwickeln sich nach 5, 15 und 30 Minuten</small></span><input id="settingEvolution" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>HYBRID AUDIO LAYER</b><small>21 Offline-Samples ergänzen jede Welt mit eigenen Signature-Texturen</small></span><input id="settingHybrid" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>WORLD MUSIC DIRECTOR</b><small>Regelt Call-and-Response, Pausen und musikalische Dramaturgie</small></span><input id="settingMusicDirector" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>DYNAMIC TIME MODE</b><small>Licht und Klangfarbe folgen deiner lokalen Tageszeit</small></span><input id="settingTimeMode" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>WORLD WEATHER</b><small>Lebendige atmosphärische Bedingungen pro Welt</small></span><input id="settingWeather" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>RITUAL COMPLETION</b><small>Audio nach einer abgeschlossenen Klangreise sanft beenden</small></span><input id="settingRitualStop" type="checkbox" role="switch"></label>

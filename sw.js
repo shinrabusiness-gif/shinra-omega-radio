@@ -1,5 +1,5 @@
-const VERSION='6.6';
-const CACHE='shinra-omega-sunroot-harmony-6.6';
+const VERSION='6.7';
+const CACHE='shinra-omega-music-director-6.7';
 const ASSETS=['./','./index.html','./style.css','./app.js','./manifest.json','./version.json','./icon-192.png','./icon-512.png','./shinra-symbol.png','./shinra-omega-logo.png','./sample-ash-wind.wav','./sample-bamboo.wav','./sample-bell.wav','./sample-bubble-field.wav','./sample-cedar-leaves.wav','./sample-choir-air.wav','./sample-city-distant.wav','./sample-cosmic-static.wav','./sample-ember-fire.wav','./sample-forest.wav','./sample-glass-chime.wav','./sample-ion-pulse.wav','./sample-koto.wav','./sample-metal-resonance.wav','./sample-mountain-string.wav','./sample-neon-hum.wav','./sample-ocean.wav','./sample-pressure-crack.wav','./sample-radio.wav','./sample-rain.wav','./sample-wood.wav'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)))});
 self.addEventListener('message',event=>{

@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#08090d">
   <meta name="description" content="Shinra Radio – broadcasts from seven forgotten worlds">
   <link rel="manifest" href="manifest.json">
@@ -38,7 +38,7 @@
     <header class="topbar glass">
       <button class="brand" id="brandBtn" aria-label="Shinra Omega Radio Startseite"><img class="brand-logo" src="shinra-symbol.png" alt=""><span><small>SHINRA SIGNAL NETWORK</small><b>SHINRA OMEGA RADIO</b></span></button>
       <div class="status"><span id="netDot" class="dot"></span><span id="netLabel">ONLINE</span></div>
-      <div class="top-actions"><button id="journeyBtn" class="icon-btn journey-btn" aria-label="Omega Journeys" title="Omega Journeys">⟡<span id="journeyDot"></span></button><button id="listeningModeBtn" class="icon-btn listening-mode-btn" aria-label="Listening Modes" title="Listening Modes">◈<span id="listeningModeDot"></span></button><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="fusionBtn" class="icon-btn fusion-btn" aria-label="World Fusion" title="World Fusion">∞<span id="fusionDot"></span></button><button id="shareSignalBtn" class="icon-btn share-signal-btn" aria-label="Share Signal" title="Share Signal">↗</button><button id="ritualBtn" class="icon-btn ritual-btn" aria-label="Omega Rituals" title="Omega Rituals">⟁<span id="ritualDot"></span></button><button id="weatherBtn" class="icon-btn weather-btn" aria-label="World Weather" title="World Weather">☼<span id="weatherDot"></span></button><button id="scannerBtn" class="icon-btn scanner-btn" aria-label="Signal Scanner" title="Signal Scanner">⌖<span id="scannerCount">0</span></button><button id="operatorBtn" class="icon-btn operator-btn" aria-label="Operator Memory" title="Operator Memory">◎</button><button id="loreBtn" class="icon-btn lore-btn" aria-label="Transmission Archive" title="Transmission Archive">⌬<span id="loreCount">0</span></button><button id="ambientModeBtn" class="icon-btn" aria-label="Ambient-Modus" title="Ambient-Modus">⛶</button><button id="settingsBtn" class="icon-btn" aria-label="Einstellungen" title="Einstellungen">⚙</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
+      <div class="top-actions"><button id="commandMenuBtn" class="icon-btn command-menu-btn" aria-label="Omega Command Center" title="Omega Command Center">☰</button><button id="journeyBtn" class="icon-btn journey-btn" aria-label="Omega Journeys" title="Omega Journeys">⟡<span id="journeyDot"></span></button><button id="listeningModeBtn" class="icon-btn listening-mode-btn" aria-label="Listening Modes" title="Listening Modes">◈<span id="listeningModeDot"></span></button><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="fusionBtn" class="icon-btn fusion-btn" aria-label="World Fusion" title="World Fusion">∞<span id="fusionDot"></span></button><button id="shareSignalBtn" class="icon-btn share-signal-btn" aria-label="Share Signal" title="Share Signal">↗</button><button id="ritualBtn" class="icon-btn ritual-btn" aria-label="Omega Rituals" title="Omega Rituals">⟁<span id="ritualDot"></span></button><button id="weatherBtn" class="icon-btn weather-btn" aria-label="World Weather" title="World Weather">☼<span id="weatherDot"></span></button><button id="scannerBtn" class="icon-btn scanner-btn" aria-label="Signal Scanner" title="Signal Scanner">⌖<span id="scannerCount">0</span></button><button id="operatorBtn" class="icon-btn operator-btn" aria-label="Operator Memory" title="Operator Memory">◎</button><button id="loreBtn" class="icon-btn lore-btn" aria-label="Transmission Archive" title="Transmission Archive">⌬<span id="loreCount">0</span></button><button id="ambientModeBtn" class="icon-btn" aria-label="Ambient-Modus" title="Ambient-Modus">⛶</button><button id="settingsBtn" class="icon-btn" aria-label="Einstellungen" title="Einstellungen">⚙</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
     </header>
 
     <section class="hero glass"><img class="hero-brand-watermark" src="shinra-symbol.png" alt="" aria-hidden="true">
@@ -263,7 +263,7 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><div class="mode-buttons"><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button><button id="ambientPanelBtn" class="wide-btn ambient-entry">ENTER AMBIENT MODE</button></div></article>
     </section>
 
-    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b>6.1 OMEGA JOURNEYS</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WEB AUDIO + SAMPLES</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b>6.2 MOBILE CORE HOTFIX</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WEB AUDIO + SAMPLES</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
@@ -642,6 +642,30 @@
     <button id="installUpdateBtn" class="update-signal-btn">UPDATE INSTALLIEREN</button>
     <button id="dismissUpdateBtn" class="update-signal-close" aria-label="Update-Meldung schließen">×</button>
   </aside>
+
+  <aside id="commandMenuOverlay" class="command-menu-overlay" aria-hidden="true">
+    <div class="command-menu-card glass" role="dialog" aria-modal="true" aria-labelledby="commandMenuTitle">
+      <div class="command-menu-head">
+        <div><p class="eyebrow">OMEGA CONTROL</p><h2 id="commandMenuTitle">COMMAND CENTER</h2><small>All systems · one clean access point</small></div>
+        <button id="closeCommandMenu" class="icon-btn" aria-label="Command Center schließen">×</button>
+      </div>
+      <div class="command-menu-grid">
+        <button data-command-target="journeyBtn"><span>⟡</span><strong>OMEGA JOURNEYS</strong><small>Curated passages through several worlds</small></button>
+        <button data-command-target="listeningModeBtn"><span>◈</span><strong>LISTENING MODES</strong><small>Balanced, Focus, Sleep and Cinematic</small></button>
+        <button data-command-target="fusionBtn"><span>∞</span><strong>WORLD FUSION</strong><small>Merge a second world into the signal</small></button>
+        <button data-command-target="ritualBtn"><span>⟁</span><strong>OMEGA RITUALS</strong><small>Timed four-phase listening sessions</small></button>
+        <button data-command-target="scannerBtn"><span>⌖</span><strong>SIGNAL SCANNER</strong><small>Recover lost frequencies and codes</small></button>
+        <button data-command-target="weatherBtn"><span>☼</span><strong>WORLD WEATHER</strong><small>Read the living atmospheric state</small></button>
+        <button data-command-target="loreBtn"><span>⌬</span><strong>LORE ARCHIVE</strong><small>Review rare recovered transmissions</small></button>
+        <button data-command-target="operatorBtn"><span>◎</span><strong>OPERATOR MEMORY</strong><small>Listening time, contacts and rank</small></button>
+        <button data-command-target="shareSignalBtn"><span>↗</span><strong>SHARE SIGNAL</strong><small>Create a world transmission card</small></button>
+        <button data-command-target="ambientModeBtn"><span>⛶</span><strong>AMBIENT MODE</strong><small>Immersive full-screen world view</small></button>
+        <button data-command-target="sleepModeBtn"><span>◐</span><strong>SLEEP CHAMBER</strong><small>Enter the current world's sleep space</small></button>
+        <button data-command-target="settingsBtn"><span>⚙</span><strong>SETTINGS</strong><small>Audio, performance and app controls</small></button>
+      </div>
+    </div>
+  </aside>
+
   <div id="toast" class="toast" role="status"></div>
   <script src="app.js"></script>
 </body>

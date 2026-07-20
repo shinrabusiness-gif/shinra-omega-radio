@@ -1188,3 +1188,53 @@ const omegaBaseStopAudio=stopAudio;stopAudio=function(...args){if(journeyActive)
 $('#journeyBtn')?.addEventListener('click',openJourneys);$('#closeJourney')?.addEventListener('click',closeJourneys);$('#startJourney')?.addEventListener('click',startJourney);$('#journeyHudOpen')?.addEventListener('click',openJourneys);$('#journeySkip')?.addEventListener('click',skipJourneyPhase);$('#journeyStop')?.addEventListener('click',()=>endJourney(false));$('#journeyOverlay')?.addEventListener('click',e=>{if(e.target.id==='journeyOverlay')closeJourneys()});
 window.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='j'&&e.target.tagName!=='INPUT'&&e.target.tagName!=='SELECT')openJourneys();if(e.key==='Escape'&&document.body.classList.contains('journey-open'))closeJourneys()});
 renderJourneySelection();
+
+
+/* ===== MOBILE CORE HOTFIX 6.2 ===== */
+(()=>{
+  const root=document.documentElement;
+  const body=document.body;
+  const shell=document.querySelector('.shell');
+  const overlay=document.getElementById('commandMenuOverlay');
+  const openBtn=document.getElementById('commandMenuBtn');
+  const closeBtn=document.getElementById('closeCommandMenu');
+
+  function normalizeMobileLayout(){
+    root.style.width='100%';
+    root.style.maxWidth='100%';
+    body.style.width='100%';
+    body.style.maxWidth='100%';
+    if(shell){
+      shell.style.removeProperty('transform');
+      shell.style.removeProperty('zoom');
+    }
+  }
+  function openCommandMenu(){
+    if(!overlay)return;
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    body.classList.add('command-menu-open');
+  }
+  function closeCommandMenu(){
+    if(!overlay)return;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    body.classList.remove('command-menu-open');
+  }
+  normalizeMobileLayout();
+  window.addEventListener('resize',normalizeMobileLayout,{passive:true});
+  window.visualViewport?.addEventListener('resize',normalizeMobileLayout,{passive:true});
+  openBtn?.addEventListener('click',openCommandMenu);
+  closeBtn?.addEventListener('click',closeCommandMenu);
+  overlay?.addEventListener('click',e=>{if(e.target===overlay)closeCommandMenu()});
+  overlay?.querySelectorAll('[data-command-target]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const target=document.getElementById(button.dataset.commandTarget);
+      closeCommandMenu();
+      requestAnimationFrame(()=>target?.click());
+    });
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&overlay?.classList.contains('open')){e.preventDefault();closeCommandMenu()}
+  });
+})();

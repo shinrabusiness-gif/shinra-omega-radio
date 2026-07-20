@@ -1,4 +1,4 @@
-const CACHE='shinra-omega-journeys-6.1';
+const CACHE='shinra-omega-mobile-core-hotfix-6.2';
 const ASSETS=['./','./index.html','./style.css','./app.js','./manifest.json','./icon-192.png','./icon-512.png','./shinra-symbol.png','./shinra-omega-logo.png','./sample-forest.wav','./sample-rain.wav','./sample-ocean.wav','./sample-radio.wav','./sample-wood.wav','./sample-bell.wav','./sample-bamboo.wav'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)))});
 self.addEventListener('message',event=>{if(event.data&&event.data.type==='SKIP_WAITING')self.skipWaiting()});

@@ -1,11 +1,11 @@
 {
   "name": "Shinra Omega Radio — Master",
   "short_name": "Shinra Ω",
-  "description": "Seven living transmissions from forgotten worlds.",
+  "description": "Seven living transmissions with curated multi-world Omega Journeys.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#07080b",
   "theme_color": "#07080b",
   "lang": "de",

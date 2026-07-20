@@ -14,6 +14,8 @@
 <body data-world="black-sun">
   <canvas id="visualizer" aria-hidden="true"></canvas>
   <div class="world-fx" aria-hidden="true"><div class="stars"></div><div class="grid"></div><div class="grain"></div></div>
+  <div class="time-cycle-layer" aria-hidden="true"><i class="time-sun"></i><b class="time-horizon"></b><em class="time-vignette"></em></div>
+  <div class="weather-cycle-layer" aria-hidden="true"><i class="weather-haze"></i><b class="weather-stream s1"></b><b class="weather-stream s2"></b><b class="weather-stream s3"></b><em class="weather-particle p1"></em><em class="weather-particle p2"></em><em class="weather-particle p3"></em></div>
   <div id="boot" class="boot awaiting" role="dialog" aria-label="Shinra Omega Radio startet" aria-modal="true">
     <div class="boot-aura" aria-hidden="true"></div>
     <div class="boot-stage">
@@ -36,7 +38,7 @@
     <header class="topbar glass">
       <button class="brand" id="brandBtn" aria-label="Shinra Omega Radio Startseite"><img class="brand-logo" src="shinra-symbol.png" alt=""><span><small>SHINRA SIGNAL NETWORK</small><b>SHINRA OMEGA RADIO</b></span></button>
       <div class="status"><span id="netDot" class="dot"></span><span id="netLabel">ONLINE</span></div>
-      <div class="top-actions"><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="settingsBtn" class="icon-btn" aria-label="Einstellungen" title="Einstellungen">⚙</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
+      <div class="top-actions"><button id="journeyBtn" class="icon-btn journey-btn" aria-label="Omega Journeys" title="Omega Journeys">⟡<span id="journeyDot"></span></button><button id="listeningModeBtn" class="icon-btn listening-mode-btn" aria-label="Listening Modes" title="Listening Modes">◈<span id="listeningModeDot"></span></button><button id="langBtn" class="chip">DE</button><button id="installBtn" class="chip" hidden>INSTALL</button><button id="fusionBtn" class="icon-btn fusion-btn" aria-label="World Fusion" title="World Fusion">∞<span id="fusionDot"></span></button><button id="shareSignalBtn" class="icon-btn share-signal-btn" aria-label="Share Signal" title="Share Signal">↗</button><button id="ritualBtn" class="icon-btn ritual-btn" aria-label="Omega Rituals" title="Omega Rituals">⟁<span id="ritualDot"></span></button><button id="weatherBtn" class="icon-btn weather-btn" aria-label="World Weather" title="World Weather">☼<span id="weatherDot"></span></button><button id="scannerBtn" class="icon-btn scanner-btn" aria-label="Signal Scanner" title="Signal Scanner">⌖<span id="scannerCount">0</span></button><button id="operatorBtn" class="icon-btn operator-btn" aria-label="Operator Memory" title="Operator Memory">◎</button><button id="loreBtn" class="icon-btn lore-btn" aria-label="Transmission Archive" title="Transmission Archive">⌬<span id="loreCount">0</span></button><button id="ambientModeBtn" class="icon-btn" aria-label="Ambient-Modus" title="Ambient-Modus">⛶</button><button id="settingsBtn" class="icon-btn" aria-label="Einstellungen" title="Einstellungen">⚙</button><button id="sleepModeBtn" class="icon-btn" aria-label="Schlafmodus">◐</button></div>
     </header>
 
     <section class="hero glass"><img class="hero-brand-watermark" src="shinra-symbol.png" alt="" aria-hidden="true">
@@ -136,7 +138,24 @@
       </div>
       <div class="hero-copy"><p id="worldCode" class="eyebrow">CHANNEL 01 / ORIGIN</p><h1 id="worldTitle">BLACK SUN</h1><p id="worldSubtitle">Low-frequency transmissions beneath a dead horizon.</p><div class="tags"><span id="genreTag">DARK AMBIENT</span><span id="bpmTag">48 BPM</span><span id="modeTag">PROCEDURAL</span></div></div>
       <div class="reactor-wrap"><div id="reactor" class="reactor"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><div class="core" aria-hidden="true"><span></span></div></div></div>
-      <div class="signal-box"><small>SIGNAL</small><strong id="signalValue">STANDBY</strong><div class="meter"><i id="signalMeter"></i></div></div>
+      <div class="signal-box"><small>SIGNAL</small><strong id="signalValue">STANDBY</strong><div class="meter"><i id="signalMeter"></i></div><div class="evolution-readout"><small>WORLD STATE</small><strong id="evolutionState">DORMANT</strong><div class="evolution-meter"><i id="evolutionMeter"></i></div><span id="evolutionNext">START TRANSMISSION</span></div><div class="time-readout"><small>LOCAL CYCLE</small><strong id="timeState">SCANNING</strong><span id="timeClock">--:--</span></div><div class="weather-readout"><small>WORLD WEATHER</small><strong id="weatherState">CALIBRATING</strong><span id="weatherMetric">--</span></div></div><div class="evolution-aura" aria-hidden="true"></div><div id="evolutionSignal" class="evolution-signal" aria-hidden="true" role="status"><small>WORLD EVOLUTION</small><strong id="evolutionSignalTitle">AWAKENING</strong><span id="evolutionSignalText">The transmission is changing.</span></div>
+      <div id="ambientHud" class="ambient-hud" aria-hidden="true">
+        <div class="ambient-shade top"></div>
+        <div class="ambient-shade bottom"></div>
+        <div class="ambient-topline">
+          <div class="ambient-brand"><img src="shinra-symbol.png" alt=""><span><small>SHINRA SIGNAL NETWORK</small><b>AMBIENT TRANSMISSION</b></span></div>
+          <div class="ambient-actions"><span id="ambientStatus">STANDBY</span><button id="exitAmbientBtn" class="ambient-exit" aria-label="Ambient-Modus verlassen">EXIT</button></div>
+        </div>
+        <div class="ambient-bottomline">
+          <div class="ambient-copy"><small id="ambientCode">CHANNEL 01 / ORIGIN</small><h2 id="ambientTitle">BLACK SUN</h2><p id="ambientTrack">CORE DRIFT</p><span id="ambientEvolution" class="ambient-evolution">STATE · DORMANT</span><span id="ambientTime" class="ambient-time">LOCAL CYCLE · SCANNING</span><span id="ambientWeather" class="ambient-weather">WORLD WEATHER · CALIBRATING</span></div>
+          <div class="ambient-transport" aria-label="Ambient-Steuerung">
+            <button id="ambientPrevBtn" aria-label="Vorherige Welt">‹</button>
+            <button id="ambientPlayBtn" class="ambient-play" aria-label="Wiedergabe starten">▶</button>
+            <button id="ambientNextBtn" aria-label="Nächste Welt">›</button>
+          </div>
+        </div>
+        <div class="ambient-hint">TAP TO REVEAL CONTROLS · SWIPE TO CHANGE WORLD</div>
+      </div>
     </section>
 
     <nav id="worlds" class="worlds" aria-label="Sender"></nav>
@@ -147,7 +166,7 @@
         <button id="playBtn" class="round play" aria-label="Wiedergabe starten"><span id="playIcon">▶</span></button>
         <button id="nextBtn" class="round secondary" aria-label="Nächster Sender">›</button><button id="favoriteBtn" class="round secondary utility" aria-label="Sender favorisieren" title="Favorit">♡</button><button id="shuffleBtn" class="round secondary utility" aria-label="Zufallsmodus" title="Zufallsmodus">⌁</button>
       </div>
-      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong>
+      <div class="now"><small>NOW TRANSMITTING</small><strong id="nowTitle">BLACK SUN — CORE DRIFT</strong><span id="listeningModeBadge" class="listening-mode-badge">BALANCED</span>
         <div class="bs-mini-signal" aria-hidden="true">
           <span class="bs-mini-horizon"></span>
           <span class="bs-mini-sun"><i></i><b></b><em></em></span>
@@ -233,6 +252,7 @@
           <span class="srv-mini-wave w1"></span><span class="srv-mini-wave w2"></span><span class="srv-mini-wave w3"></span>
           <span class="srv-mini-leaf l1"></span><span class="srv-mini-leaf l2"></span><span class="srv-mini-leaf l3"></span>
         </div>
+        <div id="fusionBadge" class="fusion-badge" aria-hidden="true"><small>WORLD FUSION</small><strong id="fusionBadgeText">BLACK SUN × AQUATOC</strong></div>
         <div class="progress"><i id="progressBar"></i></div><div class="time"><span id="elapsed">00:00</span><span>∞</span></div></div>
       <div class="volume"><span>VOL</span><input id="volume" type="range" min="0" max="1" value="0.72" step="0.01" aria-label="Lautstärke"><output id="volumeOut">72</output></div>
     </section>
@@ -240,13 +260,21 @@
     <section class="panels">
       <article class="panel glass"><div class="panel-head"><div><p class="eyebrow">SONIC CONTROL</p><h2>3-BAND EQUALIZER</h2></div><button id="resetEq" class="text-btn">RESET</button></div><div class="eq" id="eq"></div></article>
       <article class="panel glass"><div class="panel-head"><div><p class="eyebrow">ATMOSPHERE</p><h2>SIGNAL LAYERS</h2></div><span id="layerState">ACTIVE</span></div><div class="layers" id="layers"></div></article>
-      <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button></article>
+      <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><div class="mode-buttons"><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button><button id="ambientPanelBtn" class="wide-btn ambient-entry">ENTER AMBIENT MODE</button></div></article>
     </section>
 
-    <section class="system glass"><div><small>CORE VERSION</small><b>4.6 OMEGA UPDATE SIGNAL</b></div><div><small>AUDIO ENGINE</small><b>WEB AUDIO</b></div><div><small>MEMORY</small><b id="memoryLabel">LOCAL + FAVORITES</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b>6.1 OMEGA JOURNEYS</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WEB AUDIO + SAMPLES</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
+
+  <aside id="ritualHud" class="ritual-hud" aria-hidden="true" role="status">
+    <div class="ritual-hud-mark" aria-hidden="true"><i></i><b></b><em></em></div>
+    <div class="ritual-hud-copy"><small id="ritualHudWorld">CHANNEL 01 · RITUAL</small><strong id="ritualHudPhase">AWAKENING</strong></div>
+    <span id="ritualHudTime">10:00</span>
+    <div class="ritual-hud-progress"><i id="ritualHudBar"></i></div>
+    <button id="ritualEndBtn" aria-label="Ritual beenden">END</button>
+  </aside>
 
   <aside id="worldGate" class="world-gate" aria-hidden="true">
     <div class="gate-field"></div>
@@ -254,6 +282,7 @@
     <p class="eyebrow">ENTERING TRANSMISSION</p>
     <h2 id="gateTitle">BLACK SUN</h2>
     <small id="gateGenre">DARK AMBIENT</small>
+    <p id="gateQuote" class="gate-quote">The horizon keeps what the fire forgot.</p>
   </aside>
 
   <aside id="sleepOverlay" class="sleep-overlay" aria-hidden="true">
@@ -280,7 +309,130 @@
       <div class="srv-sleep-sun"><i></i><b></b><em></em></div><div class="srv-sleep-ray r1"></div><div class="srv-sleep-ray r2"></div><div class="srv-sleep-ray r3"></div><div class="srv-sleep-trunk t1"></div><div class="srv-sleep-trunk t2"></div><div class="srv-sleep-trunk t3"></div><div class="srv-sleep-path"></div><span class="srv-sleep-leaf l1"></span><span class="srv-sleep-leaf l2"></span><span class="srv-sleep-leaf l3"></span>
     </div>
     <button id="exitSleepBtn" class="sleep-exit">EXIT</button>
-    <div class="sleep-content"><p id="sleepCode" class="eyebrow">CHANNEL 01</p><h2 id="sleepTitle">BLACK SUN</h2><div class="sleep-orb"><i></i></div><p id="sleepTimerText">NO TIMER</p><button id="sleepPlayBtn" class="round play">▶</button></div></aside>
+    <div class="sleep-content"><p id="sleepCode" class="eyebrow">CHANNEL 01</p><h2 id="sleepTitle">BLACK SUN</h2><div class="sleep-orb"><i></i></div><p id="sleepTimerText">NO TIMER</p><small id="sleepEvolution" class="sleep-evolution">WORLD STATE · DORMANT</small><small id="sleepTime" class="sleep-time">LOCAL CYCLE · SCANNING</small><small id="sleepWeather" class="sleep-weather">WORLD WEATHER · CALIBRATING</small><button id="sleepPlayBtn" class="round play">▶</button></div></aside>
+
+  <aside id="ritualOverlay" class="ritual-overlay" aria-hidden="true">
+    <div class="ritual-card glass" role="dialog" aria-modal="true" aria-labelledby="ritualTitle">
+      <div class="ritual-head">
+        <div><p class="eyebrow">GUIDED SIGNAL JOURNEYS</p><h2 id="ritualTitle">OMEGA RITUALS</h2><small id="ritualWorldLabel">CURRENT WORLD · BLACK SUN</small></div>
+        <button id="closeRitual" class="icon-btn" aria-label="Omega Rituals schließen">×</button>
+      </div>
+      <section class="ritual-emblem-zone">
+        <div class="ritual-emblem" aria-hidden="true"><i></i><b></b><em></em><span></span></div>
+        <div><small>ACTIVE TRANSMISSION</small><h3 id="ritualWorldName">BLACK SUN</h3><p id="ritualWorldText">A guided passage through the current world.</p></div>
+      </section>
+      <section class="ritual-lengths" aria-label="Ritualdauer">
+        <button class="ritual-length active" data-ritual-minutes="10"><small>10 MIN</small><strong>SUNRISE OATH</strong><span>Brief grounding ritual</span></button>
+        <button class="ritual-length" data-ritual-minutes="20"><small>20 MIN</small><strong>DEEP PASSAGE</strong><span>Full four-phase journey</span></button>
+        <button class="ritual-length" data-ritual-minutes="30"><small>30 MIN</small><strong>OMEGA VIGIL</strong><span>Extended immersive session</span></button>
+      </section>
+      <section class="ritual-phases">
+        <div><i>01</i><span><strong>AWAKENING</strong><small>Signal and breath enter alignment</small></span></div>
+        <div><i>02</i><span><strong>DESCENT</strong><small>The world opens beneath the surface</small></span></div>
+        <div><i>03</i><span><strong>TRANSMISSION</strong><small>The central frequency is revealed</small></span></div>
+        <div><i>04</i><span><strong>DISSOLVE</strong><small>The signal returns to silence</small></span></div>
+      </section>
+      <div class="ritual-status-row"><span id="ritualHistory">0 RITUALS COMPLETED</span><span>R opens Rituals</span></div>
+      <button id="startRitual" class="ritual-start">BEGIN 10 MIN RITUAL</button>
+    </div>
+  </aside>
+
+
+  <aside id="rareEventOverlay" class="rare-event-overlay" aria-hidden="true">
+    <div class="rare-event-fx" aria-hidden="true">
+      <span class="refx refx-1"></span><span class="refx refx-2"></span><span class="refx refx-3"></span>
+      <i class="refx-line line-1"></i><i class="refx-line line-2"></i><i class="refx-line line-3"></i>
+      <b class="refx-core"></b><em class="refx-halo"></em>
+    </div>
+    <div class="rare-event-copy">
+      <small>RARE WORLD EVENT</small>
+      <h2 id="rareEventTitle">ECLIPSE CROWN</h2>
+      <p id="rareEventText">The dead horizon closes around the signal.</p>
+      <span id="rareEventCount">EVENT 01</span>
+    </div>
+    <button id="dismissRareEvent" class="rare-event-dismiss" aria-label="Rare Event schließen">×</button>
+  </aside>
+
+
+
+  <aside id="fusionOverlay" class="fusion-overlay" aria-hidden="true">
+    <div class="fusion-panel glass" role="dialog" aria-modal="true" aria-labelledby="fusionTitle">
+      <div class="fusion-head">
+        <div><p class="eyebrow">OMEGA CONVERGENCE ENGINE</p><h2 id="fusionTitle">WORLD FUSION</h2><small>TWO WORLDS · ONE LIVING TRANSMISSION</small></div>
+        <button id="closeFusion" class="icon-btn" aria-label="World Fusion schließen">×</button>
+      </div>
+      <section class="fusion-hero">
+        <div class="fusion-world primary"><small>PRIMARY WORLD</small><div class="fusion-orb"><i></i><b></b><em></em></div><strong id="fusionPrimaryName">BLACK SUN</strong><span id="fusionPrimaryGenre">DARK AMBIENT</span></div>
+        <div class="fusion-link" aria-hidden="true"><i></i><b>∞</b><em></em></div>
+        <div class="fusion-world secondary"><small>SECONDARY WORLD</small><div class="fusion-orb"><i></i><b></b><em></em></div><strong id="fusionSecondaryName">AQUATOC</strong><span id="fusionSecondaryGenre">AQUATIC INDUSTRIAL</span></div>
+      </section>
+      <section class="fusion-identity">
+        <small>CONVERGENCE IDENTITY</small><h3 id="fusionRecipeName">DROWNED ECLIPSE</h3><p id="fusionRecipeText">A dead sun sinking beneath impossible pressure.</p>
+      </section>
+      <section><div class="fusion-section-head"><div><small>SECONDARY SIGNAL</small><h3>SELECT A WORLD</h3></div><b id="fusionSelectionCount">01 / 06</b></div><div id="fusionWorldGrid" class="fusion-world-grid"></div></section>
+      <section class="fusion-mix"><label for="fusionMix"><span><small>FUSION INTENSITY</small><strong id="fusionMixLabel">32%</strong></span><input id="fusionMix" type="range" min="15" max="55" step="1" value="32"></label><p>Lower values preserve the primary world. Higher values reveal more of the secondary signal.</p></section>
+      <div class="fusion-actions"><button id="toggleFusionBtn" class="fusion-primary">ACTIVATE FUSION</button><span>Y opens World Fusion · selection is stored locally</span></div>
+    </div>
+  </aside>
+
+
+
+
+  <aside id="journeyOverlay" class="journey-overlay" aria-hidden="true">
+    <div class="journey-card glass" role="dialog" aria-modal="true" aria-labelledby="journeyTitle">
+      <div class="journey-head">
+        <div><p class="eyebrow">CURATED WORLD PASSAGES</p><h2 id="journeyTitle">OMEGA JOURNEYS</h2><small>Several worlds · one continuous passage</small></div>
+        <button id="closeJourney" class="icon-btn" aria-label="Omega Journeys schließen">×</button>
+      </div>
+      <section class="journey-intro">
+        <div class="journey-compass" aria-hidden="true"><i></i><b></b><em></em><span>⟡</span></div>
+        <div><small>ACTIVE SIGNAL PATH</small><h3 id="journeySelectedName">SUNRISE OATH</h3><p id="journeySelectedText">A rooted passage from forest resolve into ancestral stone and open light.</p></div>
+        <strong id="journeySelectedDuration">20 MIN</strong>
+      </section>
+      <section><div class="journey-section-head"><div><small>SELECT PASSAGE</small><h3>CURATED ROUTES</h3></div><b id="journeyHistory">0 COMPLETED</b></div><div id="journeyGrid" class="journey-grid"></div></section>
+      <section class="journey-route-panel"><small>WORLD SEQUENCE</small><div id="journeyRoute" class="journey-route"></div></section>
+      <div class="journey-actions"><button id="startJourney" class="journey-primary">BEGIN JOURNEY</button><span>J opens Omega Journeys · audio pauses the route without losing progress</span></div>
+    </div>
+  </aside>
+
+  <aside id="journeyHud" class="journey-hud" aria-hidden="true">
+    <button id="journeyHudOpen" class="journey-hud-main" aria-label="Aktive Omega Journey öffnen">
+      <span class="journey-hud-emblem">⟡</span>
+      <span><small id="journeyHudLabel">OMEGA JOURNEY</small><strong id="journeyHudWorld">SUNROOT VALE</strong><em id="journeyHudPhase">01 / 03 · SUNRISE OATH</em></span>
+      <b id="journeyHudTime">20:00</b>
+    </button>
+    <div class="journey-hud-progress"><i id="journeyHudBar"></i></div>
+    <div class="journey-hud-controls"><button id="journeySkip" type="button">NEXT WORLD</button><button id="journeyStop" type="button">END</button></div>
+  </aside>
+
+  <aside id="listeningModeOverlay" class="listening-mode-overlay" aria-hidden="true">
+    <div class="listening-mode-card glass" role="dialog" aria-modal="true" aria-labelledby="listeningModeTitle">
+      <div class="listening-mode-head">
+        <div><p class="eyebrow">OMEGA MIX CONTROL</p><h2 id="listeningModeTitle">LISTENING MODES</h2><small>One transmission · four ways to enter it</small></div>
+        <button id="closeListeningMode" class="icon-btn" aria-label="Listening Modes schließen">×</button>
+      </div>
+      <section id="listeningModeGrid" class="listening-mode-grid">
+        <button class="listening-mode-option" data-listening-mode="balanced">
+          <i>◎</i><span><small>ORIGINAL SIGNAL</small><strong>BALANCED</strong><em>Unveränderte Weltmischung mit allen Systemen aktiv.</em></span><b>01</b>
+        </button>
+        <button class="listening-mode-option" data-listening-mode="focus">
+          <i>◇</i><span><small>CONCENTRATION FIELD</small><strong>DEEP FOCUS</strong><em>Ruhigeres Bild, zentrierter Klang und weniger Ablenkung.</em></span><b>02</b>
+        </button>
+        <button class="listening-mode-option" data-listening-mode="sleep">
+          <i>◐</i><span><small>NIGHT PROTOCOL</small><strong>SLEEP</strong><em>Sanftere Höhen, dunklere Visuals und keine Rare Events.</em></span><b>03</b>
+        </button>
+        <button class="listening-mode-option" data-listening-mode="cinematic">
+          <i>◆</i><span><small>FULL SPECTRUM</small><strong>CINEMATIC</strong><em>Breitere Schichten, stärkere Tiefe und volle Ereignisdichte.</em></span><b>04</b>
+        </button>
+      </section>
+      <section class="listening-mode-status">
+        <div><small>ACTIVE MODE</small><strong id="listeningModeActive">BALANCED</strong></div>
+        <div><small>AUDIO RESPONSE</small><strong id="listeningModeAudio">NEUTRAL</strong></div>
+        <div><small>EVENT DENSITY</small><strong id="listeningModeEvents">STANDARD</strong></div>
+      </section>
+      <div class="listening-mode-footer"><span>M opens Listening Modes · transitions are stored locally</span></div>
+    </div>
+  </aside>
 
   <aside id="settingsOverlay" class="settings-overlay" aria-hidden="true">
     <div class="settings-card glass" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
@@ -290,9 +442,193 @@
         <label class="setting-row"><span><b>RUHIGE ANIMATIONEN</b><small>Weniger Bewegung und Effekte</small></span><input id="settingReduced" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>LETZTEN SENDER MERKEN</b><small>Beim nächsten Start wieder auswählen</small></span><input id="settingRemember" type="checkbox" role="switch"></label>
         <label class="setting-row"><span><b>SHUFFLE BEIM START</b><small>Zufallsmodus automatisch aktivieren</small></span><input id="settingShuffle" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>RARE TRANSMISSIONS</b><small>Seltene Weltmeldungen während laufender Sender</small></span><input id="settingRare" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>RARE WORLD EVENTS</b><small>Seltene visuelle und klangliche Anomalien pro Welt</small></span><input id="settingRareEvents" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>WORLD EVOLUTION</b><small>Welten entwickeln sich nach 5, 15 und 30 Minuten</small></span><input id="settingEvolution" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>HYBRID AUDIO LAYER</b><small>Offline-Sampletexturen ergänzen die prozedurale Klangengine</small></span><input id="settingHybrid" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>DYNAMIC TIME MODE</b><small>Licht und Klangfarbe folgen deiner lokalen Tageszeit</small></span><input id="settingTimeMode" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>WORLD WEATHER</b><small>Lebendige atmosphärische Bedingungen pro Welt</small></span><input id="settingWeather" type="checkbox" role="switch"></label>
+        <label class="setting-row"><span><b>RITUAL COMPLETION</b><small>Audio nach einer abgeschlossenen Klangreise sanft beenden</small></span><input id="settingRitualStop" type="checkbox" role="switch"></label>
+        <label class="setting-row setting-select"><span><b>PERFORMANCE PROFILE</b><small>AUTO passt Visuals und Audio an das Gerät an</small></span><select id="settingPerformance"><option value="auto">AUTO</option><option value="quality">QUALITY</option><option value="balanced">BALANCED</option><option value="battery">BATTERY</option></select></label>
         <label class="setting-row setting-select"><span><b>STANDARD SLEEP-TIMER</b><small>Wird beim Start vorbereitet</small></span><select id="settingTimer"><option value="0">AUS</option><option value="15">15 MIN</option><option value="30">30 MIN</option><option value="45">45 MIN</option><option value="60">60 MIN</option><option value="90">90 MIN</option></select></label>
       </div>
       <div class="settings-actions"><button id="resetAppData" class="danger-btn">APP-DATEN ZURÜCKSETZEN</button><button id="saveSettings" class="wide-btn">SPEICHERN</button></div>
+    </div>
+  </aside>
+
+
+
+  <aside id="weatherOverlay" class="weather-overlay" aria-hidden="true">
+    <div class="weather-card glass" role="dialog" aria-modal="true" aria-labelledby="weatherTitle">
+      <div class="weather-head">
+        <div><p class="eyebrow">ATMOSPHERIC MONITOR</p><h2 id="weatherTitle">WORLD WEATHER</h2><small id="weatherUpdated">LIVE WORLD CONDITIONS</small></div>
+        <button id="closeWeather" class="icon-btn" aria-label="World Weather schließen">×</button>
+      </div>
+      <section class="weather-hero-panel">
+        <div class="weather-emblem" aria-hidden="true"><i></i><b></b><em></em></div>
+        <div class="weather-world-copy"><small id="weatherWorldCode">CHANNEL 01 / ORIGIN</small><h3 id="weatherWorldName">BLACK SUN</h3><strong id="weatherCondition">ASH VEIL</strong><p id="weatherNarrative">The dead horizon is holding its breath.</p></div>
+        <div class="weather-intensity"><small>ATMOSPHERIC FORCE</small><b id="weatherIntensity">42</b><span>%</span><div class="weather-force-meter"><i id="weatherForceBar"></i></div></div>
+      </section>
+      <section id="weatherMetrics" class="weather-metrics"></section>
+      <section class="weather-forecast">
+        <div><small>NEXT SHIFT</small><strong id="weatherNextShift">09:59</strong></div>
+        <div><small>TREND</small><strong id="weatherTrend">STABLE</strong></div>
+        <div><small>AUDIO RESPONSE</small><strong id="weatherAudioState">SUBTLE</strong></div>
+      </section>
+      <div class="weather-actions"><button id="refreshWeather" class="wide-btn">RECALIBRATE ATMOSPHERE</button><span>W opens World Weather · conditions shift gradually</span></div>
+    </div>
+  </aside>
+
+
+  <aside id="scannerOverlay" class="scanner-overlay" aria-hidden="true">
+    <div class="scanner-card glass" role="dialog" aria-modal="true" aria-labelledby="scannerTitle">
+      <div class="scanner-head">
+        <div><p class="eyebrow">OMEGA FREQUENCY SEARCH</p><h2 id="scannerTitle">SIGNAL SCANNER</h2><small id="scannerRecovered">0 / 14 LOST FREQUENCIES RECOVERED</small></div>
+        <button id="closeScanner" class="icon-btn" aria-label="Signal Scanner schließen">×</button>
+      </div>
+      <section class="scanner-hero">
+        <div class="scanner-array" aria-hidden="true"><i></i><b></b><em></em><span></span><u></u></div>
+        <div class="scanner-world-lock"><small>LOCKED WORLD BAND</small><strong id="scannerWorld">BLACK SUN</strong><span id="scannerWorldCode">CHANNEL 01 / ORIGIN</span><p id="scannerBand">18.70 — 31.40 Hz</p></div>
+        <div class="scanner-frequency"><small>LIVE FREQUENCY</small><b id="scannerFrequency">18.70</b><span id="scannerUnit">Hz</span></div>
+      </section>
+      <div class="scanner-progress"><i id="scannerProgressBar"></i></div>
+      <section id="scannerResult" class="scanner-result idle"><small>SCANNER READY</small><h3>SEARCH THE CURRENT WORLD BAND</h3><p>Each world holds two buried frequency signatures. Begin its transmission, then scan the active band.</p></section>
+      <div class="scanner-controls"><button id="startScanner" class="wide-btn">START WORLD SCAN</button><span id="scannerHint">X opens the scanner · each scan takes about 9 seconds</span></div>
+      <section class="scanner-memory"><div class="scanner-memory-head"><div><small>FREQUENCY MEMORY</small><h3>RECOVERED SIGNATURES</h3></div><b id="scannerTotal">0 / 14</b></div><div id="scannerArchive" class="scanner-archive"></div></section>
+      <p class="scanner-foot">Scanner memory remains on this device. No account. No cloud.</p>
+    </div>
+  </aside>
+
+
+  <aside id="diagnosticsOverlay" class="diagnostics-overlay" aria-hidden="true">
+    <div class="diagnostics-card glass" role="dialog" aria-modal="true" aria-labelledby="diagnosticsTitle">
+      <div class="diagnostics-head">
+        <div><p class="eyebrow">OMEGA SYSTEM ANALYSIS</p><h2 id="diagnosticsTitle">PERFORMANCE + DIAGNOSTICS</h2><small>LIVE DEVICE · AUDIO · CACHE · PWA STATUS</small></div>
+        <button id="closeDiagnostics" class="icon-btn" aria-label="Systemdiagnose schließen">×</button>
+      </div>
+      <section class="diagnostics-hero">
+        <div class="diagnostics-orbit" aria-hidden="true"><i></i><b></b><em></em><span>Ω</span></div>
+        <div><small>ACTIVE PERFORMANCE PROFILE</small><strong id="diagProfile">AUTO · SCANNING</strong><p id="diagReason">Analyzing device capability…</p></div>
+        <div class="diagnostics-live"><small>LIVE FPS</small><b id="diagFps">--</b><span id="diagHealth">CHECKING</span></div>
+      </section>
+      <section class="diagnostics-grid">
+        <article><small>AUDIO CONTEXT</small><strong id="diagAudio">NOT STARTED</strong><span id="diagAudioDetail">Web Audio available</span></article>
+        <article><small>ACTIVE AUDIO NODES</small><strong id="diagNodes">0</strong><span id="diagNodeDetail">Procedural + hybrid</span></article>
+        <article><small>OFFLINE SAMPLES</small><strong id="diagSamples">0 / 7</strong><span id="diagSampleDetail">Waiting for audio start</span></article>
+        <article><small>SERVICE WORKER</small><strong id="diagWorker">CHECKING</strong><span id="diagWorkerDetail">PWA core status</span></article>
+        <article><small>CACHE STORAGE</small><strong id="diagCache">CHECKING</strong><span id="diagCacheDetail">Offline asset vault</span></article>
+        <article><small>DEVICE STORAGE</small><strong id="diagStorage">CHECKING</strong><span id="diagStorageDetail">Browser allocation</span></article>
+        <article><small>NETWORK</small><strong id="diagNetwork">CHECKING</strong><span id="diagNetworkDetail">Connection state</span></article>
+        <article><small>DEVICE CAPABILITY</small><strong id="diagDevice">CHECKING</strong><span id="diagDeviceDetail">Memory and CPU</span></article>
+        <article><small>DISPLAY PIPELINE</small><strong id="diagViewport">CHECKING</strong><span id="diagViewportDetail">Resolution and pixel ratio</span></article>
+        <article><small>BATTERY SIGNAL</small><strong id="diagBattery">UNKNOWN</strong><span id="diagBatteryDetail">Battery API may be unavailable</span></article>
+        <article><small>MOTION MODE</small><strong id="diagMotion">FULL</strong><span id="diagMotionDetail">Animation preference</span></article>
+        <article><small>UPDATE CHANNEL</small><strong id="diagUpdate">CURRENT</strong><span id="diagUpdateDetail">Omega 5.8</span></article>
+        <article><small>LOCAL TIME CYCLE</small><strong id="diagTime">SCANNING</strong><span id="diagTimeDetail">Dynamic world lighting</span></article>
+      </section>
+      <section class="diagnostics-actions">
+        <button id="runDiagnostics" class="wide-btn">RUN SYSTEM CHECK</button>
+        <button id="copyDiagnostics">COPY REPORT</button>
+        <button id="cleanOldCaches">CLEAN OLD CACHES</button>
+      </section>
+      <p class="diagnostics-foot">No diagnostic data leaves this browser. Press D anytime to open this panel.</p>
+    </div>
+  </aside>
+
+  <aside id="operatorOverlay" class="operator-overlay" aria-hidden="true">
+    <div class="operator-card glass" role="dialog" aria-modal="true" aria-labelledby="operatorTitle">
+      <div class="operator-head">
+        <div><p class="eyebrow">SHINRA PERSONAL SIGNAL</p><h2 id="operatorTitle">OPERATOR MEMORY</h2><small>LOCAL STATION RECORD · DEVICE ONLY</small></div>
+        <button id="closeOperator" class="icon-btn" aria-label="Operator Memory schließen">×</button>
+      </div>
+      <section class="operator-identity">
+        <div class="operator-seal" aria-hidden="true"><i></i><b></b><em>Ω</em></div>
+        <div class="operator-call">
+          <small>OPERATOR CALLSIGN</small>
+          <div><input id="operatorCallsign" maxlength="18" autocomplete="off" spellcheck="false" value="SHINRA"><button id="saveCallsign">STORE</button></div>
+          <span id="operatorRank">SIGNAL LISTENER</span>
+        </div>
+      </section>
+      <section class="operator-stats" aria-label="Hörstatistiken">
+        <article><small>TOTAL LISTENING</small><strong id="operatorTotal">00:00</strong></article>
+        <article><small>CURRENT SESSION</small><strong id="operatorCurrent">00:00</strong></article>
+        <article><small>LONGEST SESSION</small><strong id="operatorLongest">00:00</strong></article>
+        <article><small>SESSIONS</small><strong id="operatorSessions">0</strong></article>
+        <article><small>SIGNALS FOUND</small><strong id="operatorSignals">0 / 21</strong></article>
+      </section>
+      <section class="operator-section">
+        <div class="operator-section-head"><div><small>WORLD RESONANCE</small><h3>LISTENING DISTRIBUTION</h3></div><b id="operatorFavorite">NO SIGNAL YET</b></div>
+        <div id="operatorWorlds" class="operator-worlds"></div>
+      </section>
+      <section class="operator-section">
+        <div class="operator-section-head"><div><small>CONTACT RECORD</small><h3>FIRST TRANSMISSIONS</h3></div></div>
+        <div id="operatorContacts" class="operator-contacts"></div>
+      </section>
+      <div class="operator-foot"><span>All memory remains inside this browser. No account. No cloud.</span><button id="resetOperatorMemory">RESET OPERATOR LOG</button></div>
+    </div>
+  </aside>
+
+  <aside id="loreOverlay" class="lore-overlay" aria-hidden="true">
+    <div class="lore-card glass" role="dialog" aria-modal="true" aria-labelledby="loreTitle">
+      <div class="lore-head">
+        <div><p class="eyebrow">SHINRA SIGNAL MEMORY</p><h2 id="loreTitle">TRANSMISSION ARCHIVE</h2><small id="loreProgress">0 / 21 SIGNALS RECOVERED</small></div>
+        <button id="closeLore" class="icon-btn" aria-label="Archiv schließen">×</button>
+      </div>
+      <div class="lore-progress"><i id="loreProgressBar"></i></div>
+      <div id="loreArchive" class="lore-archive"></div>
+      <p class="lore-footnote">Signals are recovered locally on this device. No account. No cloud.</p>
+    </div>
+  </aside>
+
+  <aside id="rareSignal" class="rare-signal" aria-hidden="true" role="status">
+    <div class="rare-static" aria-hidden="true"></div>
+    <div class="rare-mark" aria-hidden="true"><i></i><b></b><em></em></div>
+    <div class="rare-copy">
+      <small>RARE TRANSMISSION DETECTED</small>
+      <span id="rareWorld">CHANNEL 01 / ORIGIN</span>
+      <strong id="rareTitle">ASH PROTOCOL</strong>
+      <p id="rareText">The horizon keeps what the fire forgot.</p>
+    </div>
+    <div class="rare-actions"><button id="rareArchiveBtn">OPEN ARCHIVE</button><button id="closeRareBtn" aria-label="Meldung schließen">×</button></div>
+  </aside>
+
+
+  <aside id="shareOverlay" class="share-overlay" aria-hidden="true">
+    <div class="share-panel glass" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+      <div class="share-head">
+        <div><p class="eyebrow">OMEGA SIGNAL EXPORT</p><h2 id="shareTitle">SHARE SIGNAL</h2><small>GENERATE A CLEAN WORLD TRANSMISSION CARD</small></div>
+        <button id="closeShare" class="icon-btn" aria-label="Share Signal schließen">×</button>
+      </div>
+      <div class="share-layout">
+        <section class="share-preview-wrap">
+          <canvas id="shareCanvas" width="1080" height="1350" aria-label="Vorschau der Signal-Karte"></canvas>
+          <div class="share-preview-glow" aria-hidden="true"></div>
+        </section>
+        <section class="share-controls">
+          <div class="share-current">
+            <small>CURRENT TRANSMISSION</small>
+            <strong id="shareWorldName">BLACK SUN</strong>
+            <span id="shareTrackName">CORE DRIFT</span>
+          </div>
+          <div class="share-formats" aria-label="Bildformat">
+            <button class="active" data-share-format="post"><small>4:5</small><strong>POST</strong></button>
+            <button data-share-format="story"><small>9:16</small><strong>STORY</strong></button>
+          </div>
+          <div class="share-meta-grid">
+            <article><small>WORLD STATE</small><strong id="shareEvolution">DORMANT</strong></article>
+            <article><small>WEATHER</small><strong id="shareWeather">CALIBRATING</strong></article>
+            <article><small>OPERATOR</small><strong id="shareOperator">SHINRA</strong></article>
+            <article><small>STATUS</small><strong id="shareStatus">STANDBY</strong></article>
+          </div>
+          <div class="share-actions">
+            <button id="nativeShareBtn" class="share-primary">SHARE SIGNAL</button>
+            <button id="saveShareBtn">SAVE PNG</button>
+            <button id="copyShareBtn">COPY SIGNAL TEXT</button>
+          </div>
+          <p class="share-note">The image is generated locally. No listening history or private data leaves the device unless you share it.</p>
+          <span class="share-shortcut">P opens Share Signal</span>
+        </section>
+      </div>
     </div>
   </aside>
 

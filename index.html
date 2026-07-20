@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#08090d">
+  <meta name="app-version" content="6.4">
   <meta name="description" content="Shinra Radio – broadcasts from seven forgotten worlds">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png">
@@ -136,6 +137,19 @@
         <span class="srv-hero-leaf l1"></span><span class="srv-hero-leaf l2"></span><span class="srv-hero-leaf l3"></span>
         <span class="srv-hero-mote m1"></span><span class="srv-hero-mote m2"></span><span class="srv-hero-mote m3"></span>
       </div>
+
+      <div id="fusionSceneLayer" class="fusion-scene-layer" aria-hidden="true">
+        <div class="fusion-chroma"></div>
+        <div class="fusion-pair-mark" aria-hidden="true"><i></i><b></b><em></em></div>
+        <div class="fusion-signature fusion-sig-black-sun"><i class="fusion-eclipse"></i><b class="fusion-corona"></b><em class="fusion-ash a1"></em><em class="fusion-ash a2"></em><em class="fusion-ash a3"></em></div>
+        <div class="fusion-signature fusion-sig-aquatoc"><i class="fusion-sonar s1"></i><i class="fusion-sonar s2"></i><i class="fusion-sonar s3"></i><b class="fusion-sonar-core"></b><em class="fusion-bubble b1"></em><em class="fusion-bubble b2"></em><em class="fusion-bubble b3"></em></div>
+        <div class="fusion-signature fusion-sig-crimson-rain"><i class="fusion-neon-gate"></i><b class="fusion-neon-core"></b><em class="fusion-rain r1"></em><em class="fusion-rain r2"></em><em class="fusion-rain r3"></em><em class="fusion-rain r4"></em><em class="fusion-rain r5"></em></div>
+        <div class="fusion-signature fusion-sig-mountain-blood"><i class="fusion-ridge back"></i><i class="fusion-ridge front"></i><b class="fusion-stone-sigil"></b><em class="fusion-ember e1"></em><em class="fusion-ember e2"></em><em class="fusion-ember e3"></em></div>
+        <div class="fusion-signature fusion-sig-starless-void"><i class="fusion-void-core"></i><b class="fusion-void-orbit o1"></b><b class="fusion-void-orbit o2"></b><em class="fusion-star s1"></em><em class="fusion-star s2"></em><em class="fusion-star s3"></em></div>
+        <div class="fusion-signature fusion-sig-celestial-veil"><i class="fusion-halo h1"></i><i class="fusion-halo h2"></i><b class="fusion-light-core"></b><em class="fusion-ray r1"></em><em class="fusion-ray r2"></em><em class="fusion-ray r3"></em></div>
+        <div class="fusion-signature fusion-sig-sunroot-vale"><i class="fusion-sunroot-sun"></i><b class="fusion-tree t1"></b><b class="fusion-tree t2"></b><b class="fusion-tree t3"></b><em class="fusion-leaf l1"></em><em class="fusion-leaf l2"></em><em class="fusion-leaf l3"></em></div>
+        <div class="fusion-hero-identity"><small id="fusionHeroMode">FUSION MATRIX · MERGE</small><strong id="fusionHeroName">OMEGA CONVERGENCE</strong><span id="fusionHeroPair">PRIMARY × SECONDARY</span></div>
+      </div>
       <div class="hero-copy"><p id="worldCode" class="eyebrow">CHANNEL 01 / ORIGIN</p><h1 id="worldTitle">BLACK SUN</h1><p id="worldSubtitle">Low-frequency transmissions beneath a dead horizon.</p><div class="tags"><span id="genreTag">DARK AMBIENT</span><span id="bpmTag">48 BPM</span><span id="modeTag">PROCEDURAL</span></div></div>
       <div class="reactor-wrap"><div id="reactor" class="reactor"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><div class="core" aria-hidden="true"><span></span></div></div></div>
       <div class="signal-box"><small>SIGNAL</small><strong id="signalValue">STANDBY</strong><div class="meter"><i id="signalMeter"></i></div><div class="evolution-readout"><small>WORLD STATE</small><strong id="evolutionState">DORMANT</strong><div class="evolution-meter"><i id="evolutionMeter"></i></div><span id="evolutionNext">START TRANSMISSION</span></div><div class="time-readout"><small>LOCAL CYCLE</small><strong id="timeState">SCANNING</strong><span id="timeClock">--:--</span></div><div class="weather-readout"><small>WORLD WEATHER</small><strong id="weatherState">CALIBRATING</strong><span id="weatherMetric">--</span></div></div><div class="evolution-aura" aria-hidden="true"></div><div id="evolutionSignal" class="evolution-signal" aria-hidden="true" role="status"><small>WORLD EVOLUTION</small><strong id="evolutionSignalTitle">AWAKENING</strong><span id="evolutionSignalText">The transmission is changing.</span></div>
@@ -253,6 +267,8 @@
           <span class="srv-mini-leaf l1"></span><span class="srv-mini-leaf l2"></span><span class="srv-mini-leaf l3"></span>
         </div>
         <div id="fusionBadge" class="fusion-badge" aria-hidden="true"><small>WORLD FUSION</small><strong id="fusionBadgeText">BLACK SUN × AQUATOC</strong></div>
+
+        <div class="fusion-mini-layer" aria-hidden="true"><i></i><b></b><em></em><span></span></div>
         <div class="progress"><i id="progressBar"></i></div><div class="time"><span id="elapsed">00:00</span><span>∞</span></div></div>
       <div class="volume"><span>VOL</span><input id="volume" type="range" min="0" max="1" value="0.72" step="0.01" aria-label="Lautstärke"><output id="volumeOut">72</output></div>
     </section>
@@ -263,7 +279,7 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><div class="mode-buttons"><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button><button id="ambientPanelBtn" class="wide-btn ambient-entry">ENTER AMBIENT MODE</button></div></article>
     </section>
 
-    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b>6.2 MOBILE CORE HOTFIX</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WEB AUDIO + SAMPLES</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b id="coreVersionLabel">6.4 FUSION MATRIX + VERSION SYNC</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WEB AUDIO + SAMPLES</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
@@ -370,7 +386,7 @@
         <small>CONVERGENCE IDENTITY</small><h3 id="fusionRecipeName">DROWNED ECLIPSE</h3><p id="fusionRecipeText">A dead sun sinking beneath impossible pressure.</p>
       </section>
       <section><div class="fusion-section-head"><div><small>SECONDARY SIGNAL</small><h3>SELECT A WORLD</h3></div><b id="fusionSelectionCount">01 / 06</b></div><div id="fusionWorldGrid" class="fusion-world-grid"></div></section>
-      <section class="fusion-mix"><label for="fusionMix"><span><small>FUSION INTENSITY</small><strong id="fusionMixLabel">32%</strong></span><input id="fusionMix" type="range" min="15" max="55" step="1" value="32"></label><p>Lower values preserve the primary world. Higher values reveal more of the secondary signal.</p></section>
+      <section class="fusion-mix"><label for="fusionMix"><span><small>FUSION INTENSITY</small><strong id="fusionMixLabel">55% · MERGE</strong></span><input id="fusionMix" type="range" min="20" max="85" step="1" value="55"></label><div class="fusion-presets" role="group" aria-label="Fusion intensity presets"><button data-fusion-preset="28" data-fusion-mode="echo">ECHO<small>SUBTLE</small></button><button data-fusion-preset="55" data-fusion-mode="merge">MERGE<small>BALANCED</small></button><button data-fusion-preset="82" data-fusion-mode="rift">RIFT<small>INTENSE</small></button></div><p>Echo adds a trace. Merge makes both worlds visible and audible. Rift creates a dominant hybrid signal.</p></section>
       <div class="fusion-actions"><button id="toggleFusionBtn" class="fusion-primary">ACTIVATE FUSION</button><span>Y opens World Fusion · selection is stored locally</span></div>
     </div>
   </aside>

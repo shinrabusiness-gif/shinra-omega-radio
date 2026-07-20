@@ -1808,3 +1808,53 @@ body.director-cue .reactor{animation:directorPulse 1.25s ease-out}body.director-
 @keyframes directorPulse{0%{transform:scale(1);filter:brightness(1)}35%{transform:scale(1.035);filter:brightness(1.2)}100%{transform:scale(1);filter:brightness(1)}}
 body.motion-reduced.director-cue .reactor{animation:none!important}
 @media(max-width:660px){.music-director-badge{margin-left:0;margin-right:6px;margin-bottom:9px}}
+
+
+/* ===== 6.8 MOUNTAIN ASCENT REWORK ===== */
+body[data-world="mountain-blood"]{--mountain-stone:#9fb1b2;--mountain-ice:#d9e4df;--mountain-sun:#d7b26a;--mountain-shadow:#101718}
+body[data-world="mountain-blood"] .hero{background:radial-gradient(circle at 64% 16%,rgba(235,218,164,.22),transparent 20%),radial-gradient(circle at 24% 34%,rgba(160,186,190,.13),transparent 30%),linear-gradient(180deg,#182426 0%,#263537 34%,#1a2526 64%,#0b1011 100%);border-color:rgba(190,210,208,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 30px 90px rgba(7,15,16,.38)}
+body[data-world="mountain-blood"] .hero:before{background:linear-gradient(180deg,rgba(210,227,224,.08),transparent 30%),radial-gradient(ellipse at 50% 76%,rgba(220,229,221,.11),transparent 44%)}
+body[data-world="mountain-blood"] .mb-hero-sky{background:radial-gradient(circle at 68% 21%,rgba(243,225,170,.18),transparent 18%),linear-gradient(180deg,rgba(137,171,177,.14),rgba(66,91,94,.04) 44%,transparent 70%);opacity:1}
+body[data-world="mountain-blood"] .mb-hero-ridge.back i,body[data-world="mountain-blood"] .mb-hero-ridge.back b,body[data-world="mountain-blood"] .mb-hero-ridge.back em{background:linear-gradient(150deg,#52696b 0%,#2a383a 42%,#11191a 76%)!important}
+body[data-world="mountain-blood"] .mb-hero-ridge.front i,body[data-world="mountain-blood"] .mb-hero-ridge.front b,body[data-world="mountain-blood"] .mb-hero-ridge.front em{background:linear-gradient(145deg,#35484a 0%,#1b282a 48%,#090f10 78%)!important}
+body[data-world="mountain-blood"] .mb-hero-ridge i:after,body[data-world="mountain-blood"] .mb-hero-ridge b:after,body[data-world="mountain-blood"] .mb-hero-ridge em:after{content:"";position:absolute;inset:0;background:linear-gradient(152deg,rgba(228,237,232,.32),transparent 24%);clip-path:polygon(0 0,68% 0,42% 26%,30% 16%,18% 42%,0 31%);opacity:.58}
+body[data-world="mountain-blood"] .mb-hero-ridge.front:after{bottom:31%;background:linear-gradient(90deg,transparent,rgba(194,214,211,.2),rgba(235,218,164,.58),rgba(194,214,211,.18),transparent);box-shadow:0 0 24px rgba(215,178,106,.17);animation-duration:8.6s}
+body[data-world="mountain-blood"] .mb-hero-sigil{opacity:.72;filter:drop-shadow(0 0 38px rgba(215,178,106,.12))}
+body[data-world="mountain-blood"] .mb-hero-sigil i{border-color:rgba(217,228,220,.5);box-shadow:0 0 28px rgba(185,201,199,.12),inset 0 0 24px rgba(215,178,106,.035)}
+body[data-world="mountain-blood"] .mb-hero-sigil b{background:linear-gradient(to bottom,transparent,#e1e8df,#d7b26a,transparent);box-shadow:0 0 12px rgba(215,178,106,.34)}
+body[data-world="mountain-blood"] .mb-hero-sigil em{background:linear-gradient(90deg,transparent,#dbe5df,transparent);box-shadow:0 0 10px rgba(185,201,199,.3)}
+body[data-world="mountain-blood"] .mb-hero-sigil span{background:radial-gradient(circle,#fffbed 0 2px,#d7b26a 3px,#b9c9c7 5px,transparent 9px),radial-gradient(circle,rgba(215,178,106,.08),transparent 68%)}
+body[data-world="mountain-blood"] .mb-hero-wind{height:18px;border-top:1px solid rgba(216,230,226,.24);border-radius:50%;background:none;opacity:.46;filter:blur(.1px)}
+body[data-world="mountain-blood"] .mb-hero-ember{width:3px;height:3px;background:#e7eee9;box-shadow:0 0 14px rgba(231,238,233,.72);opacity:.34}
+body[data-world="mountain-blood"] .mb-hero-fireline{bottom:12%;height:28%;background:linear-gradient(to top,rgba(204,220,218,.11),rgba(204,220,218,.025) 45%,transparent 76%);filter:blur(18px);opacity:.76}
+body[data-world="mountain-blood"] .hero h1{color:#eef3ee;text-shadow:0 0 24px rgba(215,178,106,.09)}
+body[data-world="mountain-blood"] .hero-copy>p:not(.eyebrow){color:rgba(218,229,224,.72)}
+body[data-world="mountain-blood"] .tags span{border-color:rgba(185,201,199,.2);color:#dce6df;background:rgba(18,31,32,.28)}
+body[data-world="mountain-blood"] .reactor .ring{border-color:#c9d6d2;box-shadow:0 0 22px rgba(185,201,199,.16)}
+body[data-world="mountain-blood"] .reactor .core{background:radial-gradient(circle at 35% 30%,#fffdf2,#e6e8d8 20%,#d7b26a 43%,#46595a 72%,#11191a 90%);box-shadow:0 0 28px rgba(215,178,106,.3),0 0 88px rgba(185,201,199,.14)}
+body[data-world="mountain-blood"] .reactor .core:before{border-color:rgba(231,238,233,.72);box-shadow:0 0 14px rgba(185,201,199,.24),inset 0 0 8px rgba(215,178,106,.08)}
+body[data-world="mountain-blood"] .reactor .core:after{background:linear-gradient(to bottom,transparent,#edf2ed,#d7b26a,transparent);box-shadow:0 0 10px rgba(215,178,106,.28)}
+.world-card.mountain-blood-card{background:linear-gradient(180deg,rgba(31,48,50,.96),rgba(21,34,35,.88) 50%,rgba(11,17,18,.96));border-color:rgba(185,201,199,.2)}
+.world-card.mountain-blood-card.active{border-color:rgba(215,226,222,.48);box-shadow:inset 0 0 60px rgba(185,201,199,.06),0 20px 54px rgba(5,12,13,.42)}
+.mountain-blood-card .world-kicker{color:#d7c895;text-shadow:0 0 10px rgba(215,178,106,.18)}
+.mountain-blood-card .world-text strong{color:#eef3ee}.mountain-blood-card .world-text small{color:rgba(218,229,224,.58)}
+body[data-world="mountain-blood"] .mb-mini-signal{background:linear-gradient(180deg,rgba(31,48,50,.68),rgba(13,22,23,.88));border-color:rgba(185,201,199,.2)}
+body[data-world="mountain-blood"] .mb-mini-ridge i,body[data-world="mountain-blood"] .mb-mini-ridge b,body[data-world="mountain-blood"] .mb-mini-ridge em{background:linear-gradient(180deg,rgba(118,145,147,.34),rgba(11,18,19,.96))!important}
+body[data-world="mountain-blood"] .mb-mini-sigil i{border-color:rgba(215,226,222,.58)}
+body[data-world="mountain-blood"] .mb-mini-sigil b{background:linear-gradient(to bottom,transparent,#dfe8e2,#d7b26a,transparent)}
+body[data-world="mountain-blood"] .mb-mini-sigil em{background:linear-gradient(90deg,transparent,#dfe8e2,transparent)}
+body[data-world="mountain-blood"] .mb-mini-ember{background:#e2ebe6;box-shadow:0 0 10px rgba(226,235,230,.58);opacity:.28}
+body[data-world="mountain-blood"] .mb-mini-pulse{background:linear-gradient(90deg,transparent,rgba(185,201,199,.74),rgba(215,178,106,.45),transparent);filter:drop-shadow(0 0 7px rgba(185,201,199,.25))}
+body[data-world="mountain-blood"] .sleep-overlay{background:radial-gradient(circle at 50% 13%,rgba(236,220,174,.12),transparent 24%),linear-gradient(180deg,#152326 0%,#26383a 44%,#111a1b 76%,#030606 100%)}
+body[data-world="mountain-blood"] .mb-sleep-ridge.back{background:linear-gradient(180deg,rgba(103,130,132,.44),rgba(12,20,21,.96))}
+body[data-world="mountain-blood"] .mb-sleep-ridge.front{background:linear-gradient(180deg,rgba(72,96,98,.54),rgba(6,11,12,.99))}
+body[data-world="mountain-blood"] .mb-sleep-wind{border-color:rgba(217,230,226,.19);opacity:.4}
+body[data-world="mountain-blood"] .mb-sleep-ember{background:#e5ece7;box-shadow:0 0 12px rgba(229,236,231,.55);opacity:.25}
+body[data-world="mountain-blood"] .mb-sleep-sigil i{border-color:rgba(218,229,224,.66)}
+body[data-world="mountain-blood"] .mb-sleep-sigil b{background:linear-gradient(to bottom,transparent,#e6ece7,#d7b26a,transparent)}
+body[data-world="mountain-blood"] .mb-sleep-sigil em{background:linear-gradient(90deg,transparent,#e6ece7,transparent)}
+body[data-world="mountain-blood"] .sleep-content h2{color:#eef3ee;text-shadow:0 0 24px rgba(215,178,106,.1)}
+body[data-world="mountain-blood"] .sleep-orb{background:radial-gradient(circle,#263738 0 22%,rgba(185,201,199,.82) 29%,rgba(215,178,106,.15) 48%,transparent 69%)}
+body[data-world="mountain-blood"] .sleep-orb i{background:#f7f5e9;box-shadow:0 0 80px rgba(185,201,199,.38)}
+body[data-world="mountain-blood"] .evolution-aura{background:radial-gradient(circle at 52% 18%,rgba(215,178,106,.18),transparent 22%),radial-gradient(circle at 50% 80%,rgba(185,201,199,.2),transparent 34%)}
+body[data-world="mountain-blood"][data-evolution="3"] .hero{box-shadow:inset 0 -90px 150px rgba(185,201,199,.09),0 30px 90px rgba(5,13,14,.36)}

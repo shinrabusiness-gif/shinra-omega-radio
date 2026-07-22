@@ -93,7 +93,7 @@ const OPERATOR_MEMORY_DEFAULT={callsign:'SHINRA',totalMs:0,longestMs:0,lastSessi
 function loadOperatorMemory(){try{const saved=JSON.parse(localStorage.srOperatorMemory||'{}');return {...OPERATOR_MEMORY_DEFAULT,...saved,worldMs:{...saved.worldMs},visits:{...saved.visits},firstContact:{...saved.firstContact}}}catch{return {...OPERATOR_MEMORY_DEFAULT,worldMs:{},visits:{},firstContact:{}}}}
 let operatorMemory=loadOperatorMemory(),operatorSessionStart=0,operatorLastTick=0,operatorMemoryTimer=null,operatorSaveCounter=0;
 const state={eq:JSON.parse(localStorage.srEq||'{"bass":0,"mid":0,"treble":0}'),layers:JSON.parse(localStorage.srLayers||'[0.45,0.28,0.22,0.30]'),volume:Number(localStorage.srVol||.72)};
-const APP_CACHE='shinra-omega-signal-nexus-6.9.1';
+const APP_CACHE='shinra-omega-signal-nexus-6.9.2';
 let performanceProfile='balanced',performanceReason='Initial device scan',performanceAutoStep=0,batteryInfo=null,currentFps=60,visualizerRunning=false,visualizerFrame=0,fpsFrames=0,fpsWindowStart=performance.now(),diagnosticsTimer=null,lastDiagnosticsReport='';
 const TIME_PHASES={dawn:{label:'DAWN',audio:[.2,.08,-.12]},day:{label:'DAYLIGHT',audio:[0,0,.16]},dusk:{label:'DUSK',audio:[.34,.04,-.34]},night:{label:'NIGHT',audio:[.48,-.1,-.58]},neutral:{label:'MANUAL',audio:[0,0,0]}};const timeOverride=new URLSearchParams(location.search).get('time');let currentTimePhase='neutral',timeCycleTimer=null,lastTimePhase='';
 
@@ -182,9 +182,9 @@ async function collectDiagnostics(){
   let cacheNames=[];try{cacheNames=await caches.keys();$('#diagCache').textContent=`${cacheNames.length} VAULT${cacheNames.length===1?'':'S'}`;$('#diagCacheDetail').textContent=cacheNames.includes(APP_CACHE)?'Current offline core stored':'Current core waiting for activation'}catch{$('#diagCache').textContent='UNAVAILABLE'}
   let worker='UNSUPPORTED',workerDetail='Service Worker unavailable';try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.getRegistration();worker=reg?.active?.state?.toUpperCase()||reg?.waiting?.state?.toUpperCase()||'REGISTERING';workerDetail=reg?.waiting?'Update waiting to install':navigator.serviceWorker.controller?'Page controlled and offline-ready':'First activation pending'}}catch{}
   $('#diagWorker').textContent=worker;$('#diagWorkerDetail').textContent=workerDetail;
-  $('#diagUpdate').textContent=waitingWorker?'READY':'CURRENT';$('#diagUpdateDetail').textContent=waitingWorker?'New core waiting for installation':'Omega Core 6.9.1 active';applyDynamicTime(false);
+  $('#diagUpdate').textContent=waitingWorker?'READY':'CURRENT';$('#diagUpdateDetail').textContent=waitingWorker?'New core waiting for installation':'Omega Core 6.9.2 active';applyDynamicTime(false);
   lastDiagnosticsReport=[
-    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.9.1',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`MUSIC DIRECTOR: ${settings.musicDirector===false?'disabled':((directorDefinition().labels||[])[Math.max(0,musicDirectorPhase)]||'standby')}`,`GENERATED: ${new Date().toISOString()}`
+    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.9.2',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`MUSIC DIRECTOR: ${settings.musicDirector===false?'disabled':((directorDefinition().labels||[])[Math.max(0,musicDirectorPhase)]||'standby')}`,`GENERATED: ${new Date().toISOString()}`
   ].join('\n');
 }
 function openDiagnostics(){document.body.classList.add('diagnostics-open');$('#diagnosticsOverlay').classList.add('open');$('#diagnosticsOverlay').setAttribute('aria-hidden','false');collectDiagnostics();clearInterval(diagnosticsTimer);diagnosticsTimer=setInterval(updateDiagnosticsLive,1000)}
@@ -1127,7 +1127,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true}};
 window.addEventListener('online',()=>{$('#netLabel').textContent='ONLINE';$('#netDot').style.background='#6df49a'});window.addEventListener('offline',()=>{$('#netLabel').textContent='OFFLINE';$('#netDot').style.background='#ff765f'});
 if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>!playing&&startAudio());navigator.mediaSession.setActionHandler('pause',()=>playing&&stopAudio());navigator.mediaSession.setActionHandler('previoustrack',()=>selectWorld(current-1));navigator.mediaSession.setActionHandler('nexttrack',()=>selectWorld(current+1));}
-const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.9.1';
+const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.9.2';
 let waitingWorker=null,updateReloading=false;
 function showUpdateSignal(worker){waitingWorker=worker;const panel=$('#updateSignal');if(!panel)return;panel.classList.add('show');panel.setAttribute('aria-hidden','false');$('#updateSignalTitle').textContent='NEW CORE VERSION READY';$('#updateSignalText').textContent='A fresh Omega transmission is ready to install.';try{worker.postMessage({type:'GET_VERSION'})}catch{}}
 function hideUpdateSignal(){const panel=$('#updateSignal');if(!panel)return;panel.classList.remove('show');panel.setAttribute('aria-hidden','true')}
@@ -1306,65 +1306,96 @@ renderJourneySelection();
 })();
 
 
-// ===== OMEGA SIGNAL NEXUS 6.9.1 — MOBILE SMOOTHNESS PATCH =====
+// ===== OMEGA SIGNAL NEXUS 6.9.2 — SINGLE CANVAS ENGINE =====
 (()=>{
   const overlay=document.getElementById('signalNexus');
   const stage=document.getElementById('nexusStage');
+  const canvas=document.getElementById('nexusCanvas');
   const worldHost=document.getElementById('nexusWorlds');
   const dotHost=document.getElementById('nexusDots');
-  if(!overlay||!stage||!worldHost)return;
+  if(!overlay||!stage||!canvas||!worldHost)return;
 
+  const ctx=canvas.getContext('2d',{alpha:true,desynchronized:true});
   const count=WORLDS.length;
   const step=Math.PI*2/count;
+  const TAU=Math.PI*2;
+  const wrapIndex=i=>(i%count+count)%count;
   let selected=Math.max(0,Math.min(count-1,current));
   let rotation=-selected*step;
   let targetRotation=rotation;
-  let open=false;
-  let raf=0;
-  let dragging=false;
-  let pointerId=null;
-  let startX=0;
-  let startRotation=0;
-  let moved=0;
-  let wheelLock=false;
-  let nodes=[];
-  let mobile=false;
-  let radiusX=0;
-  let radiusY=0;
+  let pendingRotation=rotation;
+  let open=false,dragging=false,raf=0,pointerId=null;
+  let startX=0,startRotation=0,moved=0,lastX=0,lastTime=0,velocity=0,wheelLock=false;
+  let width=1,height=1,dpr=1,mobile=false,radiusX=1,radiusY=1,centerY=1,baseSize=130;
+  let hitAreas=[];
+  const sprites=[];
 
-  const wrapIndex=i=>(i%count+count)%count;
-  const viewportWidth=()=>Math.max(320,window.visualViewport?.width||document.documentElement.clientWidth||innerWidth);
-  const updateMetrics=()=>{
-    const width=viewportWidth();
-    mobile=width<760;
-    radiusX=mobile?Math.min(width*.72,285):Math.min(width*.36,470);
-    radiusY=mobile?42:68;
+  const hexToRgb=hex=>{
+    const value=String(hex||'#ffffff').replace('#','');
+    const full=value.length===3?[...value].map(x=>x+x).join(''):value;
+    const num=parseInt(full,16);
+    return {r:(num>>16)&255,g:(num>>8)&255,b:num&255};
   };
-  const closestRotationFor=index=>{
-    const base=-index*step;
-    const turns=Math.round((rotation-base)/(Math.PI*2));
-    return base+turns*Math.PI*2;
-  };
+  const rgba=(hex,a)=>{const c=hexToRgb(hex);return `rgba(${c.r},${c.g},${c.b},${a})`};
 
-  function worldMarkup(w,i){
-    return `<button class="nexus-world-node" type="button" role="listitem" data-nexus-world="${i}" data-world="${w.id}" style="--world-color:${w.color};--world-color2:${w.color2}" aria-label="${w.title} öffnen">
-      <span class="nexus-node-orbit" aria-hidden="true"></span>
-      <span class="nexus-planet" aria-hidden="true"><i></i><b></b><em></em></span>
-      <span class="nexus-node-copy"><small>${String(i+1).padStart(2,'0')}</small><strong>${w.title}</strong><span>${w.genre}</span></span>
-    </button>`;
+  function makeSprite(world){
+    const size=360,c=document.createElement('canvas');
+    c.width=c.height=size;
+    const g=c.getContext('2d',{alpha:true});
+    const cx=size/2,cy=size/2,r=108;
+    g.clearRect(0,0,size,size);
+
+    let glow=g.createRadialGradient(cx,cy,r*.55,cx,cy,r*1.55);
+    glow.addColorStop(0,rgba(world.color,.34));glow.addColorStop(.48,rgba(world.color,.13));glow.addColorStop(1,rgba(world.color,0));
+    g.fillStyle=glow;g.beginPath();g.arc(cx,cy,r*1.55,0,TAU);g.fill();
+
+    const base=g.createRadialGradient(cx-r*.34,cy-r*.38,r*.06,cx,cy,r*1.06);
+    base.addColorStop(0,rgba(world.color2,.98));base.addColorStop(.33,rgba(world.color,.88));base.addColorStop(.72,'#0a0d12');base.addColorStop(1,'#010204');
+    g.fillStyle=base;g.beginPath();g.arc(cx,cy,r,0,TAU);g.fill();
+
+    g.save();g.beginPath();g.arc(cx,cy,r,0,TAU);g.clip();
+    if(world.id==='black-sun'){
+      g.fillStyle='#010101';g.beginPath();g.arc(cx,cy,r*.58,0,TAU);g.fill();
+      g.strokeStyle=rgba(world.color2,.9);g.lineWidth=7;g.beginPath();g.arc(cx,cy,r*.63,0,TAU);g.stroke();
+    }else if(world.id==='aquatoc'){
+      g.strokeStyle=rgba(world.color,.28);g.lineWidth=2;
+      for(let rr=24;rr<r*1.25;rr+=22){g.beginPath();g.arc(cx-r*.18,cy-r*.12,rr,0,TAU);g.stroke()}
+    }else if(world.id==='crimson-rain'){
+      g.strokeStyle=rgba(world.color,.3);g.lineWidth=2;
+      for(let x=-r;x<r;x+=18){g.beginPath();g.moveTo(cx+x,cy-r);g.lineTo(cx+x-r*.35,cy+r);g.stroke()}
+    }else if(world.id==='mountain-blood'){
+      g.fillStyle=rgba('#e8efec',.62);g.beginPath();g.moveTo(cx-r,cy+r*.5);g.lineTo(cx-r*.25,cy-r*.22);g.lineTo(cx+r*.05,cy+r*.05);g.lineTo(cx+r*.45,cy-r*.42);g.lineTo(cx+r,cy+r*.55);g.closePath();g.fill();
+      g.fillStyle=rgba('#182326',.9);g.beginPath();g.moveTo(cx-r,cy+r*.72);g.lineTo(cx-r*.05,cy-r*.02);g.lineTo(cx+r,cy+r*.72);g.closePath();g.fill();
+    }else if(world.id==='starless-void'){
+      const hole=g.createRadialGradient(cx,cy,0,cx,cy,r*.55);hole.addColorStop(0,'#000');hole.addColorStop(.44,'#000');hole.addColorStop(.52,rgba(world.color,.95));hole.addColorStop(.66,rgba(world.color2,.22));hole.addColorStop(1,rgba(world.color2,0));g.fillStyle=hole;g.fillRect(cx-r,cy-r,r*2,r*2);
+    }else if(world.id==='celestial-veil'){
+      g.strokeStyle=rgba('#fff',.42);g.lineWidth=1.3;
+      for(let rr=25;rr<r;rr+=22){g.beginPath();g.arc(cx,cy,rr,0,TAU);g.stroke()}
+    }else if(world.id==='sunroot-vale'){
+      g.strokeStyle=rgba(world.color2,.24);g.lineWidth=3;
+      for(let i=-5;i<=5;i++){g.beginPath();g.moveTo(cx+i*22,cy+r);g.quadraticCurveTo(cx+i*14,cy,cx+i*24,cy-r);g.stroke()}
+    }
+    const shade=g.createLinearGradient(cx-r,cy-r,cx+r,cy+r);shade.addColorStop(0,'rgba(255,255,255,.20)');shade.addColorStop(.38,'rgba(255,255,255,0)');shade.addColorStop(1,'rgba(0,0,0,.72)');g.fillStyle=shade;g.fillRect(cx-r,cy-r,r*2,r*2);
+    g.restore();
+
+    g.strokeStyle=rgba(world.color,.7);g.lineWidth=1.5;g.beginPath();g.arc(cx,cy,r,0,TAU);g.stroke();
+    g.strokeStyle=rgba(world.color,.48);g.lineWidth=1.2;g.beginPath();g.ellipse(cx,cy,r*1.25,r*.25,-.18,0,TAU);g.stroke();
+    g.fillStyle='rgba(255,255,255,.88)';g.beginPath();g.arc(cx+r*.32,cy-r*.42,3.3,0,TAU);g.fill();
+    return c;
   }
 
-  function render(){
-    worldHost.innerHTML=WORLDS.map(worldMarkup).join('');
-    nodes=[...worldHost.querySelectorAll('[data-nexus-world]')];
-    if(dotHost)dotHost.innerHTML=WORLDS.map((w,i)=>`<button type="button" data-nexus-dot="${i}" aria-label="${w.title}"></button>`).join('');
-    nodes.forEach(node=>{
-      node.addEventListener('click',e=>{
-        if(moved>9){e.preventDefault();return}
-        focusWorld(Number(node.dataset.nexusWorld));
-      });
-    });
-    dotHost?.querySelectorAll('[data-nexus-dot]').forEach(node=>node.addEventListener('click',()=>focusWorld(Number(node.dataset.nexusDot))));
+  function buildSprites(){
+    sprites.length=0;
+    WORLDS.forEach(w=>sprites.push(makeSprite(w)));
+  }
+
+  function renderControls(){
+    worldHost.innerHTML=WORLDS.map((w,i)=>`<button type="button" data-nexus-world="${i}" aria-label="${w.title} öffnen">${w.title}</button>`).join('');
+    worldHost.querySelectorAll('[data-nexus-world]').forEach(node=>node.addEventListener('click',()=>focusWorld(Number(node.dataset.nexusWorld))));
+    if(dotHost){
+      dotHost.innerHTML=WORLDS.map((w,i)=>`<button type="button" data-nexus-dot="${i}" aria-label="${w.title}"></button>`).join('');
+      dotHost.querySelectorAll('[data-nexus-dot]').forEach(node=>node.addEventListener('click',()=>focusWorld(Number(node.dataset.nexusDot))));
+    }
   }
 
   function updateCopy(){
@@ -1377,139 +1408,126 @@ renderJourneySelection();
     dotHost?.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('active',i===selected));
   }
 
-  function focusWorld(index,instant=false){
-    selected=wrapIndex(index);
-    targetRotation=closestRotationFor(selected);
-    if(instant)rotation=targetRotation;
-    updateCopy();
-    if(open&&!raf)raf=requestAnimationFrame(frame);
+  function resizeCanvas(){
+    const rect=stage.getBoundingClientRect();
+    width=Math.max(1,Math.round(rect.width));height=Math.max(1,Math.round(rect.height));
+    mobile=width<760;
+    dpr=mobile?Math.min(window.devicePixelRatio||1,1.25):Math.min(window.devicePixelRatio||1,1.6);
+    const rw=Math.max(1,Math.round(width*dpr)),rh=Math.max(1,Math.round(height*dpr));
+    if(canvas.width!==rw||canvas.height!==rh){canvas.width=rw;canvas.height=rh;canvas.style.width=`${width}px`;canvas.style.height=`${height}px`;ctx.setTransform(dpr,0,0,dpr,0,0)}
+    radiusX=mobile?Math.min(width*.72,285):Math.min(width*.36,470);
+    radiusY=mobile?38:65;
+    centerY=height*(mobile?.46:.47);
+    baseSize=mobile?Math.min(width*.39,168):Math.min(width*.19,224);
+    draw();
   }
 
-  function layout(){
-    nodes.forEach((node,i)=>{
+  function nearestRotation(index,from=rotation){
+    const base=-index*step;
+    const turns=Math.round((from-base)/TAU);
+    return base+turns*TAU;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,width,height);
+    hitAreas=[];
+    const items=WORLDS.map((w,i)=>{
       const angle=rotation+i*step;
       const depth=(Math.cos(angle)+1)/2;
-      const x=Math.sin(angle)*radiusX;
-      const y=Math.sin(angle*2)*radiusY-(1-depth)*(mobile?18:28);
-      const scale=(mobile?.54:.48)+depth*(mobile?.56:.62);
-      const opacity=.16+depth*.84;
-      const transform=`translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) scale(${scale.toFixed(3)})`;
-      node.style.transform=transform;
-      node.style.opacity=opacity.toFixed(3);
-      const z=10+Math.round(depth*90);
-      if(node._nexusZ!==z){node.style.zIndex=String(z);node._nexusZ=z}
-      const isFront=i===selected;
-      if(node._nexusFront!==isFront){node.classList.toggle('front',isFront);node._nexusFront=isFront}
-      const nextTab=isFront?0:-1;
-      if(node.tabIndex!==nextTab)node.tabIndex=nextTab;
+      const x=width/2+Math.sin(angle)*radiusX;
+      const y=centerY+Math.sin(angle*2)*radiusY-(1-depth)*(mobile?16:25);
+      const scale=(mobile?.47:.44)+depth*(mobile?.61:.66);
+      return {i,depth,x,y,size:baseSize*scale,alpha:.13+depth*.87};
+    }).sort((a,b)=>a.depth-b.depth);
+
+    items.forEach(item=>{
+      const sprite=sprites[item.i];if(!sprite)return;
+      const size=item.size;
+      ctx.save();ctx.globalAlpha=item.alpha;
+      ctx.drawImage(sprite,item.x-size/2,item.y-size/2,size,size);
+      ctx.restore();
+      hitAreas.push({...item,radius:size*.38});
     });
   }
 
+  function schedule(){if(!raf)raf=requestAnimationFrame(frame)}
   function frame(){
-    raf=0;
-    if(!open)return;
-    const delta=targetRotation-rotation;
-    if(Math.abs(delta)>.00035){
-      const smoothing=dragging?.46:(settings.reduced?.28:.14);
-      rotation+=delta*smoothing;
-    }else rotation=targetRotation;
-    layout();
-    if(dragging||Math.abs(targetRotation-rotation)>.00035)raf=requestAnimationFrame(frame);
+    raf=0;if(!open)return;
+    if(dragging){rotation=pendingRotation}
+    else{
+      const delta=targetRotation-rotation;
+      if(Math.abs(delta)>.00025){rotation+=delta*(settings.reduced?.3:.2)}else rotation=targetRotation;
+    }
+    draw();
+    if(dragging||Math.abs(targetRotation-rotation)>.00025)schedule();
   }
 
-  function enterWorld(){
-    if(selected!==current)selectWorld(selected);
-    closeNexus();
+  function setSelected(index){
+    const next=wrapIndex(index);
+    if(next!==selected){selected=next;updateCopy()}
   }
+  function focusWorld(index,instant=false){
+    setSelected(index);
+    targetRotation=nearestRotation(selected,rotation);
+    if(instant){rotation=targetRotation;pendingRotation=rotation;draw()}else schedule();
+  }
+  function enterWorld(){if(selected!==current)selectWorld(selected);window.closeNexus()}
 
   window.openNexus=function(){
-    if(!overlay||open)return;
-    selected=current;
-    rotation=-selected*step;
-    targetRotation=rotation;
-    updateMetrics();
-    updateCopy();
-    open=true;
-    overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden','false');
-    document.body.classList.add('nexus-open');
-    layout();
-    if(!raf)raf=requestAnimationFrame(frame);
+    if(open)return;
+    selected=current;rotation=-selected*step;targetRotation=rotation;pendingRotation=rotation;open=true;
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.classList.add('nexus-open');
+    updateCopy();requestAnimationFrame(()=>{resizeCanvas();schedule()});
   };
-
   window.closeNexus=function(){
-    if(!overlay||!open)return;
-    open=false;
-    dragging=false;
-    overlay.classList.remove('open','nexus-dragging');
-    overlay.setAttribute('aria-hidden','true');
-    document.body.classList.remove('nexus-open');
-    stage.classList.remove('dragging');
+    if(!open)return;open=false;dragging=false;pointerId=null;
+    overlay.classList.remove('open','nexus-dragging');overlay.setAttribute('aria-hidden','true');document.body.classList.remove('nexus-open');stage.classList.remove('dragging');
     if(raf){cancelAnimationFrame(raf);raf=0}
   };
 
   stage.addEventListener('pointerdown',e=>{
     if(e.button!==undefined&&e.button!==0)return;
-    dragging=true;
-    pointerId=e.pointerId;
-    startX=e.clientX;
-    startRotation=rotation;
-    targetRotation=rotation;
-    moved=0;
-    stage.classList.add('dragging');
+    dragging=true;pointerId=e.pointerId;startX=e.clientX;startRotation=rotation;pendingRotation=rotation;targetRotation=rotation;moved=0;lastX=e.clientX;lastTime=performance.now();velocity=0;
+    stage.classList.add('dragging');overlay.classList.add('nexus-dragging');
     try{stage.setPointerCapture?.(pointerId)}catch{}
-    if(!raf)raf=requestAnimationFrame(frame);
+    schedule();
   });
   stage.addEventListener('pointermove',e=>{
     if(!dragging||e.pointerId!==pointerId)return;
-    const samples=e.getCoalescedEvents?.();
-    const point=samples?.length?samples[samples.length-1]:e;
-    const dx=point.clientX-startX;
+    const samples=e.getCoalescedEvents?.();const point=samples?.length?samples[samples.length-1]:e;
+    const now=performance.now(),dx=point.clientX-startX,dt=Math.max(1,now-lastTime);
     moved=Math.max(moved,Math.abs(dx));
-    if(moved>3)overlay.classList.add('nexus-dragging');
-    targetRotation=startRotation+dx*(mobile?.0082:.0054);
-    if(!raf)raf=requestAnimationFrame(frame);
+    const factor=mobile?.0082:.0054;
+    pendingRotation=startRotation+dx*factor;
+    velocity=(point.clientX-lastX)*factor/dt;
+    lastX=point.clientX;lastTime=now;schedule();
   });
   const endDrag=e=>{
     if(!dragging||(e.pointerId!==undefined&&e.pointerId!==pointerId))return;
-    dragging=false;
-    stage.classList.remove('dragging');
-    overlay.classList.remove('nexus-dragging');
-    try{stage.releasePointerCapture?.(pointerId)}catch{}
-    pointerId=null;
-    const snapped=wrapIndex(Math.round(-targetRotation/step));
-    focusWorld(snapped);
+    dragging=false;stage.classList.remove('dragging');overlay.classList.remove('nexus-dragging');
+    try{stage.releasePointerCapture?.(pointerId)}catch{}pointerId=null;
+    rotation=pendingRotation;
+    if(moved<8){
+      const rect=stage.getBoundingClientRect(),x=(e.clientX??lastX)-rect.left,y=(e.clientY??centerY)-rect.top;
+      const hit=hitAreas.filter(h=>Math.hypot(x-h.x,y-h.y)<=Math.max(28,h.radius)).sort((a,b)=>b.depth-a.depth)[0];
+      if(hit){focusWorld(hit.i);return}
+    }
+    const projected=rotation+Math.max(-.012,Math.min(.012,velocity))*150;
+    const snapped=wrapIndex(Math.round(-projected/step));focusWorld(snapped);
   };
-  stage.addEventListener('pointerup',endDrag);
-  stage.addEventListener('pointercancel',endDrag);
-  stage.addEventListener('lostpointercapture',endDrag);
-  stage.addEventListener('wheel',e=>{
-    if(!open||wheelLock)return;
-    e.preventDefault();
-    wheelLock=true;
-    focusWorld(selected+(e.deltaY>0||e.deltaX>0?1:-1));
-    setTimeout(()=>wheelLock=false,260);
-  },{passive:false});
+  stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);stage.addEventListener('lostpointercapture',endDrag);
+  stage.addEventListener('wheel',e=>{if(!open||wheelLock)return;e.preventDefault();wheelLock=true;focusWorld(selected+(e.deltaY>0||e.deltaX>0?1:-1));setTimeout(()=>wheelLock=false,240)},{passive:false});
 
   document.getElementById('nexusPrev')?.addEventListener('click',()=>focusWorld(selected-1));
   document.getElementById('nexusNext')?.addEventListener('click',()=>focusWorld(selected+1));
   document.getElementById('enterNexusWorld')?.addEventListener('click',enterWorld);
-  document.getElementById('closeNexus')?.addEventListener('click',closeNexus);
-  document.getElementById('nexusBrand')?.addEventListener('click',closeNexus);
-  document.getElementById('brandBtn')?.addEventListener('click',openNexus);
+  document.getElementById('closeNexus')?.addEventListener('click',window.closeNexus);
+  document.getElementById('nexusBrand')?.addEventListener('click',window.closeNexus);
+  document.getElementById('brandBtn')?.addEventListener('click',window.openNexus);
+  const onResize=()=>{if(open)resizeCanvas()};
+  window.addEventListener('resize',onResize,{passive:true});window.visualViewport?.addEventListener('resize',onResize,{passive:true});
+  window.addEventListener('keydown',e=>{if(!open)return;if(e.key==='ArrowLeft'){e.preventDefault();focusWorld(selected-1)}else if(e.key==='ArrowRight'){e.preventDefault();focusWorld(selected+1)}else if(e.key==='Enter'){e.preventDefault();enterWorld()}else if(e.key==='Escape'){e.preventDefault();window.closeNexus()}});
 
-  const onResize=()=>{if(!open)return;updateMetrics();layout()};
-  window.addEventListener('resize',onResize,{passive:true});
-  window.visualViewport?.addEventListener('resize',onResize,{passive:true});
-  window.addEventListener('keydown',e=>{
-    if(!open)return;
-    if(e.key==='ArrowLeft'){e.preventDefault();focusWorld(selected-1)}
-    else if(e.key==='ArrowRight'){e.preventDefault();focusWorld(selected+1)}
-    else if(e.key==='Enter'){e.preventDefault();enterWorld()}
-    else if(e.key==='Escape'){e.preventDefault();closeNexus()}
-  });
-  render();
-  updateMetrics();
-  updateCopy();
+  buildSprites();renderControls();updateCopy();
 })();
 

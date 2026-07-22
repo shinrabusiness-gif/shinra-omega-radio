@@ -1953,3 +1953,15 @@ body.nexus-open .shell{pointer-events:none}
 @media(max-height:710px){.nexus-node-copy span,.nexus-copy small,.nexus-hint{display:none}.nexus-stage{min-height:290px}.nexus-copy h1{font-size:24px}.nexus-footer{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
 .motion-reduced .nexus-nebula,.motion-reduced .nexus-stars-a,.motion-reduced .nexus-stars-b,.motion-reduced .nexus-planet:after,.motion-reduced .nexus-center i,.motion-reduced .nexus-center b{animation:none!important}
 @media(prefers-reduced-motion:reduce){.nexus-nebula,.nexus-stars-a,.nexus-stars-b,.nexus-planet:after,.nexus-center i,.nexus-center b{animation:none!important}}
+\n\n/* ===== 6.9.2 CANVAS NEXUS — SINGLE COMPOSITE SURFACE ===== */
+.signal-nexus{transform:none!important;backface-visibility:visible!important;-webkit-backface-visibility:visible!important}
+.nexus-stage{perspective:none!important;transform-style:flat!important;backface-visibility:visible!important;-webkit-backface-visibility:visible!important;contain:layout paint!important}
+.nexus-canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;pointer-events:none;touch-action:none;contain:strict}
+.nexus-worlds{position:absolute!important;width:1px!important;height:1px!important;left:-10000px!important;top:auto!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;contain:none!important}
+.nexus-orbit-ring{z-index:1}.nexus-center{z-index:3}
+.signal-nexus.nexus-dragging .nexus-canvas{filter:none!important}
+@media(max-width:760px){
+  .nexus-stage{contain:strict!important}
+  .nexus-orbit-ring{opacity:.58}
+  .nexus-center{will-change:auto!important}
+}

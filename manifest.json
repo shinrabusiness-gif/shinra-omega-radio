@@ -1,7 +1,7 @@
 {
   "name": "Shinra Omega Radio — Master",
   "short_name": "Shinra Ω",
-  "description": "Seven living transmissions, including the meditative Mountain Ascent sound and visual rework.",
+  "description": "Seven living transmissions inside an interactive, touch-driven Omega Signal Nexus.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

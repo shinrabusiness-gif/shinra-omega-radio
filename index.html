@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#08090d">
-  <meta name="app-version" content="6.8">
+  <meta name="app-version" content="6.9">
   <meta name="description" content="Shinra Radio – broadcasts from seven forgotten worlds">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png">
@@ -34,6 +34,48 @@
     </div>
     <button id="skipBoot" class="boot-skip boot-awaken" type="button"><span>TAP TO AWAKEN</span><small>SOUND ON</small></button>
   </div>
+
+  <section id="signalNexus" class="signal-nexus" aria-hidden="true" aria-label="Omega Signal Nexus">
+    <div class="nexus-space" aria-hidden="true">
+      <div class="nexus-stars nexus-stars-a"></div>
+      <div class="nexus-stars nexus-stars-b"></div>
+      <div class="nexus-nebula"></div>
+      <div class="nexus-horizon"></div>
+      <div class="nexus-noise"></div>
+    </div>
+    <header class="nexus-header">
+      <button id="nexusBrand" class="nexus-brand" type="button" aria-label="Aktuellen Sender öffnen">
+        <img src="shinra-symbol.png" alt="">
+        <span><small>SHINRA SIGNAL NETWORK</small><strong>OMEGA SIGNAL NEXUS</strong></span>
+      </button>
+      <div class="nexus-status"><i></i><span>07 WORLDS ONLINE</span></div>
+      <button id="closeNexus" class="nexus-close" type="button" aria-label="Signal Nexus schließen">×</button>
+    </header>
+
+    <div id="nexusStage" class="nexus-stage">
+      <div class="nexus-orbit-ring ring-a" aria-hidden="true"></div>
+      <div class="nexus-orbit-ring ring-b" aria-hidden="true"></div>
+      <div class="nexus-center" aria-hidden="true">
+        <i></i><b></b><em></em><span>Ω</span>
+      </div>
+      <div id="nexusWorlds" class="nexus-worlds" role="list" aria-label="Sieben Sender"></div>
+    </div>
+
+    <div class="nexus-copy">
+      <p id="nexusCode">CHANNEL 01 / ORIGIN</p>
+      <h1 id="nexusTitle">BLACK SUN</h1>
+      <span id="nexusGenre">DARK AMBIENT · 48 BPM</span>
+      <small id="nexusSubtitle">Low-frequency transmissions beneath a dead horizon.</small>
+    </div>
+
+    <footer class="nexus-footer">
+      <button id="nexusPrev" class="nexus-arrow" type="button" aria-label="Vorheriger Sender">‹</button>
+      <div id="nexusDots" class="nexus-dots" aria-label="Senderauswahl"></div>
+      <button id="enterNexusWorld" class="nexus-enter" type="button"><span>ENTER SIGNAL</span><small>OPEN CURRENT WORLD</small></button>
+      <button id="nexusNext" class="nexus-arrow" type="button" aria-label="Nächster Sender">›</button>
+    </footer>
+    <div class="nexus-hint"><span>SWIPE TO ROTATE</span><i></i><span>TAP A WORLD</span></div>
+  </section>
 
   <main class="shell">
     <header class="topbar glass">
@@ -279,7 +321,7 @@
       <article class="panel glass timer-panel"><div class="panel-head"><div><p class="eyebrow">SLEEP PROTOCOL</p><h2 id="timerTitle">NO TIMER</h2></div><span id="timerCountdown">∞</span></div><div id="timerButtons" class="timer-buttons"></div><div class="mode-buttons"><button id="fullscreenSleep" class="wide-btn">ENTER SLEEP CHAMBER</button><button id="ambientPanelBtn" class="wide-btn ambient-entry">ENTER AMBIENT MODE</button></div></article>
     </section>
 
-    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b id="coreVersionLabel">6.8 MOUNTAIN ASCENT REWORK</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WORLD MUSIC DIRECTOR</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
+    <section class="system glass"><div id="diagnosticsBtn" class="system-diagnostic-trigger" role="button" tabindex="0" aria-label="Systemdiagnose öffnen"><small>CORE VERSION · TAP FOR SYSTEM</small><b id="coreVersionLabel">6.9 SIGNAL NEXUS</b></div><div><small>AUDIO ENGINE</small><b id="audioEngineLabel">WORLD MUSIC DIRECTOR</b></div><div><small>MEMORY</small><b id="memoryLabel">OPERATOR + LORE + SCAN</b></div><div><small>STATUS</small><b id="systemStatus">READY</b></div></section>
     <footer><span>INVINCIBLE UNDER THE SUN</span><span>© SHINRA SIGNAL NETWORK</span></footer>
   </main>
 
@@ -540,7 +582,7 @@
         <article><small>DISPLAY PIPELINE</small><strong id="diagViewport">CHECKING</strong><span id="diagViewportDetail">Resolution and pixel ratio</span></article>
         <article><small>BATTERY SIGNAL</small><strong id="diagBattery">UNKNOWN</strong><span id="diagBatteryDetail">Battery API may be unavailable</span></article>
         <article><small>MOTION MODE</small><strong id="diagMotion">FULL</strong><span id="diagMotionDetail">Animation preference</span></article>
-        <article><small>UPDATE CHANNEL</small><strong id="diagUpdate">CURRENT</strong><span id="diagUpdateDetail">Omega 5.8</span></article>
+        <article><small>UPDATE CHANNEL</small><strong id="diagUpdate">CURRENT</strong><span id="diagUpdateDetail">Omega 6.9</span></article>
         <article><small>LOCAL TIME CYCLE</small><strong id="diagTime">SCANNING</strong><span id="diagTimeDetail">Dynamic world lighting</span></article>
       </section>
       <section class="diagnostics-actions">

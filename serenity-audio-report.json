@@ -1,0 +1,497 @@
+{
+  "version": "8.0.0",
+  "files": {
+    "serenity-aquatoc-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.65,
+      "rms_dbfs": -23.05,
+      "dc_left": -4.124379756831331e-06,
+      "dc_right": -2.3345823137788102e-05,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.122
+    },
+    "serenity-aquatoc-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -10.21,
+      "rms_dbfs": -23.46,
+      "dc_left": -2.0566978491842747e-05,
+      "dc_right": 4.029386673209956e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    },
+    "serenity-aquatoc-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -6.87,
+      "rms_dbfs": -21.49,
+      "dc_left": -1.551426794321742e-05,
+      "dc_right": 3.0646464438177645e-05,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.727
+    },
+    "serenity-aquatoc-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -14.67,
+      "rms_dbfs": -24.93,
+      "dc_left": 2.960132178486674e-06,
+      "dc_right": 3.904943071120215e-07,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.993
+    },
+    "serenity-ash-breath.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -13.06,
+      "rms_dbfs": -28.07,
+      "dc_left": -4.617838385456707e-06,
+      "dc_right": -3.154892510792706e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.07
+    },
+    "serenity-black-sun-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.25,
+      "rms_dbfs": -23.06,
+      "dc_left": 7.130984158720821e-06,
+      "dc_right": -3.993008431280032e-05,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.146
+    },
+    "serenity-black-sun-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -7.79,
+      "rms_dbfs": -23.47,
+      "dc_left": -1.819815588532947e-05,
+      "dc_right": 2.871644937840756e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    },
+    "serenity-black-sun-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.35,
+      "rms_dbfs": -21.49,
+      "dc_left": -7.563743110949872e-06,
+      "dc_right": 6.22597644905909e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.815
+    },
+    "serenity-black-sun-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -12.19,
+      "rms_dbfs": -24.94,
+      "dc_left": -8.35496302897809e-06,
+      "dc_right": -4.758361683343537e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.993
+    },
+    "serenity-bowl-bloom.ogg": {
+      "duration_s": 10.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.05,
+      "rms_dbfs": -23.47,
+      "dc_left": -5.853555194335058e-06,
+      "dc_right": -4.5010623580310494e-05,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.985
+    },
+    "serenity-celestial-veil-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.53,
+      "rms_dbfs": -23.14,
+      "dc_left": 1.0699091035348829e-06,
+      "dc_right": 1.1270019513176521e-06,
+      "energy_above_10khz_pct": 0.002,
+      "stereo_correlation": 0.222
+    },
+    "serenity-celestial-veil-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.24,
+      "rms_dbfs": -23.44,
+      "dc_left": -5.1191113925597165e-06,
+      "dc_right": 8.832432285998948e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.984
+    },
+    "serenity-celestial-veil-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -7.68,
+      "rms_dbfs": -21.47,
+      "dc_left": -1.7867854694486596e-05,
+      "dc_right": 7.344890491367551e-07,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.89
+    },
+    "serenity-celestial-veil-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -12.53,
+      "rms_dbfs": -24.91,
+      "dc_left": -3.632855438695515e-08,
+      "dc_right": 1.7517061579042092e-08,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.994
+    },
+    "serenity-choir-breath.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -14.01,
+      "rms_dbfs": -28.18,
+      "dc_left": 4.888451599072141e-07,
+      "dc_right": 7.551775524916593e-07,
+      "energy_above_10khz_pct": 0.002,
+      "stereo_correlation": 0.024
+    },
+    "serenity-crimson-rain-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.11,
+      "rms_dbfs": -23.24,
+      "dc_left": -1.0142144901692518e-06,
+      "dc_right": 4.829008503293153e-06,
+      "energy_above_10khz_pct": 0.209,
+      "stereo_correlation": 0.102
+    },
+    "serenity-crimson-rain-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -7.78,
+      "rms_dbfs": -23.46,
+      "dc_left": -1.4224287042452488e-05,
+      "dc_right": 1.682855668150296e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    },
+    "serenity-crimson-rain-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.25,
+      "rms_dbfs": -21.49,
+      "dc_left": 5.701087388843007e-07,
+      "dc_right": -5.1392098612268455e-06,
+      "energy_above_10khz_pct": 0.026,
+      "stereo_correlation": 0.832
+    },
+    "serenity-crimson-rain-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -12.93,
+      "rms_dbfs": -24.93,
+      "dc_left": -3.115218021321198e-07,
+      "dc_right": -6.372645202645799e-07,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.993
+    },
+    "serenity-forest-breath.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -12.18,
+      "rms_dbfs": -28.23,
+      "dc_left": 1.6653358443363686e-06,
+      "dc_right": 4.111098405701341e-06,
+      "energy_above_10khz_pct": 0.107,
+      "stereo_correlation": 0.018
+    },
+    "serenity-halo-bell.ogg": {
+      "duration_s": 11.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.62,
+      "rms_dbfs": -23.44,
+      "dc_left": 1.923998297570506e-06,
+      "dc_right": 1.8761277260637144e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.984
+    },
+    "serenity-ion-bloom.ogg": {
+      "duration_s": 12.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.32,
+      "rms_dbfs": -23.46,
+      "dc_left": 4.11705877922941e-05,
+      "dc_right": 7.445414667017758e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    },
+    "serenity-mountain-blood-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -7.68,
+      "rms_dbfs": -23.14,
+      "dc_left": 2.2308270217763493e-06,
+      "dc_right": 8.600984074291773e-06,
+      "energy_above_10khz_pct": 0.004,
+      "stereo_correlation": 0.217
+    },
+    "serenity-mountain-blood-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -11.76,
+      "rms_dbfs": -23.48,
+      "dc_left": 1.129549946199404e-05,
+      "dc_right": 6.357906841003569e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.985
+    },
+    "serenity-mountain-blood-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -7.06,
+      "rms_dbfs": -21.48,
+      "dc_left": 8.651657481095754e-06,
+      "dc_right": -1.8188779904448893e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.886
+    },
+    "serenity-mountain-blood-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -14.51,
+      "rms_dbfs": -24.93,
+      "dc_left": -1.7065451629605377e-06,
+      "dc_right": 1.976600287889596e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.992
+    },
+    "serenity-night-glow.ogg": {
+      "duration_s": 10.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.1,
+      "rms_dbfs": -23.46,
+      "dc_left": 1.4165460925141815e-05,
+      "dc_right": 7.554592684755335e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.985
+    },
+    "serenity-rain-veil.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -12.47,
+      "rms_dbfs": -28.26,
+      "dc_left": 2.8140168524259934e-06,
+      "dc_right": -4.2136085198762885e-07,
+      "energy_above_10khz_pct": 0.236,
+      "stereo_correlation": 0.006
+    },
+    "serenity-reed-pluck.ogg": {
+      "duration_s": 8.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -10.64,
+      "rms_dbfs": -23.93,
+      "dc_left": -2.5034165673787356e-07,
+      "dc_right": -6.11170946740458e-07,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.983
+    },
+    "serenity-ridge-air.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -13.9,
+      "rms_dbfs": -28.17,
+      "dc_left": -1.3555330951930955e-05,
+      "dc_right": 9.080034942599013e-06,
+      "energy_above_10khz_pct": 0.005,
+      "stereo_correlation": 0.04
+    },
+    "serenity-space-breath.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -13.03,
+      "rms_dbfs": -28.12,
+      "dc_left": -5.441782377602067e-06,
+      "dc_right": 2.4039391064434312e-05,
+      "energy_above_10khz_pct": 0.025,
+      "stereo_correlation": 0.053
+    },
+    "serenity-starless-void-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.48,
+      "rms_dbfs": -23.12,
+      "dc_left": 1.246119495590392e-06,
+      "dc_right": 1.038437221723143e-05,
+      "energy_above_10khz_pct": 0.009,
+      "stereo_correlation": 0.142
+    },
+    "serenity-starless-void-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -9.19,
+      "rms_dbfs": -23.46,
+      "dc_left": -3.4176646295236424e-06,
+      "dc_right": 8.023023838177323e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    },
+    "serenity-starless-void-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -6.73,
+      "rms_dbfs": -21.49,
+      "dc_left": -4.1465544200036675e-05,
+      "dc_right": -1.5169141079240944e-05,
+      "energy_above_10khz_pct": 0.002,
+      "stereo_correlation": 0.829
+    },
+    "serenity-starless-void-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -12.08,
+      "rms_dbfs": -24.93,
+      "dc_left": -6.46458374831127e-07,
+      "dc_right": -9.393654181621969e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.994
+    },
+    "serenity-string-prayer.ogg": {
+      "duration_s": 11.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -11.73,
+      "rms_dbfs": -23.48,
+      "dc_left": -1.4865651792206336e-05,
+      "dc_right": 2.9105046905897325e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.985
+    },
+    "serenity-sunroot-vale-atmosphere.ogg": {
+      "duration_s": 56.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.68,
+      "rms_dbfs": -23.19,
+      "dc_left": -4.007846200693166e-06,
+      "dc_right": -1.870974529083469e-06,
+      "energy_above_10khz_pct": 0.092,
+      "stereo_correlation": 0.141
+    },
+    "serenity-sunroot-vale-bloom.ogg": {
+      "duration_s": 14.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -5.95,
+      "rms_dbfs": -23.44,
+      "dc_left": -8.068124657256703e-07,
+      "dc_right": -6.7857567955798e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    },
+    "serenity-sunroot-vale-foundation.ogg": {
+      "duration_s": 64.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -8.01,
+      "rms_dbfs": -21.49,
+      "dc_left": -2.7314468752592802e-05,
+      "dc_right": 7.708718840149231e-06,
+      "energy_above_10khz_pct": 0.011,
+      "stereo_correlation": 0.841
+    },
+    "serenity-sunroot-vale-melody.ogg": {
+      "duration_s": 48.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -10.88,
+      "rms_dbfs": -24.92,
+      "dc_left": -2.214420419477392e-06,
+      "dc_right": -1.7209844145327224e-06,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.995
+    },
+    "serenity-water-breath.ogg": {
+      "duration_s": 24.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -13.59,
+      "rms_dbfs": -28.05,
+      "dc_left": 5.119799425301608e-06,
+      "dc_right": 4.5222888729767874e-05,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.091
+    },
+    "serenity-water-drop.ogg": {
+      "duration_s": 9.0,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -11.76,
+      "rms_dbfs": -23.46,
+      "dc_left": -1.5677280316594988e-05,
+      "dc_right": 1.643576797505375e-05,
+      "energy_above_10khz_pct": 0.0,
+      "stereo_correlation": 0.986
+    }
+  },
+  "world_mix": {
+    "black-sun": {
+      "peak_dbfs": -7.24,
+      "rms_dbfs": -20.06
+    },
+    "aquatoc": {
+      "peak_dbfs": -7.47,
+      "rms_dbfs": -19.86
+    },
+    "crimson-rain": {
+      "peak_dbfs": -6.87,
+      "rms_dbfs": -20.16
+    },
+    "mountain-blood": {
+      "peak_dbfs": -7.53,
+      "rms_dbfs": -21.11
+    },
+    "starless-void": {
+      "peak_dbfs": -7.89,
+      "rms_dbfs": -20.42
+    },
+    "celestial-veil": {
+      "peak_dbfs": -7.63,
+      "rms_dbfs": -20.9
+    },
+    "sunroot-vale": {
+      "peak_dbfs": -6.54,
+      "rms_dbfs": -20.43
+    }
+  }
+}

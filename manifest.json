@@ -1,7 +1,7 @@
 {
-  "name": "Shinra Omega Radio — Master",
+  "name": "Shinra Omega Radio — Serenity",
   "short_name": "Shinra Ω",
-  "description": "Seven living transmissions inside an interactive, touch-driven Omega Signal Nexus.",
+  "description": "Seven high-quality, meditative 48 kHz sound worlds inside the Omega Signal Nexus.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

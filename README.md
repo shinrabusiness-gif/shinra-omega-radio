@@ -1,1 +1,8 @@
-Shinra Omega Radio 6.8 — Mountain Ascent Rework. Mountain Blood is now a calmer high-ridge meditation world with clear summit wind, harmonious open-fifth strings, sparse stone pulses, a fourth Summit Drone layer, and a softer World Music Director sequence. Four new offline samples are included: summit wind, summit string, summit drone and summit bell. Visuals now emphasize cold ridges, cloud light and quiet elevation instead of ember-heavy ritual imagery. Upload every file to the GitHub repository root and replace existing files.
+Shinra Omega Radio 6.9.1 — Omega Signal Nexus Smooth Swipe Patch.
+
+This build preserves the complete 6.8 Mountain Ascent Rework and adds a new interactive homepage for all seven stations. The Nexus is a lightweight, dependency-free 2.5D spatial carousel designed for smooth touch performance on phones: swipe to rotate the seven worlds, tap to focus a station, and enter the selected signal. The SHINRA brand button returns to the Nexus at any time.
+
+Upload every file to the GitHub repository root and replace the existing files.
+
+
+6.9.1 patch: GPU-only carousel transforms, drag-time effect pause, reduced mobile compositing, and updated offline cache.

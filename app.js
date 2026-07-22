@@ -93,7 +93,7 @@ const OPERATOR_MEMORY_DEFAULT={callsign:'SHINRA',totalMs:0,longestMs:0,lastSessi
 function loadOperatorMemory(){try{const saved=JSON.parse(localStorage.srOperatorMemory||'{}');return {...OPERATOR_MEMORY_DEFAULT,...saved,worldMs:{...saved.worldMs},visits:{...saved.visits},firstContact:{...saved.firstContact}}}catch{return {...OPERATOR_MEMORY_DEFAULT,worldMs:{},visits:{},firstContact:{}}}}
 let operatorMemory=loadOperatorMemory(),operatorSessionStart=0,operatorLastTick=0,operatorMemoryTimer=null,operatorSaveCounter=0;
 const state={eq:JSON.parse(localStorage.srEq||'{"bass":0,"mid":0,"treble":0}'),layers:JSON.parse(localStorage.srLayers||'[0.45,0.28,0.22,0.30]'),volume:Number(localStorage.srVol||.72)};
-const APP_CACHE='shinra-omega-share-signal-6.9';
+const APP_CACHE='shinra-omega-signal-nexus-6.9.1';
 let performanceProfile='balanced',performanceReason='Initial device scan',performanceAutoStep=0,batteryInfo=null,currentFps=60,visualizerRunning=false,visualizerFrame=0,fpsFrames=0,fpsWindowStart=performance.now(),diagnosticsTimer=null,lastDiagnosticsReport='';
 const TIME_PHASES={dawn:{label:'DAWN',audio:[.2,.08,-.12]},day:{label:'DAYLIGHT',audio:[0,0,.16]},dusk:{label:'DUSK',audio:[.34,.04,-.34]},night:{label:'NIGHT',audio:[.48,-.1,-.58]},neutral:{label:'MANUAL',audio:[0,0,0]}};const timeOverride=new URLSearchParams(location.search).get('time');let currentTimePhase='neutral',timeCycleTimer=null,lastTimePhase='';
 
@@ -182,9 +182,9 @@ async function collectDiagnostics(){
   let cacheNames=[];try{cacheNames=await caches.keys();$('#diagCache').textContent=`${cacheNames.length} VAULT${cacheNames.length===1?'':'S'}`;$('#diagCacheDetail').textContent=cacheNames.includes(APP_CACHE)?'Current offline core stored':'Current core waiting for activation'}catch{$('#diagCache').textContent='UNAVAILABLE'}
   let worker='UNSUPPORTED',workerDetail='Service Worker unavailable';try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.getRegistration();worker=reg?.active?.state?.toUpperCase()||reg?.waiting?.state?.toUpperCase()||'REGISTERING';workerDetail=reg?.waiting?'Update waiting to install':navigator.serviceWorker.controller?'Page controlled and offline-ready':'First activation pending'}}catch{}
   $('#diagWorker').textContent=worker;$('#diagWorkerDetail').textContent=workerDetail;
-  $('#diagUpdate').textContent=waitingWorker?'READY':'CURRENT';$('#diagUpdateDetail').textContent=waitingWorker?'New core waiting for installation':'Omega Core 6.9 active';applyDynamicTime(false);
+  $('#diagUpdate').textContent=waitingWorker?'READY':'CURRENT';$('#diagUpdateDetail').textContent=waitingWorker?'New core waiting for installation':'Omega Core 6.9.1 active';applyDynamicTime(false);
   lastDiagnosticsReport=[
-    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.9',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`MUSIC DIRECTOR: ${settings.musicDirector===false?'disabled':((directorDefinition().labels||[])[Math.max(0,musicDirectorPhase)]||'standby')}`,`GENERATED: ${new Date().toISOString()}`
+    'SHINRA OMEGA RADIO · SYSTEM REPORT','VERSION: 6.9.1',`PROFILE: ${(settings.performance||'auto').toUpperCase()} -> ${performanceProfile.toUpperCase()}`,`PROFILE REASON: ${performanceReason}`,`FPS: ${currentFps}`,`AUDIO: ${audioCtx?`${audioCtx.state}, ${audioCtx.sampleRate} Hz`:'not started'}`,`ACTIVE NODES: ${activeAudioNodeCount()}`,`SAMPLES: ${Object.keys(sampleBuffers).length}/${HYBRID_SAMPLE_TOTAL}`,`NETWORK: ${navigator.onLine?'online':'offline'}${connection?.effectiveType?`, ${connection.effectiveType}`:''}`,`DEVICE: ${memory}, ${cores}`,`DISPLAY: ${innerWidth}x${innerHeight}, DPR ${devicePixelRatio}`,`BATTERY: ${batteryInfo?`${Math.round(batteryInfo.level*100)}%, ${batteryInfo.charging?'charging':'discharging'}`:'API unavailable'}`,`SERVICE WORKER: ${worker}`,`CACHES: ${cacheNames.join(', ')||'none'}`,`MOTION: ${settings.reduced?'quiet':'full'}`,`TIME CYCLE: ${settings.timeMode===false?'disabled':currentTimePhase}`,`MUSIC DIRECTOR: ${settings.musicDirector===false?'disabled':((directorDefinition().labels||[])[Math.max(0,musicDirectorPhase)]||'standby')}`,`GENERATED: ${new Date().toISOString()}`
   ].join('\n');
 }
 function openDiagnostics(){document.body.classList.add('diagnostics-open');$('#diagnosticsOverlay').classList.add('open');$('#diagnosticsOverlay').setAttribute('aria-hidden','false');collectDiagnostics();clearInterval(diagnosticsTimer);diagnosticsTimer=setInterval(updateDiagnosticsLive,1000)}
@@ -1127,7 +1127,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true}};
 window.addEventListener('online',()=>{$('#netLabel').textContent='ONLINE';$('#netDot').style.background='#6df49a'});window.addEventListener('offline',()=>{$('#netLabel').textContent='OFFLINE';$('#netDot').style.background='#ff765f'});
 if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>!playing&&startAudio());navigator.mediaSession.setActionHandler('pause',()=>playing&&stopAudio());navigator.mediaSession.setActionHandler('previoustrack',()=>selectWorld(current-1));navigator.mediaSession.setActionHandler('nexttrack',()=>selectWorld(current+1));}
-const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.9';
+const APP_VERSION=document.querySelector('meta[name="app-version"]')?.content||'6.9.1';
 let waitingWorker=null,updateReloading=false;
 function showUpdateSignal(worker){waitingWorker=worker;const panel=$('#updateSignal');if(!panel)return;panel.classList.add('show');panel.setAttribute('aria-hidden','false');$('#updateSignalTitle').textContent='NEW CORE VERSION READY';$('#updateSignalText').textContent='A fresh Omega transmission is ready to install.';try{worker.postMessage({type:'GET_VERSION'})}catch{}}
 function hideUpdateSignal(){const panel=$('#updateSignal');if(!panel)return;panel.classList.remove('show');panel.setAttribute('aria-hidden','true')}
@@ -1306,7 +1306,7 @@ renderJourneySelection();
 })();
 
 
-// ===== OMEGA SIGNAL NEXUS 6.9 =====
+// ===== OMEGA SIGNAL NEXUS 6.9.1 — MOBILE SMOOTHNESS PATCH =====
 (()=>{
   const overlay=document.getElementById('signalNexus');
   const stage=document.getElementById('nexusStage');
@@ -1327,8 +1327,19 @@ renderJourneySelection();
   let startRotation=0;
   let moved=0;
   let wheelLock=false;
+  let nodes=[];
+  let mobile=false;
+  let radiusX=0;
+  let radiusY=0;
 
   const wrapIndex=i=>(i%count+count)%count;
+  const viewportWidth=()=>Math.max(320,window.visualViewport?.width||document.documentElement.clientWidth||innerWidth);
+  const updateMetrics=()=>{
+    const width=viewportWidth();
+    mobile=width<760;
+    radiusX=mobile?Math.min(width*.72,285):Math.min(width*.36,470);
+    radiusY=mobile?42:68;
+  };
   const closestRotationFor=index=>{
     const base=-index*step;
     const turns=Math.round((rotation-base)/(Math.PI*2));
@@ -1345,8 +1356,9 @@ renderJourneySelection();
 
   function render(){
     worldHost.innerHTML=WORLDS.map(worldMarkup).join('');
+    nodes=[...worldHost.querySelectorAll('[data-nexus-world]')];
     if(dotHost)dotHost.innerHTML=WORLDS.map((w,i)=>`<button type="button" data-nexus-dot="${i}" aria-label="${w.title}"></button>`).join('');
-    worldHost.querySelectorAll('[data-nexus-world]').forEach(node=>{
+    nodes.forEach(node=>{
       node.addEventListener('click',e=>{
         if(moved>9){e.preventDefault();return}
         focusWorld(Number(node.dataset.nexusWorld));
@@ -1374,10 +1386,6 @@ renderJourneySelection();
   }
 
   function layout(){
-    const mobile=innerWidth<760;
-    const radiusX=mobile?Math.min(innerWidth*.72,285):Math.min(innerWidth*.36,470);
-    const radiusY=mobile?42:68;
-    const nodes=worldHost.querySelectorAll('.nexus-world-node');
     nodes.forEach((node,i)=>{
       const angle=rotation+i*step;
       const depth=(Math.cos(angle)+1)/2;
@@ -1385,26 +1393,28 @@ renderJourneySelection();
       const y=Math.sin(angle*2)*radiusY-(1-depth)*(mobile?18:28);
       const scale=(mobile?.54:.48)+depth*(mobile?.56:.62);
       const opacity=.16+depth*.84;
-      node.style.setProperty('--nx',`${x.toFixed(2)}px`);
-      node.style.setProperty('--ny',`${y.toFixed(2)}px`);
-      node.style.setProperty('--ns',scale.toFixed(3));
-      node.style.setProperty('--no',opacity.toFixed(3));
-      node.style.setProperty('--nz',String(10+Math.round(depth*90)));
-      node.classList.toggle('front',i===selected&&depth>.92);
-      node.tabIndex=i===selected?0:-1;
+      const transform=`translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) scale(${scale.toFixed(3)})`;
+      node.style.transform=transform;
+      node.style.opacity=opacity.toFixed(3);
+      const z=10+Math.round(depth*90);
+      if(node._nexusZ!==z){node.style.zIndex=String(z);node._nexusZ=z}
+      const isFront=i===selected;
+      if(node._nexusFront!==isFront){node.classList.toggle('front',isFront);node._nexusFront=isFront}
+      const nextTab=isFront?0:-1;
+      if(node.tabIndex!==nextTab)node.tabIndex=nextTab;
     });
   }
 
   function frame(){
     raf=0;
     if(!open)return;
-    if(!dragging){
-      const delta=targetRotation-rotation;
-      rotation+=delta*(settings.reduced?.24:.11);
-      if(Math.abs(delta)<.0005)rotation=targetRotation;
-    }
+    const delta=targetRotation-rotation;
+    if(Math.abs(delta)>.00035){
+      const smoothing=dragging?.46:(settings.reduced?.28:.14);
+      rotation+=delta*smoothing;
+    }else rotation=targetRotation;
     layout();
-    if(dragging||Math.abs(targetRotation-rotation)>.0005)raf=requestAnimationFrame(frame);
+    if(dragging||Math.abs(targetRotation-rotation)>.00035)raf=requestAnimationFrame(frame);
   }
 
   function enterWorld(){
@@ -1417,11 +1427,13 @@ renderJourneySelection();
     selected=current;
     rotation=-selected*step;
     targetRotation=rotation;
-    updateCopy();layout();
+    updateMetrics();
+    updateCopy();
+    open=true;
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('nexus-open');
-    open=true;
+    layout();
     if(!raf)raf=requestAnimationFrame(frame);
   };
 
@@ -1429,7 +1441,7 @@ renderJourneySelection();
     if(!overlay||!open)return;
     open=false;
     dragging=false;
-    overlay.classList.remove('open');
+    overlay.classList.remove('open','nexus-dragging');
     overlay.setAttribute('aria-hidden','true');
     document.body.classList.remove('nexus-open');
     stage.classList.remove('dragging');
@@ -1438,22 +1450,45 @@ renderJourneySelection();
 
   stage.addEventListener('pointerdown',e=>{
     if(e.button!==undefined&&e.button!==0)return;
-    dragging=true;pointerId=e.pointerId;startX=e.clientX;startRotation=rotation;moved=0;
-    stage.classList.add('dragging');stage.setPointerCapture?.(pointerId);
+    dragging=true;
+    pointerId=e.pointerId;
+    startX=e.clientX;
+    startRotation=rotation;
+    targetRotation=rotation;
+    moved=0;
+    stage.classList.add('dragging');
+    try{stage.setPointerCapture?.(pointerId)}catch{}
     if(!raf)raf=requestAnimationFrame(frame);
   });
   stage.addEventListener('pointermove',e=>{
     if(!dragging||e.pointerId!==pointerId)return;
-    const dx=e.clientX-startX;moved=Math.max(moved,Math.abs(dx));rotation=startRotation+dx*(innerWidth<760?.0082:.0054);targetRotation=rotation;
+    const samples=e.getCoalescedEvents?.();
+    const point=samples?.length?samples[samples.length-1]:e;
+    const dx=point.clientX-startX;
+    moved=Math.max(moved,Math.abs(dx));
+    if(moved>3)overlay.classList.add('nexus-dragging');
+    targetRotation=startRotation+dx*(mobile?.0082:.0054);
+    if(!raf)raf=requestAnimationFrame(frame);
   });
   const endDrag=e=>{
     if(!dragging||(e.pointerId!==undefined&&e.pointerId!==pointerId))return;
-    dragging=false;stage.classList.remove('dragging');stage.releasePointerCapture?.(pointerId);pointerId=null;
-    const snapped=wrapIndex(Math.round(-rotation/step));focusWorld(snapped);
+    dragging=false;
+    stage.classList.remove('dragging');
+    overlay.classList.remove('nexus-dragging');
+    try{stage.releasePointerCapture?.(pointerId)}catch{}
+    pointerId=null;
+    const snapped=wrapIndex(Math.round(-targetRotation/step));
+    focusWorld(snapped);
   };
-  stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);
+  stage.addEventListener('pointerup',endDrag);
+  stage.addEventListener('pointercancel',endDrag);
+  stage.addEventListener('lostpointercapture',endDrag);
   stage.addEventListener('wheel',e=>{
-    if(!open||wheelLock)return;e.preventDefault();wheelLock=true;focusWorld(selected+(e.deltaY>0||e.deltaX>0?1:-1));setTimeout(()=>wheelLock=false,260);
+    if(!open||wheelLock)return;
+    e.preventDefault();
+    wheelLock=true;
+    focusWorld(selected+(e.deltaY>0||e.deltaX>0?1:-1));
+    setTimeout(()=>wheelLock=false,260);
   },{passive:false});
 
   document.getElementById('nexusPrev')?.addEventListener('click',()=>focusWorld(selected-1));
@@ -1463,7 +1498,9 @@ renderJourneySelection();
   document.getElementById('nexusBrand')?.addEventListener('click',closeNexus);
   document.getElementById('brandBtn')?.addEventListener('click',openNexus);
 
-  window.addEventListener('resize',()=>{if(open)layout()},{passive:true});
+  const onResize=()=>{if(!open)return;updateMetrics();layout()};
+  window.addEventListener('resize',onResize,{passive:true});
+  window.visualViewport?.addEventListener('resize',onResize,{passive:true});
   window.addEventListener('keydown',e=>{
     if(!open)return;
     if(e.key==='ArrowLeft'){e.preventDefault();focusWorld(selected-1)}
@@ -1471,5 +1508,8 @@ renderJourneySelection();
     else if(e.key==='Enter'){e.preventDefault();enterWorld()}
     else if(e.key==='Escape'){e.preventDefault();closeNexus()}
   });
-  render();updateCopy();
+  render();
+  updateMetrics();
+  updateCopy();
 })();
+

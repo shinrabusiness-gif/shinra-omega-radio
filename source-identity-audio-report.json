@@ -1,0 +1,692 @@
+{
+  "version": "9.0.0",
+  "format": "Ogg Vorbis q7, 48 kHz stereo",
+  "worlds": {
+    "black-sun": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -19.17,
+        "rms_dbfs": -28.47,
+        "spectral_centroid_hz": 58.1,
+        "stereo_correlation": 0.994,
+        "band_energy": {
+          "sub_20_80": 0.947,
+          "low_80_250": 0.0513,
+          "mid_250_2000": 0.0003,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -15.23,
+        "rms_dbfs": -30.02,
+        "spectral_centroid_hz": 127.8,
+        "stereo_correlation": 0.951,
+        "band_energy": {
+          "sub_20_80": 0.5251,
+          "low_80_250": 0.3134,
+          "mid_250_2000": 0.1607,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -15.78,
+        "rms_dbfs": -32.14,
+        "spectral_centroid_hz": 441.0,
+        "stereo_correlation": 0.986,
+        "band_energy": {
+          "sub_20_80": 0.0394,
+          "low_80_250": 0.2334,
+          "mid_250_2000": 0.7271,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -16.4,
+        "rms_dbfs": -32.17,
+        "spectral_centroid_hz": 86.0,
+        "stereo_correlation": 0.978,
+        "band_energy": {
+          "sub_20_80": 0.7825,
+          "low_80_250": 0.1892,
+          "mid_250_2000": 0.0277,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -16.91,
+        "rms_dbfs": -25.46,
+        "spectral_centroid_hz": 69.6,
+        "stereo_correlation": 0.97,
+        "band_energy": {
+          "sub_20_80": 0.5799,
+          "low_80_250": 0.4163,
+          "mid_250_2000": 0.0025,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -12.58,
+        "rms_dbfs": -26.4,
+        "spectral_centroid_hz": 43.7,
+        "stereo_correlation": 0.987,
+        "band_energy": {
+          "sub_20_80": 0.9623,
+          "low_80_250": 0.0327,
+          "mid_250_2000": 0.0005,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      }
+    },
+    "aquatoc": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.34,
+        "rms_dbfs": -28.56,
+        "spectral_centroid_hz": 68.4,
+        "stereo_correlation": 0.977,
+        "band_energy": {
+          "sub_20_80": 0.7295,
+          "low_80_250": 0.2628,
+          "mid_250_2000": 0.0066,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -7.34,
+        "rms_dbfs": -29.67,
+        "spectral_centroid_hz": 487.7,
+        "stereo_correlation": 0.732,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0309,
+          "mid_250_2000": 0.9691,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.45,
+        "rms_dbfs": -32.26,
+        "spectral_centroid_hz": 773.3,
+        "stereo_correlation": 0.932,
+        "band_energy": {
+          "sub_20_80": 0.0062,
+          "low_80_250": 0.1279,
+          "mid_250_2000": 0.8568,
+          "presence_2000_7000": 0.0092,
+          "air_7000_16000": 0.0
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -17.26,
+        "rms_dbfs": -32.11,
+        "spectral_centroid_hz": 162.8,
+        "stereo_correlation": 0.867,
+        "band_energy": {
+          "sub_20_80": 0.0001,
+          "low_80_250": 0.9757,
+          "mid_250_2000": 0.0241,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -7.9,
+        "rms_dbfs": -27.36,
+        "spectral_centroid_hz": 670.8,
+        "stereo_correlation": 0.834,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0001,
+          "mid_250_2000": 0.9999,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -12.02,
+        "rms_dbfs": -26.76,
+        "spectral_centroid_hz": 337.7,
+        "stereo_correlation": 1.0,
+        "band_energy": {
+          "sub_20_80": 0.2866,
+          "low_80_250": 0.1729,
+          "mid_250_2000": 0.5403,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      }
+    },
+    "crimson-rain": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.02,
+        "rms_dbfs": -28.62,
+        "spectral_centroid_hz": 87.1,
+        "stereo_correlation": 0.885,
+        "band_energy": {
+          "sub_20_80": 0.59,
+          "low_80_250": 0.4032,
+          "mid_250_2000": 0.006,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.51,
+        "rms_dbfs": -30.68,
+        "spectral_centroid_hz": 5289.2,
+        "stereo_correlation": 0.907,
+        "band_energy": {
+          "sub_20_80": 0.0045,
+          "low_80_250": 0.0273,
+          "mid_250_2000": 0.1009,
+          "presence_2000_7000": 0.5634,
+          "air_7000_16000": 0.3039
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -17.49,
+        "rms_dbfs": -32.54,
+        "spectral_centroid_hz": 5229.0,
+        "stereo_correlation": 0.9,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0068,
+          "mid_250_2000": 0.1374,
+          "presence_2000_7000": 0.5623,
+          "air_7000_16000": 0.2934
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.83,
+        "rms_dbfs": -32.17,
+        "spectral_centroid_hz": 255.2,
+        "stereo_correlation": 0.918,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.5447,
+          "mid_250_2000": 0.4552,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.48,
+        "rms_dbfs": -25.62,
+        "spectral_centroid_hz": 687.0,
+        "stereo_correlation": 0.895,
+        "band_energy": {
+          "sub_20_80": 0.0003,
+          "low_80_250": 0.8671,
+          "mid_250_2000": 0.0387,
+          "presence_2000_7000": 0.0619,
+          "air_7000_16000": 0.0319
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.22,
+        "rms_dbfs": -25.55,
+        "spectral_centroid_hz": 184.9,
+        "stereo_correlation": 0.952,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.9588,
+          "mid_250_2000": 0.0411,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      }
+    },
+    "mountain-blood": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.72,
+        "rms_dbfs": -28.48,
+        "spectral_centroid_hz": 127.7,
+        "stereo_correlation": 0.877,
+        "band_energy": {
+          "sub_20_80": 0.2071,
+          "low_80_250": 0.7568,
+          "mid_250_2000": 0.0357,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -13.07,
+        "rms_dbfs": -29.96,
+        "spectral_centroid_hz": 700.9,
+        "stereo_correlation": 0.812,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.2653,
+          "mid_250_2000": 0.667,
+          "presence_2000_7000": 0.0676,
+          "air_7000_16000": 0.0
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -17.85,
+        "rms_dbfs": -33.05,
+        "spectral_centroid_hz": 2153.5,
+        "stereo_correlation": 0.789,
+        "band_energy": {
+          "sub_20_80": 0.0009,
+          "low_80_250": 0.0435,
+          "mid_250_2000": 0.4571,
+          "presence_2000_7000": 0.4976,
+          "air_7000_16000": 0.0009
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -17.94,
+        "rms_dbfs": -32.17,
+        "spectral_centroid_hz": 183.6,
+        "stereo_correlation": 0.88,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.9793,
+          "mid_250_2000": 0.0206,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -10.86,
+        "rms_dbfs": -24.46,
+        "spectral_centroid_hz": 329.3,
+        "stereo_correlation": 0.997,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.8751,
+          "mid_250_2000": 0.1233,
+          "presence_2000_7000": 0.0016,
+          "air_7000_16000": 0.0
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.83,
+        "rms_dbfs": -26.53,
+        "spectral_centroid_hz": 473.8,
+        "stereo_correlation": 0.948,
+        "band_energy": {
+          "sub_20_80": 0.3352,
+          "low_80_250": 0.4482,
+          "mid_250_2000": 0.1257,
+          "presence_2000_7000": 0.0906,
+          "air_7000_16000": 0.0
+        }
+      }
+    },
+    "starless-void": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -17.84,
+        "rms_dbfs": -28.42,
+        "spectral_centroid_hz": 38.1,
+        "stereo_correlation": 0.998,
+        "band_energy": {
+          "sub_20_80": 0.9863,
+          "low_80_250": 0.0094,
+          "mid_250_2000": 0.0001,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -17.12,
+        "rms_dbfs": -29.88,
+        "spectral_centroid_hz": 354.9,
+        "stereo_correlation": 0.673,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.7428,
+          "mid_250_2000": 0.2572,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.77,
+        "rms_dbfs": -32.72,
+        "spectral_centroid_hz": 4000.8,
+        "stereo_correlation": 0.946,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0,
+          "mid_250_2000": 0.1703,
+          "presence_2000_7000": 0.7707,
+          "air_7000_16000": 0.0591
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.78,
+        "rms_dbfs": -32.12,
+        "spectral_centroid_hz": 151.0,
+        "stereo_correlation": 0.936,
+        "band_energy": {
+          "sub_20_80": 0.0001,
+          "low_80_250": 0.9253,
+          "mid_250_2000": 0.0744,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -15.48,
+        "rms_dbfs": -25.65,
+        "spectral_centroid_hz": 58.9,
+        "stereo_correlation": 0.921,
+        "band_energy": {
+          "sub_20_80": 0.6545,
+          "low_80_250": 0.3428,
+          "mid_250_2000": 0.0014,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -15.97,
+        "rms_dbfs": -26.67,
+        "spectral_centroid_hz": 46.1,
+        "stereo_correlation": 0.997,
+        "band_energy": {
+          "sub_20_80": 0.9874,
+          "low_80_250": 0.011,
+          "mid_250_2000": 0.0001,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      }
+    },
+    "celestial-veil": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.56,
+        "rms_dbfs": -28.59,
+        "spectral_centroid_hz": 268.3,
+        "stereo_correlation": 0.907,
+        "band_energy": {
+          "sub_20_80": 0.0001,
+          "low_80_250": 0.4692,
+          "mid_250_2000": 0.5307,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.68,
+        "rms_dbfs": -29.6,
+        "spectral_centroid_hz": 345.0,
+        "stereo_correlation": 0.877,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0001,
+          "mid_250_2000": 0.9998,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -16.96,
+        "rms_dbfs": -32.88,
+        "spectral_centroid_hz": 7673.2,
+        "stereo_correlation": 0.797,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0,
+          "mid_250_2000": 0.005,
+          "presence_2000_7000": 0.4427,
+          "air_7000_16000": 0.552
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -19.88,
+        "rms_dbfs": -32.38,
+        "spectral_centroid_hz": 712.6,
+        "stereo_correlation": 0.819,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0,
+          "mid_250_2000": 0.9479,
+          "presence_2000_7000": 0.0521,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -15.03,
+        "rms_dbfs": -25.51,
+        "spectral_centroid_hz": 337.9,
+        "stereo_correlation": 0.868,
+        "band_energy": {
+          "sub_20_80": 0.0001,
+          "low_80_250": 0.3004,
+          "mid_250_2000": 0.6991,
+          "presence_2000_7000": 0.0003,
+          "air_7000_16000": 0.0
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -14.22,
+        "rms_dbfs": -26.95,
+        "spectral_centroid_hz": 243.1,
+        "stereo_correlation": 0.797,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.4667,
+          "mid_250_2000": 0.5332,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      }
+    },
+    "sunroot-vale": {
+      "foundation": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -18.03,
+        "rms_dbfs": -28.48,
+        "spectral_centroid_hz": 134.1,
+        "stereo_correlation": 0.934,
+        "band_energy": {
+          "sub_20_80": 0.0088,
+          "low_80_250": 0.9563,
+          "mid_250_2000": 0.0347,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "identity": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -16.34,
+        "rms_dbfs": -29.67,
+        "spectral_centroid_hz": 214.4,
+        "stereo_correlation": 0.811,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.975,
+          "mid_250_2000": 0.0249,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "nature": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -16.81,
+        "rms_dbfs": -32.72,
+        "spectral_centroid_hz": 3330.6,
+        "stereo_correlation": 0.821,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.0001,
+          "mid_250_2000": 0.2882,
+          "presence_2000_7000": 0.6832,
+          "air_7000_16000": 0.0285
+        }
+      },
+      "melody": {
+        "duration_s": 68.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -16.19,
+        "rms_dbfs": -32.61,
+        "spectral_centroid_hz": 326.6,
+        "stereo_correlation": 0.926,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.4256,
+          "mid_250_2000": 0.5744,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "signature": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -12.36,
+        "rms_dbfs": -24.57,
+        "spectral_centroid_hz": 282.5,
+        "stereo_correlation": 0.9,
+        "band_energy": {
+          "sub_20_80": 0.0,
+          "low_80_250": 0.5816,
+          "mid_250_2000": 0.4183,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      },
+      "transition": {
+        "duration_s": 12.0,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -15.66,
+        "rms_dbfs": -27.21,
+        "spectral_centroid_hz": 167.0,
+        "stereo_correlation": 0.959,
+        "band_energy": {
+          "sub_20_80": 0.0002,
+          "low_80_250": 0.8793,
+          "mid_250_2000": 0.1204,
+          "presence_2000_7000": 0.0,
+          "air_7000_16000": 0.0
+        }
+      }
+    }
+  }
+}

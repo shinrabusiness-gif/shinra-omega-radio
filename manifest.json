@@ -1,7 +1,7 @@
 {
-  "name": "Shinra Omega Radio — Serenity",
-  "short_name": "Shinra Ω",
-  "description": "Seven high-quality, meditative 48 kHz sound worlds inside the Omega Signal Nexus.",
+  "name": "Shinra Omega Radio \u2014 Source Identity",
+  "short_name": "Shinra \u03a9",
+  "description": "Seven independently designed meditative sound worlds with unique sources, spaces, melodies, signatures and transitions.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

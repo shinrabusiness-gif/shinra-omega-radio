@@ -1,0 +1,58 @@
+{
+  "black-sun": {
+    "foundation": "source-black-sun-foundation.ogg",
+    "identity": "source-black-sun-identity.ogg",
+    "nature": "source-black-sun-nature.ogg",
+    "melody": "source-black-sun-melody.ogg",
+    "signature": "source-black-sun-signature.ogg",
+    "transition": "source-black-sun-transition.ogg"
+  },
+  "aquatoc": {
+    "foundation": "source-aquatoc-foundation.ogg",
+    "identity": "source-aquatoc-identity.ogg",
+    "nature": "source-aquatoc-nature.ogg",
+    "melody": "source-aquatoc-melody.ogg",
+    "signature": "source-aquatoc-signature.ogg",
+    "transition": "source-aquatoc-transition.ogg"
+  },
+  "crimson-rain": {
+    "foundation": "source-crimson-rain-foundation.ogg",
+    "identity": "source-crimson-rain-identity.ogg",
+    "nature": "source-crimson-rain-nature.ogg",
+    "melody": "source-crimson-rain-melody.ogg",
+    "signature": "source-crimson-rain-signature.ogg",
+    "transition": "source-crimson-rain-transition.ogg"
+  },
+  "mountain-blood": {
+    "foundation": "source-mountain-blood-foundation.ogg",
+    "identity": "source-mountain-blood-identity.ogg",
+    "nature": "source-mountain-blood-nature.ogg",
+    "melody": "source-mountain-blood-melody.ogg",
+    "signature": "source-mountain-blood-signature.ogg",
+    "transition": "source-mountain-blood-transition.ogg"
+  },
+  "starless-void": {
+    "foundation": "source-starless-void-foundation.ogg",
+    "identity": "source-starless-void-identity.ogg",
+    "nature": "source-starless-void-nature.ogg",
+    "melody": "source-starless-void-melody.ogg",
+    "signature": "source-starless-void-signature.ogg",
+    "transition": "source-starless-void-transition.ogg"
+  },
+  "celestial-veil": {
+    "foundation": "source-celestial-veil-foundation.ogg",
+    "identity": "source-celestial-veil-identity.ogg",
+    "nature": "source-celestial-veil-nature.ogg",
+    "melody": "source-celestial-veil-melody.ogg",
+    "signature": "source-celestial-veil-signature.ogg",
+    "transition": "source-celestial-veil-transition.ogg"
+  },
+  "sunroot-vale": {
+    "foundation": "source-sunroot-vale-foundation.ogg",
+    "identity": "source-sunroot-vale-identity.ogg",
+    "nature": "source-sunroot-vale-nature.ogg",
+    "melody": "source-sunroot-vale-melody.ogg",
+    "signature": "source-sunroot-vale-signature.ogg",
+    "transition": "source-sunroot-vale-transition.ogg"
+  }
+}
